@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Intelligence MVP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .content-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .description {
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .attributes-list, .dimensions-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .attributes-list li, .dimensions-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .attributes-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .dimensions-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .insight {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            line-height: 1.6;
+            color: #856404;
+        }
+
+        .disclaimer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Intelligence MVP</h1>
+        
+        <div class="input-section">
+            <input 
+                type="text" 
+                id="productInput" 
+                placeholder="Enter a product name..."
+                autocomplete="off"
+            />
+        </div>
+
+        <div id="productOverview" class="content-section">
+            <h2>Product Overview</h2>
+            <p class="description" id="overviewText"></p>
+        </div>
+
+        <div id="keyAttributes" class="content-section">
+            <h2>Key Attributes / Specifications</h2>
+            <ul class="attributes-list" id="attributesList"></ul>
+        </div>
+
+        <div id="dimensionsVariants" class="content-section">
+            <h2>Dimensions / Variants</h2>
+            <ul class="dimensions-list" id="dimensionsList"></ul>
+        </div>
+
+        <div id="howItsUsed" class="content-section">
+            <h2>How It's Used</h2>
+            <ol class="steps" id="stepsList"></ol>
+        </div>
+
+        <div id="aiInsight" class="content-section">
+            <h2>AI Insight: What's Missing / Risky / Overlooked</h2>
+            <div class="insight" id="insightText"></div>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        This is an early-stage MVP using illustrative data.
+    </div>
+
+    <script>
+        // Generate product-agnostic content based on product name
+        function generateContent(productName) {
+            const name = productName.trim();
+            const nameLower = name.toLowerCase();
+            
+            // Product Overview - neutral explanation
+            const overview = `${name} is a product designed for general use. It serves its intended purpose within its category and is commonly found in typical usage scenarios. This product represents a standard offering in its market segment, designed to meet common user needs and expectations.`;
+            
+            // Detect product category and determine category type
+            let categoryType = 'general';
+            let categoryAttributes = [];
+            let categoryDimensions = [];
+            let categoryInsight = '';
+            
+            // Sports equipment / fitness
+            if (nameLower.match(/\b(ball|racket|bat|helmet|glove|shoe|sneaker|equipment|fitness|sport|athletic|gym|workout)\b/)) {
+                categoryType = 'sports';
+                categoryAttributes = [
+                    'Material: Constructed from materials such as synthetic polymers, composite materials, or natural fibers appropriate for the specific item type',
+                    'Size: Available in standard sizing options that accommodate different user body types and skill levels',
+                    'User suitability: Designed with considerations for age, experience level, and intended activity intensity'
+                ];
+                categoryDimensions = [
+                    'Length and weight specifications vary by model and intended use',
+                    'Size options typically include standard, large, and extra-large variants',
+                    'Weight classes or categories may be available for competitive use',
+                    'Color and design variations are commonly offered'
+                ];
+                categoryInsight = `General AI-generated explanations of ${name} commonly overlook critical safety and handling considerations such as proper sizing for injury prevention, age-appropriate usage, maintenance requirements for safety-critical components, and environmental conditions that affect performance or durability. AI explanations often fail to mention important handling practices like proper grip techniques, safe storage to prevent damage or degradation, inspection procedures before use, and awareness of impact forces or stress points that could lead to equipment failure. This platform audits AI-generated content to highlight missing context about misuse risks, safety limitations, proper handling procedures, and usage conditions specific to sports equipment.`;
+            }
+            // Food / consumables
+            else if (nameLower.match(/\b(food|snack|cereal|beverage|drink|ingredient|organic|natural|nutrition|meal|recipe)\b/)) {
+                categoryType = 'food';
+                categoryAttributes = [
+                    'Ingredients: Contains standard components typical for products in this category, with specific formulations varying by preparation method',
+                    'Allergens: May contain common allergens such as nuts, dairy, gluten, or soy depending on the product formulation',
+                    'Storage: Requires appropriate storage conditions including temperature control, humidity levels, and shelf-life considerations'
+                ];
+                categoryDimensions = [
+                    'Available in various size options such as single-serve, family-size, or bulk packaging',
+                    'Flavor or variety options may include different taste profiles or ingredient combinations',
+                    'Packaging formats vary by intended use and storage requirements',
+                    'Portion sizes and serving recommendations are typically specified'
+                ];
+                categoryInsight = `General AI-generated explanations of ${name} commonly overlook critical safety and handling information such as allergen content, proper storage conditions to prevent spoilage or contamination, expiration and shelf-life considerations, dietary restrictions, and potential food safety risks. AI explanations often fail to mention important handling practices like safe preparation methods, temperature control during storage and serving, cross-contamination prevention, proper hygiene when handling, and recognition of signs of spoilage or contamination. This platform audits AI-generated content to highlight missing context about safety considerations, proper handling procedures, storage limitations, and misuse risks specific to food products.`;
+            }
+            // Electronics / tech
+            else if (nameLower.match(/\b(phone|tablet|laptop|computer|device|electronic|tech|charger|cable|battery|screen|display|gadget)\b/)) {
+                categoryType = 'electronics';
+                categoryAttributes = [
+                    'Components: Includes standard electronic components such as processors, memory modules, connectivity interfaces, and power management systems',
+                    'Compatibility: Designed to work with specific operating systems, software versions, or peripheral devices within defined compatibility ranges',
+                    'Power requirements: Operates within specified voltage, current, and power consumption parameters'
+                ];
+                categoryDimensions = [
+                    'Storage capacity or memory size options are typically available in multiple tiers',
+                    'Model versions may include different feature sets, performance levels, or generation variants',
+                    'Color and finish options are commonly offered across product lines',
+                    'Accessory compatibility and bundle options may vary by configuration'
+                ];
+                categoryInsight = `General AI-generated explanations of ${name} commonly overlook critical technical limitations and safety considerations such as compatibility constraints, power and charging requirements, environmental operating conditions, data security considerations, and warranty or support limitations. AI explanations often fail to mention important handling practices like proper charging procedures to prevent overheating, safe storage to avoid physical damage, protection from moisture or extreme temperatures, appropriate handling to prevent drops or impacts, and awareness of battery safety considerations. This platform audits AI-generated content to highlight missing context about compatibility risks, usage limitations, proper handling procedures, and potential misuse scenarios specific to electronic devices.`;
+            }
+            // Clothing / apparel
+            else if (nameLower.match(/\b(shirt|pants|dress|jacket|clothing|apparel|fabric|textile|garment|wear)\b/)) {
+                categoryType = 'clothing';
+                categoryAttributes = [
+                    'Material composition: Made from textile materials such as cotton, polyester, wool, or blended fabrics with specific care requirements',
+                    'Size and fit: Available in standard sizing systems with fit considerations for different body types',
+                    'Care instructions: Requires specific washing, drying, and maintenance procedures to preserve quality and appearance'
+                ];
+                categoryDimensions = [
+                    'Size options typically include standard sizing from small to extra-large, with extended sizes sometimes available',
+                    'Color and pattern variations are commonly offered within product lines',
+                    'Style variants may include different cuts, fits, or design elements',
+                    'Seasonal or occasion-specific versions may be available'
+                ];
+                categoryInsight = `General AI-generated explanations of ${name} commonly overlook important considerations and safety aspects such as proper sizing and fit guidance, care instructions to maintain quality, material-specific limitations, durability expectations, and suitability for different occasions or environments. AI explanations often fail to mention important handling practices like proper washing techniques to preserve fabric integrity, safe storage to prevent damage or discoloration, awareness of material-specific care requirements, recognition of signs of wear or damage, and appropriate handling of delicate or specialized materials. This platform audits AI-generated content to highlight missing context about care limitations, fit considerations, proper handling procedures, and usage constraints specific to clothing and apparel.`;
+            }
+            // Default / general products
+            else {
+                categoryAttributes = [
+                    'Material type: Constructed from materials standard to this product category with appropriate durability characteristics',
+                    'Core specifications: Meets typical industry standards and quality benchmarks for products of this nature',
+                    'Design features: Incorporates design elements that support primary functionality and user needs'
+                ];
+                categoryDimensions = [
+                    'Available in standard sizes common to this product category',
+                    'Multiple variants may include different color, style, or configuration options',
+                    'Packaging and presentation follow industry standards',
+                    'Weight and dimensions vary by specific variant selected'
+                ];
+                categoryInsight = `General AI-generated explanations of ${name} commonly overlook important context including safety and handling considerations such as usage limits, storage guidance, environmental conditions, compatibility requirements, and maintenance needs. AI explanations often fail to mention important handling practices like proper storage methods to preserve product integrity, safe handling techniques to prevent damage or injury, awareness of material limitations or degradation factors, recognition of signs of wear or deterioration, and appropriate usage conditions for optimal performance and safety. This platform audits AI-generated content to highlight missing context, safety considerations, proper handling procedures, limitations, and misuse risks specific to this product category.`;
+            }
+            
+            // Key Attributes / Specifications - use category-specific attributes
+            const attributes = categoryAttributes;
+            
+            // Dimensions / Variants - use category-specific dimensions
+            const dimensions = categoryDimensions;
+            
+            // How It's Used - generic, product-agnostic steps
+            const steps = [
+                'Review the product and any included documentation',
+                'Identify the appropriate context or environment for use',
+                'Follow standard usage practices for products of this type',
+                'Apply the product according to its intended purpose',
+                'Maintain and store the product as recommended for its category'
+            ];
+            
+            // AI Insight - use category-specific insight
+            const insight = categoryInsight;
+            
+            return {
+                overview: overview,
+                attributes: attributes,
+                dimensions: dimensions,
+                steps: steps,
+                insight: insight
+            };
+        }
+
+        // Display product information
+        function displayProductInfo(productName) {
+            if (!productName.trim()) {
+                // Hide all sections if input is empty
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                return;
+            }
+
+            const content = generateContent(productName);
+            
+            // Show Product Overview
+            document.getElementById('overviewText').textContent = content.overview;
+            document.getElementById('productOverview').classList.add('active');
+            
+            // Show Key Attributes / Specifications
+            const attributesList = document.getElementById('attributesList');
+            attributesList.innerHTML = '';
+            content.attributes.forEach(attr => {
+                const li = document.createElement('li');
+                li.textContent = attr;
+                attributesList.appendChild(li);
+            });
+            document.getElementById('keyAttributes').classList.add('active');
+            
+            // Show Dimensions / Variants
+            const dimensionsList = document.getElementById('dimensionsList');
+            dimensionsList.innerHTML = '';
+            content.dimensions.forEach(dim => {
+                const li = document.createElement('li');
+                li.textContent = dim;
+                dimensionsList.appendChild(li);
+            });
+            document.getElementById('dimensionsVariants').classList.add('active');
+            
+            // Show How It's Used
+            const stepsList = document.getElementById('stepsList');
+            stepsList.innerHTML = '';
+            content.steps.forEach(step => {
+                const li = document.createElement('li');
+                li.textContent = step;
+                stepsList.appendChild(li);
+            });
+            document.getElementById('howItsUsed').classList.add('active');
+            
+            // Show AI Insight
+            document.getElementById('insightText').textContent = content.insight;
+            document.getElementById('aiInsight').classList.add('active');
+        }
+
+        // Event listener for input
+        const productInput = document.getElementById('productInput');
+        
+        productInput.addEventListener('input', function() {
+            displayProductInfo(this.value);
+        });
+
+        // Optional: Handle Enter key
+        productInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                displayProductInfo(this.value);
+            }
+        });
+    </script>
+</body>
+</html>
+
