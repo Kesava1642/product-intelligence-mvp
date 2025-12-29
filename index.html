@@ -149,6 +149,29 @@
             color: #856404;
         }
 
+        .not-suitable {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(133, 100, 4, 0.3);
+        }
+
+        .not-suitable h3 {
+            color: #856404;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .not-suitable ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .not-suitable li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
         .comparison-insight {
             background: #e7f3ff;
             border-left: 4px solid #2196F3;
@@ -269,11 +292,298 @@
         .btn-secondary:hover {
             background: #d0d0d0;
         }
+
+        .export-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-top: 3px solid #667eea;
+            display: none;
+        }
+
+        .export-section.active {
+            display: block;
+        }
+
+        .export-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-export {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #5568d3;
+        }
+
+        .btn-export-secondary {
+            background: #6c757d;
+        }
+
+        .btn-export-secondary:hover {
+            background: #5a6268;
+        }
+
+        .copy-feedback {
+            display: inline-block;
+            margin-left: 10px;
+            color: #28a745;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+        }
+
+        .pro-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #e9ecef;
+            color: #6c757d;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 10px;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .pro-note {
+            font-size: 12px;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 10px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-left: 3px solid #dee2e6;
+            border-radius: 4px;
+        }
+
+        .pricing-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+            text-align: center;
+        }
+
+        .pricing-section h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .pricing-plans {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .pricing-plan {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            min-width: 200px;
+            opacity: 0.8;
+        }
+
+        .pricing-plan.pro {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+        }
+
+        .pricing-plan h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .pricing-plan.free h4 {
+            color: #6c757d;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .price-placeholder {
+            font-size: 12px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: #495057;
+        }
+
+        .pricing-features li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .pricing-features li.disabled:before {
+            content: "○ ";
+            color: #dee2e6;
+        }
+
+        .pricing-features li.disabled {
+            color: #adb5bd;
+        }
+
+        .pricing-cta {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: not-allowed;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .roadmap-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .roadmap-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .roadmap-header h4 {
+            color: #495057;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .roadmap-toggle {
+            color: #6c757d;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .roadmap-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .roadmap-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            margin-top: 15px;
+        }
+
+        .roadmap-content.expanded {
+            max-height: 500px;
+        }
+
+        .roadmap-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .roadmap-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .roadmap-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .roadmap-item h5 {
+            color: #495057;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+
+        .roadmap-item p {
+            color: #6c757d;
+            font-size: 12px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .input-section,
+            .clarification-section,
+            .export-section,
+            .disclaimer,
+            .pricing-section {
+                display: none !important;
+            }
+            .content-section {
+                page-break-inside: avoid;
+                margin-top: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Product Intelligence MVP</h1>
+        <h1>Product Intelligence MVP <span class="pro-badge" title="Pro features coming soon">Pro</span></h1>
         
         <div class="input-section">
             <input 
@@ -316,12 +626,88 @@
 
         <div id="aiInsight" class="content-section">
             <h2>AI Insight: What's Missing / Risky / Overlooked</h2>
-            <div class="insight" id="insightText"></div>
+            <div class="insight" id="insightText">
+                <div id="insightMainText"></div>
+                <div class="not-suitable" id="notSuitableSection">
+                    <h3>Who This Product Is NOT Suitable For</h3>
+                    <ul id="notSuitableList"></ul>
+                </div>
+            </div>
+            <div class="pro-note">
+                Pro version includes real-time AI gap analysis, regulatory compliance checks, and automated risk scoring.
+            </div>
         </div>
 
         <div id="comparisonInsight" class="content-section">
             <h2>Comparison Insight</h2>
             <div class="comparison-insight" id="comparisonText"></div>
+            <div class="pro-note">
+                Advanced comparisons with side-by-side analysis, competitor benchmarking, and detailed cost-benefit breakdowns available in Pro version.
+            </div>
+        </div>
+
+        <div id="exportSection" class="export-section">
+            <h3>Save / Export</h3>
+            <div class="export-buttons">
+                <button class="btn btn-export" id="copyBtn">Copy to Clipboard</button>
+                <button class="btn btn-export btn-export-secondary" id="exportTextBtn">Export as Text</button>
+                <button class="btn btn-export btn-export-secondary" id="exportPdfBtn">Print / PDF</button>
+            </div>
+            <span class="copy-feedback" id="copyFeedback">Copied to clipboard!</span>
+        </div>
+    </div>
+
+    <div class="pricing-section">
+        <h3>Upgrade to Pro</h3>
+        <p class="price-placeholder">Unlock advanced features and deeper insights</p>
+        <div class="pricing-plans">
+            <div class="pricing-plan free">
+                <h4>Free</h4>
+                <div class="price">$0</div>
+                <ul class="pricing-features">
+                    <li>Basic product intelligence</li>
+                    <li>Standard comparisons</li>
+                    <li>Export to text/PDF</li>
+                    <li class="disabled">Advanced AI insights</li>
+                    <li class="disabled">Competitor analysis</li>
+                    <li class="disabled">Custom reports</li>
+                </ul>
+                <button class="pricing-cta" disabled>Current Plan</button>
+            </div>
+            <div class="pricing-plan pro">
+                <h4>Pro</h4>
+                <div class="price">Coming Soon</div>
+                <ul class="pricing-features">
+                    <li>Everything in Free</li>
+                    <li>Advanced comparisons</li>
+                    <li>Competitor benchmarking</li>
+                    <li>Custom report templates</li>
+                    <li>API access</li>
+                    <li>Priority support</li>
+                </ul>
+                <button class="pricing-cta" disabled>Coming Soon</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="roadmap-section">
+        <div class="roadmap-header" id="roadmapHeader">
+            <h4>Product Roadmap</h4>
+            <span class="roadmap-toggle" id="roadmapToggle">▼</span>
+        </div>
+        <div class="roadmap-content" id="roadmapContent">
+            <div class="roadmap-item">
+                <h5>Current</h5>
+                <p>Early-stage MVP with illustrative data</p>
+            </div>
+            <div class="roadmap-item">
+                <h5>Next</h5>
+                <p>Industry-specific intelligence and deeper insights</p>
+            </div>
+            <div class="roadmap-item">
+                <h5>Later</h5>
+                <p>Real data integration and enterprise features</p>
+            </div>
         </div>
     </div>
 
@@ -332,6 +718,10 @@
     <script>
         // Store context answers
         let contextAnswers = {};
+        
+        // Store current product data for export
+        let currentProductName = '';
+        let currentContent = null;
 
         // Generate questions based on product category
         function generateQuestions(categoryType, productName) {
@@ -799,6 +1189,78 @@
             return industryExamples[categoryType] || industryExamples.general;
         }
 
+        // Generate "Who This Product Is NOT Suitable For" content
+        function generateNotSuitableContent(categoryType, context, industry, productName) {
+            const notSuitable = [];
+            
+            if (categoryType === 'sports') {
+                notSuitable.push('Users who require equipment outside the recommended age or skill level range, as improper sizing or capability mismatch can lead to safety risks');
+                notSuitable.push('Environments with extreme weather conditions or surfaces that exceed the product\'s design specifications, which could cause premature failure or safety hazards');
+                notSuitable.push('High-intensity competitive use when the product is designed for recreational purposes, as it may not withstand the demands of competitive settings');
+                notSuitable.push('Users with specific medical conditions or physical limitations that require specialized equipment, as standard products may not provide necessary support or safety features');
+                if (context.budget && context.budget.includes('Cost-first')) {
+                    notSuitable.push('Frequent, high-intensity use where premium durability and performance features would be necessary to prevent frequent replacement or safety issues');
+                }
+            } else if (categoryType === 'food') {
+                notSuitable.push('Individuals with specific food allergies or dietary restrictions that are not clearly addressed in the product formulation, as cross-contamination risks may exist');
+                notSuitable.push('Storage environments that cannot maintain required temperature, humidity, or light conditions, which could lead to spoilage, contamination, or quality degradation');
+                notSuitable.push('Use beyond expiration dates or recommended shelf life, as food safety and quality cannot be guaranteed after these periods');
+                notSuitable.push('Specialized dietary needs requiring precise nutritional profiles or medical-grade formulations, as standard products may not meet these specific requirements');
+                if (context.environment && context.environment.includes('Special dietary')) {
+                    notSuitable.push('General consumption without careful review of ingredients, as specialized formulations may not be suitable for all dietary needs');
+                }
+            } else if (categoryType === 'electronics') {
+                notSuitable.push('Environments with extreme temperatures, humidity, or exposure to water beyond the device\'s IP rating, which could cause permanent damage or safety hazards');
+                notSuitable.push('Use with incompatible operating systems, software versions, or peripheral devices, as compatibility issues can lead to malfunctions or data loss');
+                notSuitable.push('Applications requiring performance capabilities beyond the device\'s specifications, which could result in overheating, reduced lifespan, or failure');
+                notSuitable.push('Users who cannot provide appropriate power sources, charging infrastructure, or maintenance, as improper power management can damage devices');
+                if (context.budget && context.budget.includes('Cost-first')) {
+                    notSuitable.push('Heavy-duty or professional applications requiring premium reliability and extended support, as budget models may lack necessary durability or warranty coverage');
+                }
+            } else if (categoryType === 'clothing') {
+                notSuitable.push('Activities or environments that require specialized protective gear or performance fabrics beyond the garment\'s design specifications');
+                notSuitable.push('Users who cannot follow recommended care instructions, as improper washing, drying, or storage can cause damage, shrinkage, or color fading');
+                notSuitable.push('Extreme weather conditions or environments that exceed the fabric\'s temperature, moisture, or durability ratings');
+                notSuitable.push('Situations requiring specific fit, sizing, or body coverage that the product cannot accommodate, as improper fit can affect comfort, appearance, or safety');
+                if (context.environment && context.environment.includes('Professional')) {
+                    notSuitable.push('Casual or athletic settings where professional appearance standards are not required, as the investment may not align with usage patterns');
+                }
+            } else {
+                notSuitable.push('Use cases that exceed the product\'s intended purpose or design specifications, which could lead to failure, safety risks, or voided warranties');
+                notSuitable.push('Environments or conditions that do not meet the product\'s operating requirements, such as temperature, humidity, or space constraints');
+                notSuitable.push('Users who cannot provide necessary maintenance, storage, or handling requirements, as improper care can compromise product integrity');
+                notSuitable.push('Applications requiring specialized features, certifications, or performance levels that the product does not offer');
+            }
+            
+            // Add industry-specific not suitable cases
+            if (industry === 'E-commerce') {
+                notSuitable.push('High-volume sellers requiring bulk purchasing capabilities or specialized fulfillment features that standard product listings may not support');
+                notSuitable.push('Markets with strict regulatory requirements or compliance standards that the product may not meet without additional verification');
+            } else if (industry === 'Warehouse / Logistics') {
+                notSuitable.push('Facilities with space constraints or handling equipment limitations that cannot accommodate the product\'s dimensions or weight requirements');
+                notSuitable.push('Operations requiring specialized tracking, serialization, or inventory management features that standard products may not provide');
+            } else if (industry === 'Manufacturing / Industrial') {
+                notSuitable.push('Production processes requiring specific certifications, tolerances, or quality standards that the product may not meet');
+                notSuitable.push('Operations with equipment compatibility requirements or integration needs that standard products cannot fulfill');
+            } else if (industry === 'Technology / SaaS') {
+                notSuitable.push('Systems requiring specific API integrations, data formats, or security protocols that the product does not support');
+                notSuitable.push('Applications with scalability requirements or performance demands beyond the product\'s capabilities');
+            }
+            
+            // Add context-specific not suitable cases
+            if (context.intendedUser && context.intendedUser.includes('Individual')) {
+                notSuitable.push('Business or commercial applications requiring bulk purchasing, commercial warranties, or enterprise support features');
+            } else if (context.intendedUser && context.intendedUser.includes('Business')) {
+                notSuitable.push('Personal or individual use cases where commercial-grade features and pricing may be unnecessary or cost-prohibitive');
+            }
+            
+            if (context.constraints) {
+                notSuitable.push(`Use cases that conflict with the specified constraint: ${context.constraints}, as the product may not accommodate these requirements`);
+            }
+            
+            return notSuitable;
+        }
+
         // Generate comparison insights
         function generateComparisonInsight(categoryType, context, industry) {
             const comparisons = [];
@@ -1060,13 +1522,17 @@
             // Comparison Insight
             const comparisons = generateComparisonInsight(categoryType, context, industry);
             
+            // Who This Product Is NOT Suitable For
+            const notSuitable = generateNotSuitableContent(categoryType, context, industry, name);
+            
             return {
                 overview: overview,
                 attributes: attributes,
                 dimensions: dimensions,
                 steps: steps,
                 insight: insight,
-                comparisons: comparisons
+                comparisons: comparisons,
+                notSuitable: notSuitable
             };
         }
 
@@ -1078,10 +1544,17 @@
                     section.classList.remove('active');
                 });
                 document.getElementById('clarificationSection').classList.remove('active');
+                document.getElementById('exportSection').classList.remove('active');
+                currentProductName = '';
+                currentContent = null;
                 return;
             }
 
             const content = generateContent(productName, context);
+            
+            // Store for export
+            currentProductName = productName;
+            currentContent = content;
             
             // Show Product Overview
             document.getElementById('overviewText').textContent = content.overview;
@@ -1118,7 +1591,17 @@
             document.getElementById('howItsUsed').classList.add('active');
             
             // Show AI Insight
-            document.getElementById('insightText').textContent = content.insight;
+            document.getElementById('insightMainText').textContent = content.insight;
+            
+            // Show "Who This Product Is NOT Suitable For"
+            const notSuitableList = document.getElementById('notSuitableList');
+            notSuitableList.innerHTML = '';
+            content.notSuitable.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                notSuitableList.appendChild(li);
+            });
+            
             document.getElementById('aiInsight').classList.add('active');
             
             // Show Comparison Insight
@@ -1138,6 +1621,122 @@
                 comparisonContainer.appendChild(item);
             });
             document.getElementById('comparisonInsight').classList.add('active');
+            
+            // Show export section
+            document.getElementById('exportSection').classList.add('active');
+        }
+
+        // Format content for text export
+        function formatContentForExport(productName, content) {
+            let text = `PRODUCT INTELLIGENCE REPORT\n`;
+            text += `Product: ${productName}\n`;
+            text += `Generated: ${new Date().toLocaleString()}\n`;
+            text += `\n${'='.repeat(60)}\n\n`;
+            
+            text += `1. PRODUCT OVERVIEW\n`;
+            text += `${'-'.repeat(60)}\n`;
+            text += `${content.overview}\n\n`;
+            
+            text += `2. KEY ATTRIBUTES / SPECIFICATIONS\n`;
+            text += `${'-'.repeat(60)}\n`;
+            content.attributes.forEach((attr, index) => {
+                text += `${index + 1}. ${attr}\n`;
+            });
+            text += `\n`;
+            
+            text += `3. DIMENSIONS / VARIANTS\n`;
+            text += `${'-'.repeat(60)}\n`;
+            content.dimensions.forEach((dim, index) => {
+                text += `${index + 1}. ${dim}\n`;
+            });
+            text += `\n`;
+            
+            text += `4. HOW IT'S USED\n`;
+            text += `${'-'.repeat(60)}\n`;
+            text += `Real-world use cases:\n`;
+            content.steps.forEach((step, index) => {
+                text += `${index + 1}. ${step}\n`;
+            });
+            text += `\n`;
+            
+            text += `5. AI INSIGHT: WHAT'S MISSING / RISKY / OVERLOOKED\n`;
+            text += `${'-'.repeat(60)}\n`;
+            text += `${content.insight}\n\n`;
+            
+            text += `WHO THIS PRODUCT IS NOT SUITABLE FOR\n`;
+            text += `${'-'.repeat(60)}\n`;
+            content.notSuitable.forEach((item, index) => {
+                text += `${index + 1}. ${item}\n`;
+            });
+            text += `\n`;
+            
+            text += `6. COMPARISON INSIGHT\n`;
+            text += `${'-'.repeat(60)}\n`;
+            content.comparisons.forEach((comparison, index) => {
+                text += `${comparison.title}\n`;
+                text += `${comparison.content}\n\n`;
+            });
+            
+            text += `\n${'='.repeat(60)}\n`;
+            text += `This is an early-stage MVP using illustrative data.\n`;
+            
+            return text;
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(productName, content) {
+            const text = formatContentForExport(productName, content);
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const feedback = document.getElementById('copyFeedback');
+                    feedback.classList.add('show');
+                    setTimeout(() => {
+                        feedback.classList.remove('show');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                    alert('Failed to copy to clipboard. Please try the export as text option.');
+                });
+            } else {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    const feedback = document.getElementById('copyFeedback');
+                    feedback.classList.add('show');
+                    setTimeout(() => {
+                        feedback.classList.remove('show');
+                    }, 2000);
+                } catch (err) {
+                    alert('Failed to copy to clipboard. Please try the export as text option.');
+                }
+                document.body.removeChild(textarea);
+            }
+        }
+
+        // Export as text file
+        function exportAsText(productName, content) {
+            const text = formatContentForExport(productName, content);
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `product-intelligence-${productName.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Print / PDF export
+        function exportAsPDF(productName) {
+            window.print();
         }
 
         // Event listener for input
@@ -1172,6 +1771,41 @@
             contextAnswers = {};
             document.getElementById('clarificationSection').classList.remove('active');
             displayProductInfo(productInput.value, {});
+        });
+
+        // Export button event listeners
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            if (currentProductName && currentContent) {
+                copyToClipboard(currentProductName, currentContent);
+            }
+        });
+
+        document.getElementById('exportTextBtn').addEventListener('click', function() {
+            if (currentProductName && currentContent) {
+                exportAsText(currentProductName, currentContent);
+            }
+        });
+
+        document.getElementById('exportPdfBtn').addEventListener('click', function() {
+            if (currentProductName) {
+                exportAsPDF(currentProductName);
+            }
+        });
+
+        // Roadmap expandable section
+        const roadmapHeader = document.getElementById('roadmapHeader');
+        const roadmapContent = document.getElementById('roadmapContent');
+        const roadmapToggle = document.getElementById('roadmapToggle');
+
+        roadmapHeader.addEventListener('click', function() {
+            const isExpanded = roadmapContent.classList.contains('expanded');
+            if (isExpanded) {
+                roadmapContent.classList.remove('expanded');
+                roadmapToggle.classList.remove('expanded');
+            } else {
+                roadmapContent.classList.add('expanded');
+                roadmapToggle.classList.add('expanded');
+            }
         });
     </script>
 </body>
