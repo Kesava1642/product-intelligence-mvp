@@ -57,6 +57,7 @@
             background: #f8f9fa;
             border-radius: 8px;
             display: none;
+            border-top: 3px solid #667eea;
         }
 
         .content-section.active {
@@ -67,6 +68,9 @@
             color: #667eea;
             margin-bottom: 15px;
             font-size: 20px;
+            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
         }
 
         .description {
@@ -145,12 +149,125 @@
             color: #856404;
         }
 
+        .comparison-insight {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 4px;
+            line-height: 1.6;
+            color: #0d47a1;
+        }
+
+        .comparison-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(33, 150, 243, 0.2);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .comparison-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1565c0;
+        }
+
+        .comparison-content {
+            font-size: 14px;
+        }
+
         .disclaimer {
             text-align: center;
             margin-top: 30px;
             padding: 15px;
             font-size: 12px;
             color: rgba(255, 255, 255, 0.8);
+        }
+
+        .clarification-section {
+            margin-top: 20px;
+            padding: 25px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            display: none;
+        }
+
+        .clarification-section.active {
+            display: block;
+        }
+
+        .clarification-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .question-group {
+            margin-bottom: 20px;
+        }
+
+        .question-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .question-group select,
+        .question-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            background: white;
+            transition: border-color 0.3s;
+        }
+
+        .question-group select:focus,
+        .question-group input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .clarification-actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
         }
     </style>
 </head>
@@ -165,6 +282,15 @@
                 placeholder="Enter a product name..."
                 autocomplete="off"
             />
+        </div>
+
+        <div id="clarificationSection" class="clarification-section">
+            <h3>Help us tailor the analysis</h3>
+            <div id="questionsContainer"></div>
+            <div class="clarification-actions">
+                <button class="btn btn-primary" id="generateBtn">Generate Analysis</button>
+                <button class="btn btn-secondary" id="skipBtn">Skip & Use Defaults</button>
+            </div>
         </div>
 
         <div id="productOverview" class="content-section">
@@ -184,12 +310,18 @@
 
         <div id="howItsUsed" class="content-section">
             <h2>How It's Used</h2>
+            <p style="color: #666; font-size: 14px; margin-bottom: 15px; font-style: italic;">Real-world use cases:</p>
             <ol class="steps" id="stepsList"></ol>
         </div>
 
         <div id="aiInsight" class="content-section">
             <h2>AI Insight: What's Missing / Risky / Overlooked</h2>
             <div class="insight" id="insightText"></div>
+        </div>
+
+        <div id="comparisonInsight" class="content-section">
+            <h2>Comparison Insight</h2>
+            <div class="comparison-insight" id="comparisonText"></div>
         </div>
     </div>
 
@@ -198,13 +330,585 @@
     </div>
 
     <script>
-        // Generate product-agnostic content based on product name
-        function generateContent(productName) {
+        // Store context answers
+        let contextAnswers = {};
+
+        // Generate questions based on product category
+        function generateQuestions(categoryType, productName) {
+            const questions = [];
+            
+            // Industry selector (optional, first question)
+            questions.push({
+                id: 'industry',
+                label: 'Industry context (optional)',
+                type: 'select',
+                options: ['General / Consumer', 'E-commerce', 'Warehouse / Logistics', 'Manufacturing / Industrial', 'Technology / SaaS']
+            });
+            
+            // Common question: Intended user
+            questions.push({
+                id: 'intendedUser',
+                label: 'Intended user',
+                type: 'select',
+                options: ['Individual / Personal use', 'Business / Commercial use', 'Both']
+            });
+
+            if (categoryType === 'sports') {
+                questions.push({
+                    id: 'environment',
+                    label: 'Primary environment of use',
+                    type: 'select',
+                    options: ['Indoor facilities', 'Outdoor spaces', 'Both indoor and outdoor', 'Competitive settings']
+                });
+                questions.push({
+                    id: 'budget',
+                    label: 'Priority consideration',
+                    type: 'select',
+                    options: ['Cost-first (budget-friendly options)', 'Quality-first (performance and durability)', 'Balanced approach']
+                });
+                questions.push({
+                    id: 'constraints',
+                    label: 'Specific constraints or requirements',
+                    type: 'text',
+                    placeholder: 'e.g., size restrictions, safety standards, age group'
+                });
+            } else if (categoryType === 'food') {
+                questions.push({
+                    id: 'environment',
+                    label: 'Primary use context',
+                    type: 'select',
+                    options: ['Home consumption', 'Restaurant / Food service', 'Retail / Grocery', 'Special dietary needs']
+                });
+                questions.push({
+                    id: 'budget',
+                    label: 'Priority consideration',
+                    type: 'select',
+                    options: ['Cost-first (value options)', 'Quality-first (premium ingredients)', 'Balanced approach']
+                });
+                questions.push({
+                    id: 'constraints',
+                    label: 'Specific constraints or requirements',
+                    type: 'text',
+                    placeholder: 'e.g., dietary restrictions, storage limitations, shelf life needs'
+                });
+            } else if (categoryType === 'electronics') {
+                questions.push({
+                    id: 'environment',
+                    label: 'Primary use environment',
+                    type: 'select',
+                    options: ['Home / Personal', 'Office / Business', 'Mobile / On-the-go', 'Industrial / Specialized']
+                });
+                questions.push({
+                    id: 'budget',
+                    label: 'Priority consideration',
+                    type: 'select',
+                    options: ['Cost-first (budget options)', 'Quality-first (premium features)', 'Balanced approach']
+                });
+                questions.push({
+                    id: 'constraints',
+                    label: 'Specific constraints or requirements',
+                    type: 'text',
+                    placeholder: 'e.g., compatibility needs, size/weight limits, power requirements'
+                });
+            } else if (categoryType === 'clothing') {
+                questions.push({
+                    id: 'environment',
+                    label: 'Primary use context',
+                    type: 'select',
+                    options: ['Casual / Everyday', 'Professional / Business', 'Active / Sports', 'Special occasions']
+                });
+                questions.push({
+                    id: 'budget',
+                    label: 'Priority consideration',
+                    type: 'select',
+                    options: ['Cost-first (affordable options)', 'Quality-first (durability and materials)', 'Balanced approach']
+                });
+                questions.push({
+                    id: 'constraints',
+                    label: 'Specific constraints or requirements',
+                    type: 'text',
+                    placeholder: 'e.g., size requirements, care preferences, material sensitivities'
+                });
+            } else {
+                questions.push({
+                    id: 'environment',
+                    label: 'Primary use environment',
+                    type: 'select',
+                    options: ['Home / Personal', 'Business / Commercial', 'Industrial', 'Specialized applications']
+                });
+                questions.push({
+                    id: 'budget',
+                    label: 'Priority consideration',
+                    type: 'select',
+                    options: ['Cost-first', 'Quality-first', 'Balanced approach']
+                });
+                questions.push({
+                    id: 'constraints',
+                    label: 'Specific constraints or requirements',
+                    type: 'text',
+                    placeholder: 'e.g., size, weight, safety, compliance needs'
+                });
+            }
+
+            return questions;
+        }
+
+        // Show clarification questions
+        function showClarificationQuestions(productName) {
+            const nameLower = productName.toLowerCase().trim();
+            let categoryType = 'general';
+            
+            if (nameLower.match(/\b(ball|racket|bat|helmet|glove|shoe|sneaker|equipment|fitness|sport|athletic|gym|workout)\b/)) {
+                categoryType = 'sports';
+            } else if (nameLower.match(/\b(food|snack|cereal|beverage|drink|ingredient|organic|natural|nutrition|meal|recipe)\b/)) {
+                categoryType = 'food';
+            } else if (nameLower.match(/\b(phone|tablet|laptop|computer|device|electronic|tech|charger|cable|battery|screen|display|gadget)\b/)) {
+                categoryType = 'electronics';
+            } else if (nameLower.match(/\b(shirt|pants|dress|jacket|clothing|apparel|fabric|textile|garment|wear)\b/)) {
+                categoryType = 'clothing';
+            }
+
+            const questions = generateQuestions(categoryType, productName);
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const group = document.createElement('div');
+                group.className = 'question-group';
+                
+                const label = document.createElement('label');
+                label.textContent = `${index + 1}. ${q.label}:`;
+                group.appendChild(label);
+
+                if (q.type === 'select') {
+                    const select = document.createElement('select');
+                    select.id = q.id;
+                    select.name = q.id;
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = '-- Select --';
+                    select.appendChild(defaultOption);
+                    q.options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.textContent = opt;
+                        select.appendChild(option);
+                    });
+                    group.appendChild(select);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.name = q.id;
+                    input.placeholder = q.placeholder || '';
+                    group.appendChild(input);
+                }
+
+                container.appendChild(group);
+            });
+
+            document.getElementById('clarificationSection').classList.add('active');
+        }
+
+        // Collect answers from clarification form
+        function collectContextAnswers() {
+            const answers = {};
+            const inputs = document.querySelectorAll('#questionsContainer select, #questionsContainer input[type="text"]');
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    answers[input.id] = input.value.trim();
+                }
+            });
+            return answers;
+        }
+
+        // Get industry-specific terminology
+        function getIndustryTerminology(industry) {
+            const terms = {
+                'E-commerce': {
+                    purchase: 'purchase',
+                    users: 'customers',
+                    usage: 'customer experience',
+                    selection: 'product selection',
+                    considerations: 'customer satisfaction and return rates'
+                },
+                'Warehouse / Logistics': {
+                    purchase: 'procurement',
+                    users: 'operators',
+                    usage: 'operational efficiency',
+                    selection: 'supply chain integration',
+                    considerations: 'throughput, handling requirements, and inventory management'
+                },
+                'Manufacturing / Industrial': {
+                    purchase: 'procurement',
+                    users: 'operators',
+                    usage: 'production processes',
+                    selection: 'production line integration',
+                    considerations: 'durability, maintenance schedules, and compliance standards'
+                },
+                'Technology / SaaS': {
+                    purchase: 'acquisition',
+                    users: 'end users',
+                    usage: 'user experience',
+                    selection: 'technical specifications',
+                    considerations: 'scalability, integration capabilities, and support requirements'
+                },
+                'General / Consumer': {
+                    purchase: 'purchase',
+                    users: 'users',
+                    usage: 'usage',
+                    selection: 'selection',
+                    considerations: 'user needs and expectations'
+                }
+            };
+            return terms[industry] || terms['General / Consumer'];
+        }
+
+        // Get industry-specific risks
+        function getIndustryRisks(industry) {
+            const risks = {
+                'E-commerce': [
+                    'Customer return rates and satisfaction metrics',
+                    'Shipping and packaging compatibility',
+                    'Product listing accuracy and compliance',
+                    'Inventory management and stockout risks',
+                    'Customer review and rating implications'
+                ],
+                'Warehouse / Logistics': [
+                    'Operational efficiency and throughput impact',
+                    'Storage space optimization and layout considerations',
+                    'Handling equipment compatibility',
+                    'Safety protocols and worker ergonomics',
+                    'Inventory tracking and traceability requirements'
+                ],
+                'Manufacturing / Industrial': [
+                    'Production line integration and downtime risks',
+                    'Quality control and defect rates',
+                    'Maintenance schedules and equipment compatibility',
+                    'Regulatory compliance and safety standards',
+                    'Supply chain reliability and vendor dependencies'
+                ],
+                'Technology / SaaS': [
+                    'Integration complexity and API compatibility',
+                    'Scalability limitations and performance bottlenecks',
+                    'Security vulnerabilities and data protection',
+                    'Vendor lock-in and migration challenges',
+                    'Support and maintenance requirements'
+                ],
+                'General / Consumer': [
+                    'Usage limits and safety considerations',
+                    'Storage guidance and environmental conditions',
+                    'Compatibility requirements',
+                    'Maintenance needs'
+                ]
+            };
+            return risks[industry] || risks['General / Consumer'];
+        }
+
+        // Get industry-specific usage examples
+        function getIndustryUsageExamples(industry, categoryType, context) {
+            const examples = {
+                'E-commerce': {
+                    sports: [
+                        'Listed in online product catalogs with detailed specifications for customer browsing',
+                        'Displayed in search results with filtering options for size, color, and price',
+                        'Packaged for direct-to-consumer shipping with appropriate protection',
+                        'Reviewed by customers with ratings and feedback affecting visibility',
+                        'Managed in inventory systems with real-time stock level updates'
+                    ],
+                    food: [
+                        'Listed in online grocery platforms with nutritional information and allergen warnings',
+                        'Displayed in product search results with filtering by dietary preferences',
+                        'Packaged for home delivery with temperature control considerations',
+                        'Reviewed by customers with feedback on taste, quality, and value',
+                        'Managed with expiration date tracking and rotation protocols'
+                    ],
+                    electronics: [
+                        'Featured in online marketplaces with technical specifications and compatibility details',
+                        'Displayed with comparison tools for features, price, and reviews',
+                        'Shipped with appropriate packaging to prevent damage during transit',
+                        'Reviewed by customers with focus on performance, reliability, and value',
+                        'Managed with warranty and return policy considerations'
+                    ],
+                    clothing: [
+                        'Displayed in online stores with size charts and fit guidance',
+                        'Featured in product listings with multiple images and style variations',
+                        'Packaged for shipping with appropriate folding and protection',
+                        'Reviewed by customers with feedback on fit, quality, and appearance',
+                        'Managed with size availability and inventory tracking'
+                    ],
+                    general: [
+                        'Listed in online marketplaces with comprehensive product descriptions',
+                        'Displayed in search results with relevant filtering and sorting options',
+                        'Packaged appropriately for shipping and customer expectations',
+                        'Reviewed by customers with ratings affecting product visibility',
+                        'Managed in inventory systems with real-time availability updates'
+                    ]
+                },
+                'Warehouse / Logistics': {
+                    sports: [
+                        'Stored in warehouse facilities with space optimization considerations',
+                        'Handled using material handling equipment appropriate for weight and dimensions',
+                        'Picked and packed according to order fulfillment workflows',
+                        'Tracked through inventory management systems with barcode scanning',
+                        'Shipped with appropriate packaging to prevent damage during transit'
+                    ],
+                    food: [
+                        'Stored in temperature-controlled environments with expiration date tracking',
+                        'Handled following food safety protocols and rotation procedures',
+                        'Picked and packed with appropriate packaging for freshness',
+                        'Tracked through inventory systems with lot number and batch tracking',
+                        'Shipped with temperature control and handling instructions'
+                    ],
+                    electronics: [
+                        'Stored in secure, climate-controlled areas with anti-static precautions',
+                        'Handled with care to prevent damage to sensitive components',
+                        'Picked and packed with protective packaging and anti-static materials',
+                        'Tracked through inventory systems with serial number management',
+                        'Shipped with appropriate protection and handling labels'
+                    ],
+                    clothing: [
+                        'Stored in warehouse facilities with hanging or folded storage methods',
+                        'Handled to prevent damage, wrinkling, or contamination',
+                        'Picked and packed with appropriate folding and protection',
+                        'Tracked through inventory systems with size and color variations',
+                        'Shipped with appropriate packaging to maintain appearance'
+                    ],
+                    general: [
+                        'Stored in warehouse facilities optimized for space and accessibility',
+                        'Handled using appropriate equipment and procedures for product type',
+                        'Picked and packed according to order specifications',
+                        'Tracked through inventory management systems',
+                        'Shipped with appropriate packaging and handling requirements'
+                    ]
+                },
+                'Manufacturing / Industrial': {
+                    sports: [
+                        'Integrated into production processes for sports equipment manufacturing',
+                        'Used in assembly lines with quality control checkpoints',
+                        'Stored in production facilities with just-in-time inventory management',
+                        'Tracked through manufacturing execution systems',
+                        'Maintained according to production schedules and equipment requirements'
+                    ],
+                    food: [
+                        'Used as ingredients or components in food production processes',
+                        'Stored in production facilities with temperature and humidity control',
+                        'Tracked through batch and lot management systems',
+                        'Handled following food safety and hygiene protocols',
+                        'Maintained with rotation procedures and expiration monitoring'
+                    ],
+                    electronics: [
+                        'Integrated into electronic device assembly and manufacturing processes',
+                        'Used in production lines with ESD protection and quality testing',
+                        'Stored in controlled environments with anti-static precautions',
+                        'Tracked through manufacturing execution systems with component traceability',
+                        'Maintained with calibration and testing requirements'
+                    ],
+                    clothing: [
+                        'Used in textile manufacturing and garment production processes',
+                        'Stored in production facilities with appropriate environmental conditions',
+                        'Tracked through production planning and inventory systems',
+                        'Handled to prevent contamination or damage during manufacturing',
+                        'Maintained according to production schedules and material requirements'
+                    ],
+                    general: [
+                        'Integrated into manufacturing and production processes',
+                        'Used in production lines with quality control procedures',
+                        'Stored in production facilities with inventory management',
+                        'Tracked through manufacturing execution systems',
+                        'Maintained according to production schedules and requirements'
+                    ]
+                },
+                'Technology / SaaS': {
+                    sports: [
+                        'Integrated into fitness tracking and sports analytics platforms',
+                        'Used in mobile applications for workout planning and performance monitoring',
+                        'Connected to IoT devices for real-time data collection',
+                        'Managed through cloud-based inventory and analytics systems',
+                        'Supported with API integrations for third-party services'
+                    ],
+                    food: [
+                        'Tracked through food delivery and meal planning applications',
+                        'Integrated into nutrition tracking and dietary management systems',
+                        'Connected to smart kitchen devices and inventory management apps',
+                        'Managed through cloud-based platforms for recipe and meal planning',
+                        'Supported with API integrations for grocery and delivery services'
+                    ],
+                    electronics: [
+                        'Integrated into device management and monitoring platforms',
+                        'Connected to cloud services for data synchronization and backup',
+                        'Used in IoT ecosystems with device-to-device communication',
+                        'Managed through software-defined infrastructure and automation',
+                        'Supported with API integrations and software development kits'
+                    ],
+                    clothing: [
+                        'Tracked through fashion and wardrobe management applications',
+                        'Integrated into e-commerce platforms with virtual try-on features',
+                        'Connected to smart closet systems and inventory management apps',
+                        'Managed through cloud-based platforms for style and outfit planning',
+                        'Supported with API integrations for sizing and fit recommendations'
+                    ],
+                    general: [
+                        'Integrated into digital platforms and software ecosystems',
+                        'Connected to cloud services for data management and analytics',
+                        'Used in applications with API integrations and third-party services',
+                        'Managed through software platforms and automation systems',
+                        'Supported with technical documentation and integration capabilities'
+                    ]
+                },
+                'General / Consumer': {
+                    sports: [
+                        'Used during training sessions to practice and improve skills',
+                        'Employed in competitive settings where performance and safety standards apply',
+                        'Utilized for recreational activities in appropriate environments',
+                        'Applied in fitness routines or exercise programs based on user goals',
+                        'Engaged in group activities or team sports where coordination and safety are important'
+                    ],
+                    food: [
+                        'Consumed as part of regular meals or snacks based on nutritional needs',
+                        'Used as ingredients in recipes or meal preparation',
+                        'Served in social settings or gatherings with appropriate portion considerations',
+                        'Included in dietary plans that account for nutritional content and restrictions',
+                        'Stored and prepared following food safety guidelines for optimal quality'
+                    ],
+                    electronics: [
+                        'Operated in home or office environments for productivity and communication',
+                        'Used for entertainment purposes such as media consumption or gaming',
+                        'Employed in mobile settings where portability and battery life matter',
+                        'Connected with other devices or networks for expanded functionality',
+                        'Utilized in various lighting and environmental conditions appropriate to device specifications'
+                    ],
+                    clothing: [
+                        'Worn in everyday settings appropriate to the garment style and occasion',
+                        'Used for specific activities or environments where material properties are important',
+                        'Worn in different weather conditions based on fabric characteristics',
+                        'Selected for comfort and fit in various body positions and movements',
+                        'Maintained through appropriate care routines to preserve appearance and durability'
+                    ],
+                    general: [
+                        'Used in typical scenarios appropriate to the product category and intended purpose',
+                        'Applied in various contexts where the product\'s core functionality is needed',
+                        'Utilized by different user groups based on product suitability and design',
+                        'Employed in environments that match the product\'s specifications and limitations',
+                        'Maintained and stored according to recommendations for optimal performance and longevity'
+                    ]
+                }
+            };
+            
+            const industryExamples = examples[industry] || examples['General / Consumer'];
+            return industryExamples[categoryType] || industryExamples.general;
+        }
+
+        // Generate comparison insights
+        function generateComparisonInsight(categoryType, context, industry) {
+            const comparisons = [];
+            
+            // Budget vs Premium comparison
+            const budgetComparison = {
+                title: 'Budget vs Premium Variants',
+                content: ''
+            };
+            
+            if (categoryType === 'sports') {
+                budgetComparison.content = `Budget variants typically offer essential functionality with standard materials, suitable for occasional use or beginners. Premium variants provide enhanced durability, advanced materials, and performance features designed for frequent use or competitive settings. The trade-off involves balancing initial cost against long-term durability and performance needs.`;
+            } else if (categoryType === 'food') {
+                budgetComparison.content = `Budget options focus on value and basic nutritional requirements, often with simpler ingredient lists. Premium variants may include organic ingredients, specialized formulations, or enhanced nutritional profiles. Consider whether the additional cost aligns with dietary goals, quality preferences, or specific health requirements.`;
+            } else if (categoryType === 'electronics') {
+                budgetComparison.content = `Budget models provide core functionality with standard features and performance. Premium variants offer advanced capabilities, better build quality, extended warranties, and enhanced performance. Evaluate whether the additional features justify the cost based on your usage intensity and specific requirements.`;
+            } else if (categoryType === 'clothing') {
+                budgetComparison.content = `Budget options use standard materials and construction suitable for occasional wear. Premium variants feature higher-quality fabrics, better construction techniques, and enhanced durability. Consider your usage frequency, care preferences, and how long you expect the item to remain in good condition.`;
+            } else {
+                budgetComparison.content = `Budget variants prioritize cost-effectiveness with standard features and materials. Premium options offer enhanced quality, durability, and additional features. Assess whether the premium features align with your usage patterns, longevity expectations, and specific needs.`;
+            }
+            comparisons.push(budgetComparison);
+            
+            // Size/Capacity comparison
+            const sizeComparison = {
+                title: 'Size and Capacity Options',
+                content: ''
+            };
+            
+            if (categoryType === 'sports') {
+                sizeComparison.content = `Size options directly impact fit, safety, and performance. Smaller sizes may be more maneuverable but could compromise safety if too small. Larger sizes offer more coverage or capacity but may affect agility or comfort. Select based on user measurements, activity type, and manufacturer sizing guidelines to ensure proper fit and safety.`;
+            } else if (categoryType === 'food') {
+                sizeComparison.content = `Package sizes affect value, storage requirements, and consumption patterns. Smaller packages offer freshness and portion control but higher per-unit cost. Larger packages provide better value but require appropriate storage conditions and consumption planning to prevent waste. Consider household size, consumption rate, and storage capacity.`;
+            } else if (categoryType === 'electronics') {
+                sizeComparison.content = `Storage capacity and screen size options balance portability with functionality. Smaller devices offer better portability but may limit storage or display capabilities. Larger options provide more capacity and better viewing but reduced portability. Match capacity to your data needs and screen size to your usage environment.`;
+            } else if (categoryType === 'clothing') {
+                sizeComparison.content = `Size selection impacts fit, comfort, and appearance. Sizes that are too small may restrict movement or cause discomfort, while oversized items may look unprofessional or interfere with activities. Refer to manufacturer size charts and consider fit preferences (slim, regular, relaxed) for optimal selection.`;
+            } else {
+                sizeComparison.content = `Size and capacity options balance functionality with practical constraints. Smaller variants may be more portable or space-efficient but could limit capabilities. Larger options offer more capacity or features but may require more storage space or handling considerations. Evaluate based on your space constraints, usage requirements, and portability needs.`;
+            }
+            comparisons.push(sizeComparison);
+            
+            // Suitability trade-offs
+            const tradeoffComparison = {
+                title: 'Suitability Trade-offs: Cost vs Durability vs Performance',
+                content: ''
+            };
+            
+            if (categoryType === 'sports') {
+                tradeoffComparison.content = `Cost-effective options may require more frequent replacement but are suitable for occasional use. Durable variants offer longer lifespan and better performance but at higher initial cost. High-performance options excel in competitive settings but may be unnecessary for recreational use. Balance your activity frequency, skill level, and budget to find the optimal point.`;
+            } else if (categoryType === 'food') {
+                tradeoffComparison.content = `Lower-cost options may have simpler formulations but meet basic nutritional needs. Premium variants often offer better ingredient quality and nutritional profiles but at higher cost. Consider your dietary requirements, quality preferences, and budget constraints. For regular consumption, investing in quality may provide better long-term value.`;
+            } else if (categoryType === 'electronics') {
+                tradeoffComparison.content = `Budget models provide adequate performance for basic tasks but may lack advanced features or longevity. Mid-range options balance cost and performance for most users. Premium models offer superior performance and durability but may include features you won't utilize. Match the performance level to your actual usage patterns rather than maximum capabilities.`;
+            } else if (categoryType === 'clothing') {
+                tradeoffComparison.content = `Affordable options work well for occasional wear but may show wear more quickly. Mid-range items balance cost and durability for regular use. Premium options offer superior materials and construction for extended longevity. Consider how often you'll wear the item, care requirements, and whether the durability justifies the cost for your usage pattern.`;
+            } else {
+                tradeoffComparison.content = `Budget options meet basic needs but may have shorter lifespans or limited features. Mid-range selections balance cost, durability, and performance for typical use cases. Premium variants offer enhanced durability and performance but require evaluating whether the benefits justify the additional cost for your specific requirements.`;
+            }
+            comparisons.push(tradeoffComparison);
+            
+            // Industry-specific considerations
+            if (industry === 'E-commerce') {
+                comparisons.push({
+                    title: 'E-commerce Considerations',
+                    content: `For online sales, consider how product variants affect customer decision-making. Clear size guides and variant descriptions reduce return rates. Budget options may attract price-sensitive customers but could impact satisfaction. Premium variants may justify higher prices with detailed specifications and quality assurance information.`
+                });
+            } else if (industry === 'Warehouse / Logistics') {
+                comparisons.push({
+                    title: 'Operational Efficiency Factors',
+                    content: `Evaluate variants based on storage density, handling requirements, and inventory turnover. Standardized sizes improve space utilization and picking efficiency. Consider how variant selection affects warehouse operations, inventory management complexity, and fulfillment speed. Bulk options may reduce handling but require appropriate storage capacity.`
+                });
+            } else if (industry === 'Manufacturing / Industrial') {
+                comparisons.push({
+                    title: 'Production Integration Factors',
+                    content: `Consider how variants integrate with existing production processes and equipment compatibility. Standard sizes may improve supply chain reliability and reduce setup time. Premium materials may reduce maintenance frequency and downtime. Evaluate total cost of ownership including maintenance, replacement frequency, and production impact.`
+                });
+            } else if (industry === 'Technology / SaaS') {
+                comparisons.push({
+                    title: 'Technical Integration Considerations',
+                    content: `Assess variants based on integration complexity, scalability requirements, and feature needs. Basic options may suffice for simple use cases but could limit future expansion. Premium variants offer better scalability and integration capabilities but require evaluating whether advanced features align with current and projected needs.`
+                });
+            }
+            
+            return comparisons;
+        }
+
+        // Generate product-agnostic content based on product name and context
+        function generateContent(productName, context = {}) {
             const name = productName.trim();
             const nameLower = name.toLowerCase();
             
-            // Product Overview - neutral explanation
-            const overview = `${name} is a product designed for general use. It serves its intended purpose within its category and is commonly found in typical usage scenarios. This product represents a standard offering in its market segment, designed to meet common user needs and expectations.`;
+            // Product Overview - tailored based on context and industry
+            const industry = context.industry || 'General / Consumer';
+            const terminology = getIndustryTerminology(industry);
+            let userContext = context.intendedUser || 'general users';
+            let envContext = context.environment || 'typical environments';
+            let budgetContext = context.budget || 'standard considerations';
+            
+            let overview = `${name} is a product designed for ${userContext.includes('Individual') ? 'personal' : userContext.includes('Business') ? 'commercial' : 'general'} use`;
+            if (industry !== 'General / Consumer') {
+                overview += ` in ${industry.toLowerCase()} contexts`;
+            }
+            overview += `. `;
+            overview += `It serves its intended purpose within its category and is commonly found in ${envContext.toLowerCase()}. `;
+            overview += `This product represents a ${budgetContext.includes('Cost-first') ? 'budget-conscious' : budgetContext.includes('Quality-first') ? 'premium' : 'standard'} offering in its market segment, designed to meet ${terminology.considerations}.`;
+            
+            if (context.constraints) {
+                overview += ` Specific considerations include ${context.constraints.toLowerCase()}.`;
+            }
             
             // Detect product category and determine category type
             let categoryType = 'general';
@@ -292,44 +996,92 @@
                 categoryInsight = `General AI-generated explanations of ${name} commonly overlook important context including safety and handling considerations such as usage limits, storage guidance, environmental conditions, compatibility requirements, and maintenance needs. AI explanations often fail to mention important handling practices like proper storage methods to preserve product integrity, safe handling techniques to prevent damage or injury, awareness of material limitations or degradation factors, recognition of signs of wear or deterioration, and appropriate usage conditions for optimal performance and safety. This platform audits AI-generated content to highlight missing context, safety considerations, proper handling procedures, limitations, and misuse risks specific to this product category.`;
             }
             
-            // Key Attributes / Specifications - use category-specific attributes
-            const attributes = categoryAttributes;
+            // Key Attributes / Specifications - use category-specific attributes, tailored by industry and context
+            let attributes = [...categoryAttributes];
             
-            // Dimensions / Variants - use category-specific dimensions
-            const dimensions = categoryDimensions;
+            // Add industry-specific attributes
+            if (industry === 'E-commerce') {
+                attributes.push('Product listing compatibility and digital catalog integration');
+                attributes.push('Customer review and rating considerations');
+            } else if (industry === 'Warehouse / Logistics') {
+                attributes.push('Storage and handling efficiency specifications');
+                attributes.push('Inventory management and tracking compatibility');
+            } else if (industry === 'Manufacturing / Industrial') {
+                attributes.push('Production line integration and compatibility requirements');
+                attributes.push('Quality control and compliance specifications');
+            } else if (industry === 'Technology / SaaS') {
+                attributes.push('API and integration capabilities');
+                attributes.push('Scalability and performance specifications');
+            }
             
-            // How It's Used - generic, product-agnostic steps
-            const steps = [
-                'Review the product and any included documentation',
-                'Identify the appropriate context or environment for use',
-                'Follow standard usage practices for products of this type',
-                'Apply the product according to its intended purpose',
-                'Maintain and store the product as recommended for its category'
-            ];
+            // Add context-specific attributes
+            if (context.intendedUser && context.intendedUser.includes('Business')) {
+                attributes.push('Commercial-grade specifications suitable for business use');
+            }
+            if (context.budget && context.budget.includes('Quality-first')) {
+                attributes.push('Premium materials and construction for enhanced durability');
+            } else if (context.budget && context.budget.includes('Cost-first')) {
+                attributes.push('Value-oriented specifications balancing cost and functionality');
+            }
             
-            // AI Insight - use category-specific insight
-            const insight = categoryInsight;
+            // Dimensions / Variants - use category-specific dimensions, tailored by context
+            let dimensions = [...categoryDimensions];
+            
+            if (context.environment) {
+                dimensions.push(`Variants optimized for ${context.environment.toLowerCase()} are typically available`);
+            }
+            
+            // How It's Used - real-world use cases based on industry and category
+            let useCases = getIndustryUsageExamples(industry, categoryType, context);
+            const steps = useCases;
+            
+            // AI Insight - use category-specific insight, enhanced with industry and context
+            let insight = categoryInsight;
+            
+            // Add industry-specific risks
+            if (industry !== 'General / Consumer') {
+                const industryRisks = getIndustryRisks(industry);
+                insight += ` In ${industry} contexts, AI-generated explanations commonly overlook industry-specific risks such as ${industryRisks.slice(0, 2).join(', ')}, and ${industryRisks[2]}.`;
+            }
+            
+            // Add context-specific considerations to insight
+            if (context.intendedUser && context.intendedUser.includes('Business')) {
+                insight += ` For business use, AI explanations often miss commercial considerations such as bulk purchasing implications, compliance requirements, vendor support expectations, and scalability factors.`;
+            }
+            if (context.budget && context.budget.includes('Cost-first')) {
+                insight += ` When prioritizing cost, AI-generated content frequently overlooks trade-offs between price and quality, long-term value considerations, and potential hidden costs.`;
+            } else if (context.budget && context.budget.includes('Quality-first')) {
+                insight += ` For quality-focused selections, AI explanations may not adequately address premium feature trade-offs, maintenance requirements for high-end products, or value justification.`;
+            }
+            if (context.constraints) {
+                insight += ` Given specific constraints like "${context.constraints}", AI-generated explanations often fail to address how these limitations impact product selection, usage, or safety considerations.`;
+            }
+            
+            // Comparison Insight
+            const comparisons = generateComparisonInsight(categoryType, context, industry);
             
             return {
                 overview: overview,
                 attributes: attributes,
                 dimensions: dimensions,
                 steps: steps,
-                insight: insight
+                insight: insight,
+                comparisons: comparisons
             };
         }
 
         // Display product information
-        function displayProductInfo(productName) {
+        function displayProductInfo(productName, context = {}) {
             if (!productName.trim()) {
                 // Hide all sections if input is empty
                 document.querySelectorAll('.content-section').forEach(section => {
                     section.classList.remove('active');
                 });
+                document.getElementById('clarificationSection').classList.remove('active');
                 return;
             }
 
-            const content = generateContent(productName);
+            const content = generateContent(productName, context);
             
             // Show Product Overview
             document.getElementById('overviewText').textContent = content.overview;
@@ -368,20 +1120,58 @@
             // Show AI Insight
             document.getElementById('insightText').textContent = content.insight;
             document.getElementById('aiInsight').classList.add('active');
+            
+            // Show Comparison Insight
+            const comparisonContainer = document.getElementById('comparisonText');
+            comparisonContainer.innerHTML = '';
+            content.comparisons.forEach(comparison => {
+                const item = document.createElement('div');
+                item.className = 'comparison-item';
+                const title = document.createElement('div');
+                title.className = 'comparison-title';
+                title.textContent = comparison.title;
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'comparison-content';
+                contentDiv.textContent = comparison.content;
+                item.appendChild(title);
+                item.appendChild(contentDiv);
+                comparisonContainer.appendChild(item);
+            });
+            document.getElementById('comparisonInsight').classList.add('active');
         }
 
         // Event listener for input
         const productInput = document.getElementById('productInput');
         
         productInput.addEventListener('input', function() {
-            displayProductInfo(this.value);
+            if (!this.value.trim()) {
+                document.getElementById('clarificationSection').classList.remove('active');
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+            }
         });
 
-        // Optional: Handle Enter key
+        // Handle Enter key - show questions
         productInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                displayProductInfo(this.value);
+            if (e.key === 'Enter' && this.value.trim()) {
+                e.preventDefault();
+                showClarificationQuestions(this.value);
             }
+        });
+
+        // Generate button - collect answers and show results
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            contextAnswers = collectContextAnswers();
+            document.getElementById('clarificationSection').classList.remove('active');
+            displayProductInfo(productInput.value, contextAnswers);
+        });
+
+        // Skip button - use defaults
+        document.getElementById('skipBtn').addEventListener('click', function() {
+            contextAnswers = {};
+            document.getElementById('clarificationSection').classList.remove('active');
+            displayProductInfo(productInput.value, {});
         });
     </script>
 </body>
