@@ -34,11 +34,18 @@
         }
 
         .input-section {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            position: relative;
         }
 
         input[type="text"] {
-            width: 100%;
+            flex: 1;
             padding: 15px;
             font-size: 16px;
             border: 2px solid #e0e0e0;
@@ -51,63 +58,711 @@
             border-color: #667eea;
         }
 
-        .content-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 8px;
+            background: white;
             border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
             display: none;
-            border-top: 3px solid #667eea;
         }
 
-        .content-section.active {
+        .autocomplete-dropdown.active {
             display: block;
         }
 
-        h2 {
-            color: #667eea;
-            margin-bottom: 15px;
+        .suggestion-card {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .suggestion-card:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .suggestion-card:last-child {
+            border-bottom: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .suggestion-card:hover {
+            background: #f8f9fa;
+            transform: translateX(4px);
+        }
+
+        .suggestion-icon {
+            font-size: 20px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f4ff;
+            border-radius: 6px;
+        }
+
+        .suggestion-text {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .category-section {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .category-section.active {
+            display: block;
+        }
+
+        .category-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .variants-section {
+            margin-top: 40px;
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .variants-section.active {
+            display: block;
+        }
+
+        .variants-section h3 {
+            color: #333;
+            margin-bottom: 24px;
             font-size: 20px;
             font-weight: 600;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .variants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .variant-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .variant-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .variant-card-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .variant-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .variant-card-image-placeholder {
+            font-size: 40px;
+            color: #9ca3af;
+        }
+
+        .variant-card-label {
+            padding: 12px;
+            text-align: center;
+            background: white;
+        }
+
+        .variant-card-label-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .variant-card-label-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .variant-card-tooltip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px;
+            font-size: 11px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .variant-card:hover .variant-card-tooltip {
+            opacity: 1;
+        }
+
+        .variants-group {
+            margin-bottom: 32px;
+        }
+
+        .variants-group-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .continue-btn {
+            display: block;
+            margin: 32px auto 0;
+            padding: 14px 32px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .continue-btn:hover {
+            background: #5568d3;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* What AI Often Misses Section */
+        .ai-misses-section {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 16px;
+            border: 2px solid #f59e0b;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+        }
+
+        .ai-misses-section h3 {
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ai-misses-section .section-subtitle {
+            text-align: center;
+            color: #78350f;
+            font-size: 14px;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .ai-misses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .ai-miss-card {
+            background: white;
+            border: 2px solid #fbbf24;
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .ai-miss-card:hover {
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+            border-color: #f59e0b;
+        }
+
+        .ai-miss-icon {
+            font-size: 24px;
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fef3c7;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .ai-miss-content {
+            flex: 1;
+        }
+
+        .ai-miss-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #78350f;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .ai-miss-explanation {
+            font-size: 13px;
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .ai-misses-section {
+                padding: 20px;
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+
+            .ai-misses-section h3 {
+                font-size: 18px;
+            }
+
+            .ai-misses-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .ai-miss-card {
+                padding: 12px;
+            }
+
+            .ai-miss-icon {
+                font-size: 20px;
+                min-width: 28px;
+                height: 28px;
+            }
+
+            .ai-miss-title {
+                font-size: 14px;
+            }
+
+            .ai-miss-explanation {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .category-card-image {
+                height: 120px;
+            }
+            
+            .category-card-content {
+                padding: 12px;
+            }
+            
+            .category-card-title {
+                font-size: 14px;
+            }
+            
+            .category-card-desc {
+                font-size: 12px;
+            }
+            
+            .category-card-image-placeholder {
+                font-size: 36px;
+            }
+            
+            .variants-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+            
+            .variant-card-image {
+                height: 120px;
+            }
+            
+            .variant-card-label {
+                padding: 10px;
+            }
+            
+            .variant-card-label-title {
+                font-size: 13px;
+            }
+            
+            .variant-card-label-subtitle {
+                font-size: 11px;
+            }
+            
+            .autocomplete-dropdown {
+                max-height: 300px;
+            }
+        }
+
+        .category-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .category-card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .category-card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .category-card-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .analyze-btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .analyze-btn:hover {
+            background: #5568d3;
+        }
+
+        .analyze-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .content-section {
+            margin-top: 20px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, margin-top 0.3s ease-out;
+        }
+
+        .content-section.active {
+            max-height: 5000px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .decision-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid;
+            margin-bottom: 20px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .decision-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .decision-card.info {
+            background: #f0f9ff;
+            border-left-color: #3b82f6;
+        }
+
+        .decision-card.safe {
+            background: #f0fdf4;
+            border-left-color: #22c55e;
+        }
+
+        /* Beginner summary animation */
+        #beginnerSummary {
+            animation-delay: 0.3s;
+        }
+
+        #beginnerSummary.active {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .decision-card.caution {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+
+        .decision-card.risk {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+
+        .decision-card.ai-insight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 6px solid #f59e0b;
+            border-top: 3px solid #f59e0b;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+            position: relative;
+        }
+
+        .decision-card.ai-insight::before {
+            content: "⚠️";
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 32px;
+            background: white;
+            padding: 5px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-blindspot {
+            background: white;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .ai-blindspot:hover {
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.15);
+            transform: translateX(4px);
+        }
+
+        .ai-blindspot:last-child {
+            margin-bottom: 0;
+        }
+
+        .ai-blindspot-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .ai-blindspot-reason {
+            color: #78350f;
+            font-size: 13px;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .ai-blindspot-consequence {
+            color: #451a03;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .card-title {
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .card-content {
+            color: #4b5563;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .card-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .card-bullets li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+            transition: all 0.2s ease;
+        }
+
+        .card-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Hover effect for comparison items */
+        #comparisonText .card-bullets li {
+            padding: 8px 12px;
+            margin-left: -12px;
+            border-radius: 4px;
+            cursor: default;
+        }
+
+        #comparisonText .card-bullets li:hover {
+            background: rgba(59, 130, 246, 0.08);
+            transform: translateX(4px);
+        }
+
+        .decision-card.info .card-bullets li::before {
+            color: #3b82f6;
+        }
+
+        .decision-card.safe .card-bullets li::before {
+            color: #22c55e;
+        }
+
+        .decision-card.caution .card-bullets li::before {
+            color: #f59e0b;
+        }
+
+        .decision-card.risk .card-bullets li::before {
+            color: #ef4444;
         }
 
         .description {
             line-height: 1.6;
-            color: #555;
+            color: #4b5563;
+            margin: 0;
+        }
+
+        .view-toggle-section {
+            margin-top: 20px;
             margin-bottom: 20px;
+            display: none;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        .attributes-list, .dimensions-list {
-            list-style: none;
-            padding: 0;
+        .view-toggle-section.active {
+            display: block;
         }
 
-        .attributes-list li, .dimensions-list li {
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-            line-height: 1.6;
-            color: #555;
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
 
-        .attributes-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
+        .view-toggle-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #6b7280;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-toggle-btn:hover {
+            border-color: #667eea;
             color: #667eea;
-            font-weight: bold;
-            font-size: 20px;
         }
 
-        .dimensions-list li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
+        .view-toggle-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
         }
+
 
         .steps {
             list-style: none;
@@ -140,94 +795,81 @@
             font-size: 14px;
         }
 
-        .insight {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            border-radius: 4px;
-            line-height: 1.6;
-            color: #856404;
-        }
-
-        .not-suitable {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(133, 100, 4, 0.3);
-        }
-
-        .not-suitable h3 {
-            color: #856404;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .not-suitable ul {
-            margin-left: 20px;
-            margin-top: 10px;
-        }
-
-        .not-suitable li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-
-        .comparison-insight {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            border-radius: 4px;
-            line-height: 1.6;
-            color: #0d47a1;
-        }
-
-        .comparison-item {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(33, 150, 243, 0.2);
-        }
-
-        .comparison-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .comparison-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1565c0;
-        }
-
-        .comparison-content {
-            font-size: 14px;
-        }
 
         .disclaimer {
             text-align: center;
             margin-top: 30px;
             padding: 15px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .disclaimer-subtitle {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 8px;
+            font-style: italic;
         }
 
         .clarification-section {
-            margin-top: 20px;
-            padding: 25px;
-            background: #f0f4ff;
+            margin-top: 15px;
+            padding: 0;
+            background: #f8f9fa;
             border-radius: 8px;
-            border: 2px solid #667eea;
-            display: none;
+            border: 1px solid #dee2e6;
+            overflow: hidden;
         }
 
-        .clarification-section.active {
-            display: block;
+        .clarification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            user-select: none;
+            background: #f8f9fa;
+            transition: background 0.3s;
         }
 
-        .clarification-section h3 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 18px;
+        .clarification-header:hover {
+            background: #e9ecef;
+        }
+
+        .clarification-header h3 {
+            color: #495057;
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .clarification-toggle {
+            color: #6c757d;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+
+        .clarification-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .clarification-note {
+            font-size: 11px;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .clarification-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 20px;
+        }
+
+        .clarification-content.expanded {
+            max-height: 2000px;
+            padding: 20px;
         }
 
         .question-group {
@@ -558,6 +1200,7 @@
             line-height: 1.5;
         }
 
+
         @media print {
             body {
                 background: white;
@@ -586,63 +1229,158 @@
         <h1>Product Intelligence MVP <span class="pro-badge" title="Pro features coming soon">Pro</span></h1>
         
         <div class="input-section">
-            <input 
-                type="text" 
-                id="productInput" 
-                placeholder="Enter a product name..."
-                autocomplete="off"
-            />
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="productInput" 
+                    placeholder="Search for a product (e.g. cricket bat, safety gloves, forklift)"
+                    autocomplete="off"
+                />
+                <button class="analyze-btn" id="analyzeBtn" style="display: none;">Analyse Product</button>
+            </div>
+            <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+        </div>
+
+        <div id="categorySection" class="category-section">
+            <h3>Choose the type</h3>
+            <div class="category-grid" id="categoryGrid"></div>
+        </div>
+
+        <div id="variantsSection" class="variants-section">
+            <h3>Common Variants & Options</h3>
+            <div id="variantsContainer"></div>
+            <button class="continue-btn" id="continueBtn" style="display: none;">Continue to Analysis</button>
         </div>
 
         <div id="clarificationSection" class="clarification-section">
-            <h3>Help us tailor the analysis</h3>
-            <div id="questionsContainer"></div>
-            <div class="clarification-actions">
-                <button class="btn btn-primary" id="generateBtn">Generate Analysis</button>
-                <button class="btn btn-secondary" id="skipBtn">Skip & Use Defaults</button>
+            <div class="clarification-header" id="clarificationHeader">
+                <div>
+                    <h3>Refine the analysis (optional)</h3>
+                    <div class="clarification-note">Optional — improves accuracy, not required</div>
+                </div>
+                <span class="clarification-toggle" id="clarificationToggle">▼</span>
+            </div>
+            <div class="clarification-content" id="clarificationContent">
+                <div id="questionsContainer"></div>
+            </div>
+        </div>
+
+        <div id="viewToggleSection" class="view-toggle-section">
+            <div class="view-toggle">
+                <button class="view-toggle-btn active" id="beginnerViewBtn">Beginner View</button>
+                <button class="view-toggle-btn" id="expertViewBtn">Expert View</button>
             </div>
         </div>
 
         <div id="productOverview" class="content-section">
-            <h2>Product Overview</h2>
-            <p class="description" id="overviewText"></p>
+            <div class="decision-card info">
+                <div class="card-header">
+                    <span class="card-icon">📋</span>
+                    <h2 class="card-title">1. Product Overview</h2>
+                </div>
+                <div class="card-content">
+                    <p class="description" id="overviewText"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="beginnerRecommendation" class="content-section" style="display: none;">
+            <div class="decision-card safe">
+                <div class="card-header">
+                    <span class="card-icon">✨</span>
+                    <h2 class="card-title">Beginner Recommendation</h2>
+                </div>
+                <div class="card-content">
+                    <p class="description" id="beginnerRecommendationText"></p>
+                </div>
+            </div>
         </div>
 
         <div id="keyAttributes" class="content-section">
-            <h2>Key Attributes / Specifications</h2>
-            <ul class="attributes-list" id="attributesList"></ul>
+            <div class="decision-card info">
+                <div class="card-header">
+                    <span class="card-icon">⚙️</span>
+                    <h2 class="card-title">2. Key Attributes / Specifications</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="card-bullets" id="attributesList"></ul>
+                </div>
+            </div>
         </div>
 
-        <div id="dimensionsVariants" class="content-section">
-            <h2>Dimensions / Variants</h2>
-            <ul class="dimensions-list" id="dimensionsList"></ul>
+        <div id="variantsOptions" class="content-section">
+            <div class="decision-card info">
+                <div class="card-header">
+                    <span class="card-icon">📦</span>
+                    <h2 class="card-title">3. Variants & Options</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="card-bullets" id="variantsList"></ul>
+                </div>
+            </div>
         </div>
 
-        <div id="howItsUsed" class="content-section">
-            <h2>How It's Used</h2>
-            <p style="color: #666; font-size: 14px; margin-bottom: 15px; font-style: italic;">Real-world use cases:</p>
-            <ol class="steps" id="stepsList"></ol>
+        <div id="realWorldUsage" class="content-section">
+            <div class="decision-card safe">
+                <div class="card-header">
+                    <span class="card-icon">✅</span>
+                    <h2 class="card-title">4. Real-World Usage Scenarios</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="card-bullets" id="usageScenariosList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="aiMissesSection" class="ai-misses-section" style="display: none;">
+            <h3>
+                <span>⚠️</span>
+                What Generic AI Often Misses
+            </h3>
+            <div class="section-subtitle">Decision intelligence, not product recommendations</div>
+            <div class="ai-misses-grid" id="aiMissesGrid"></div>
         </div>
 
         <div id="aiInsight" class="content-section">
-            <h2>AI Insight: What's Missing / Risky / Overlooked</h2>
-            <div class="insight" id="insightText">
-                <div id="insightMainText"></div>
-                <div class="not-suitable" id="notSuitableSection">
-                    <h3>Who This Product Is NOT Suitable For</h3>
-                    <ul id="notSuitableList"></ul>
+            <div class="decision-card ai-insight">
+                <div class="card-header">
+                    <span class="card-icon">⚠️</span>
+                    <h2 class="card-title">5. AI Insight: What Typical AI Misses</h2>
+                </div>
+                <div class="card-content" id="aiInsightBlindspots">
+                    <!-- Blind spots will be inserted here -->
                 </div>
             </div>
-            <div class="pro-note">
-                Pro version includes real-time AI gap analysis, regulatory compliance checks, and automated risk scoring.
+            <div class="decision-card risk">
+                <div class="card-header">
+                    <span class="card-icon">🚫</span>
+                    <h2 class="card-title">Who This Product Is NOT Suitable For</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="card-bullets" id="notSuitableList"></ul>
+                </div>
             </div>
         </div>
 
         <div id="comparisonInsight" class="content-section">
-            <h2>Comparison Insight</h2>
-            <div class="comparison-insight" id="comparisonText"></div>
-            <div class="pro-note">
-                Advanced comparisons with side-by-side analysis, competitor benchmarking, and detailed cost-benefit breakdowns available in Pro version.
+            <div class="decision-card info">
+                <div class="card-header">
+                    <span class="card-icon">⚖️</span>
+                    <h2 class="card-title">6. Comparison Insight</h2>
+                </div>
+                <div class="card-content" id="comparisonText"></div>
+            </div>
+        </div>
+
+        <div id="beginnerSummary" class="content-section">
+            <div class="decision-card safe">
+                <div class="card-header">
+                    <span class="card-icon">💡</span>
+                    <h2 class="card-title">7. Beginner Summary</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="card-bullets" id="beginnerSummaryText"></ul>
+                </div>
             </div>
         </div>
 
@@ -712,7 +1450,7 @@
     </div>
 
     <div class="disclaimer">
-        This is an early-stage MVP using illustrative data.
+        This is an early-stage Product Intelligence MVP using illustrative data. The platform demonstrates structured decision-support logic, not generic AI content generation.
     </div>
 
     <script>
@@ -722,6 +1460,382 @@
         // Store current product data for export
         let currentProductName = '';
         let currentContent = null;
+        let currentView = 'beginner'; // 'beginner' or 'expert'
+        let selectedProduct = null;
+
+        // Mock product database
+        const productDatabase = {
+            'cricket bat': {
+                name: 'Cricket Bat',
+                categories: [
+                    { 
+                        name: 'Leather Ball Bat', 
+                        icon: '🏏', 
+                        desc: 'Used in professional matches and competitive cricket', 
+                        imageUrl: 'https://via.placeholder.com/200x140/667eea/ffffff?text=Leather+Bat',
+                        variants: {
+                            'Handle Length': [
+                                { label: 'Short Handle', subtitle: '28-30 inches', imageUrl: 'https://via.placeholder.com/160x140/667eea/ffffff?text=Short', tooltip: 'Better control, lighter swing' },
+                                { label: 'Long Handle', subtitle: '32-34 inches', imageUrl: 'https://via.placeholder.com/160x140/8b5cf6/ffffff?text=Long', tooltip: 'More power, extended reach' }
+                            ],
+                            'Willow Type': [
+                                { label: 'English Willow', subtitle: 'Premium quality', imageUrl: 'https://via.placeholder.com/160x140/22c55e/ffffff?text=English', tooltip: 'Professional grade, superior performance' },
+                                { label: 'Kashmir Willow', subtitle: 'Budget friendly', imageUrl: 'https://via.placeholder.com/160x140/f59e0b/ffffff?text=Kashmir', tooltip: 'Affordable, good for practice' }
+                            ],
+                            'Weight Range': [
+                                { label: 'Light (1.1-1.2 kg)', subtitle: 'Quick swing', imageUrl: 'https://via.placeholder.com/160x140/3b82f6/ffffff?text=Light', tooltip: 'Easier to handle, faster strokes' },
+                                { label: 'Medium (1.2-1.3 kg)', subtitle: 'Balanced', imageUrl: 'https://via.placeholder.com/160x140/6366f1/ffffff?text=Medium', tooltip: 'Good balance of power and control' },
+                                { label: 'Heavy (1.3-1.4 kg)', subtitle: 'Maximum power', imageUrl: 'https://via.placeholder.com/160x140/ec4899/ffffff?text=Heavy', tooltip: 'More power, requires strength' }
+                            ]
+                        }
+                    },
+                    { 
+                        name: 'Tennis Ball Bat', 
+                        icon: '🏏', 
+                        desc: 'Designed for casual play and practice sessions', 
+                        imageUrl: 'https://via.placeholder.com/200x140/22c55e/ffffff?text=Tennis+Bat',
+                        variants: {
+                            'Size': [
+                                { label: 'Junior', subtitle: 'Ages 5-10', imageUrl: 'https://via.placeholder.com/160x140/22c55e/ffffff?text=Junior', tooltip: 'Smaller size for kids' },
+                                { label: 'Senior', subtitle: 'Standard size', imageUrl: 'https://via.placeholder.com/160x140/10b981/ffffff?text=Senior', tooltip: 'Full-size for adults' }
+                            ],
+                            'Material': [
+                                { label: 'Wood', subtitle: 'Traditional', imageUrl: 'https://via.placeholder.com/160x140/059669/ffffff?text=Wood', tooltip: 'Classic feel and durability' },
+                                { label: 'Composite', subtitle: 'Modern', imageUrl: 'https://via.placeholder.com/160x140/34d399/ffffff?text=Composite', tooltip: 'Lightweight and durable' }
+                            ]
+                        }
+                    },
+                    { 
+                        name: 'Plastic Ball Bat', 
+                        icon: '🏏', 
+                        desc: 'Lightweight option for beginners and children', 
+                        imageUrl: 'https://via.placeholder.com/200x140/f59e0b/ffffff?text=Plastic+Bat',
+                        variants: {
+                            'Size': [
+                                { label: 'Small', subtitle: 'Kids 5-8 years', imageUrl: 'https://via.placeholder.com/160x140/f59e0b/ffffff?text=Small', tooltip: 'Perfect for young beginners' },
+                                { label: 'Medium', subtitle: 'Kids 8-12 years', imageUrl: 'https://via.placeholder.com/160x140/fbbf24/ffffff?text=Medium', tooltip: 'Growing players' },
+                                { label: 'Large', subtitle: 'Teens & adults', imageUrl: 'https://via.placeholder.com/160x140/fcd34d/ffffff?text=Large', tooltip: 'Full-size lightweight option' }
+                            ]
+                        }
+                    },
+                    { 
+                        name: 'Training Bat', 
+                        icon: '🏏', 
+                        desc: 'Specialized bat for practice and skill development', 
+                        imageUrl: 'https://via.placeholder.com/200x140/8b5cf6/ffffff?text=Training+Bat',
+                        variants: {
+                            'Type': [
+                                { label: 'Heavy Bat', subtitle: 'Strength training', imageUrl: 'https://via.placeholder.com/160x140/8b5cf6/ffffff?text=Heavy', tooltip: 'Builds wrist and arm strength' },
+                                { label: 'Light Bat', subtitle: 'Speed training', imageUrl: 'https://via.placeholder.com/160x140/a78bfa/ffffff?text=Light', tooltip: 'Improves swing speed' },
+                                { label: 'Weighted Bat', subtitle: 'Conditioning', imageUrl: 'https://via.placeholder.com/160x140/c084fc/ffffff?text=Weighted', tooltip: 'Advanced training tool' }
+                            ]
+                        }
+                    }
+                ]
+            },
+            'cricket ball': {
+                name: 'Cricket Ball',
+                categories: [
+                    { name: 'Red Leather Ball', icon: '⚾', desc: 'Standard ball for test matches and first-class cricket' },
+                    { name: 'White Leather Ball', icon: '⚾', desc: 'Used in limited-overs and day-night matches' },
+                    { name: 'Tennis Ball', icon: '⚾', desc: 'Soft ball for casual play and practice' },
+                    { name: 'Plastic Ball', icon: '⚾', desc: 'Durable option for street cricket and beginners' }
+                ]
+            },
+            'cricket kit': {
+                name: 'Cricket Kit',
+                categories: [
+                    { name: 'Professional Kit', icon: '🎒', desc: 'Complete set for competitive cricket' },
+                    { name: 'Beginner Kit', icon: '🎒', desc: 'Essential equipment for new players' },
+                    { name: 'Practice Kit', icon: '🎒', desc: 'Basic kit for training sessions' }
+                ]
+            },
+            'safety gloves': {
+                name: 'Safety Gloves',
+                categories: [
+                    { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades' },
+                    { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals' },
+                    { name: 'Heat-Resistant Gloves', icon: '🧤', desc: 'Protection from high temperatures' },
+                    { name: 'General Purpose Gloves', icon: '🧤', desc: 'Multi-purpose protection for various tasks' }
+                ]
+            },
+            'forklift': {
+                name: 'Forklift',
+                categories: [
+                    { name: 'Electric Forklift', icon: '🚜', desc: 'Indoor use with zero emissions' },
+                    { name: 'Diesel Forklift', icon: '🚜', desc: 'Heavy-duty outdoor operations' },
+                    { name: 'LPG Forklift', icon: '🚜', desc: 'Versatile fuel option for various environments' },
+                    { name: 'Pallet Jack', icon: '🚜', desc: 'Manual handling for smaller loads' }
+                ]
+            },
+            'helmet': {
+                name: 'Helmet',
+                categories: [
+                    { name: 'Sports Helmet', icon: '⛑️', desc: 'Protection for cricket, cycling, and other sports' },
+                    { name: 'Safety Helmet', icon: '⛑️', desc: 'Industrial and construction safety' },
+                    { name: 'Motorcycle Helmet', icon: '⛑️', desc: 'Road safety for motorcyclists' }
+                ]
+            },
+            'racket': {
+                name: 'Racket',
+                categories: [
+                    { name: 'Tennis Racket', icon: '🎾', desc: 'For tennis court play' },
+                    { name: 'Badminton Racket', icon: '🏸', desc: 'Lightweight for badminton courts' },
+                    { name: 'Squash Racket', icon: '🎾', desc: 'Compact design for squash courts' }
+                ]
+            },
+            'laptop': {
+                name: 'Laptop',
+                categories: [
+                    { name: 'Business Laptop', icon: '💻', desc: 'Professional use and productivity' },
+                    { name: 'Gaming Laptop', icon: '💻', desc: 'High-performance for gaming' },
+                    { name: 'Student Laptop', icon: '💻', desc: 'Affordable option for education' }
+                ]
+            },
+            'bat': {
+                name: 'Cricket Bat',
+                categories: [
+                    { name: 'Leather Ball Bat', icon: '🏏', desc: 'Used in professional matches and competitive cricket' },
+                    { name: 'Tennis Ball Bat', icon: '🏏', desc: 'Designed for casual play and practice sessions' },
+                    { name: 'Plastic Ball Bat', icon: '🏏', desc: 'Lightweight option for beginners and children' }
+                ]
+            },
+            'gloves': {
+                name: 'Safety Gloves',
+                categories: [
+                    { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades' },
+                    { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals' },
+                    { name: 'Heat-Resistant Gloves', icon: '🧤', desc: 'Protection from high temperatures' }
+                ]
+            }
+        };
+
+        // Get product suggestions based on input
+        function getProductSuggestions(query) {
+            if (query.length < 2) return [];
+            
+            const lowerQuery = query.toLowerCase();
+            const suggestions = [];
+            
+            for (const [key, product] of Object.entries(productDatabase)) {
+                if (key.includes(lowerQuery) || product.name.toLowerCase().includes(lowerQuery)) {
+                    suggestions.push({
+                        key: key,
+                        name: product.name,
+                        icon: product.categories[0]?.icon || '📦'
+                    });
+                }
+            }
+            
+            // Also check individual words
+            const words = lowerQuery.split(' ');
+            words.forEach(word => {
+                if (word.length >= 2) {
+                    for (const [key, product] of Object.entries(productDatabase)) {
+                        if (key.includes(word) && !suggestions.find(s => s.key === key)) {
+                            suggestions.push({
+                                key: key,
+                                name: product.name,
+                                icon: product.categories[0]?.icon || '📦'
+                            });
+                        }
+                    }
+                }
+            });
+            
+            return suggestions.slice(0, 5);
+        }
+
+        // Show autocomplete suggestions
+        function showAutocompleteSuggestions(query) {
+            const dropdown = document.getElementById('autocompleteDropdown');
+            const suggestions = getProductSuggestions(query);
+            
+            if (suggestions.length === 0) {
+                dropdown.classList.remove('active');
+                return;
+            }
+            
+            dropdown.innerHTML = '';
+            suggestions.forEach(suggestion => {
+                const card = document.createElement('div');
+                card.className = 'suggestion-card';
+                card.innerHTML = `
+                    <div class="suggestion-icon">${suggestion.icon}</div>
+                    <div class="suggestion-text">${suggestion.name}</div>
+                `;
+                card.addEventListener('click', () => {
+                    selectProduct(suggestion.key);
+                });
+                dropdown.appendChild(card);
+            });
+            
+            dropdown.classList.add('active');
+        }
+
+        // Select a product and show categories
+        function selectProduct(productKey) {
+            const product = productDatabase[productKey];
+            if (!product) return;
+            
+            selectedProduct = product;
+            document.getElementById('productInput').value = product.name;
+            document.getElementById('autocompleteDropdown').classList.remove('active');
+            
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('viewToggleSection').classList.remove('active');
+            document.getElementById('exportSection').classList.remove('active');
+            document.getElementById('variantsSection').classList.remove('active');
+            
+            // Show category section
+            showCategorySection(product);
+        }
+
+        // Show category selection cards
+        function showCategorySection(product) {
+            const categorySection = document.getElementById('categorySection');
+            const categoryGrid = document.getElementById('categoryGrid');
+            
+            categoryGrid.innerHTML = '';
+            product.categories.forEach((category, index) => {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                
+                // Use image placeholder URL or icon
+                const imageUrl = category.imageUrl || null;
+                const imagePlaceholder = imageUrl 
+                    ? `<img src="${imageUrl}" alt="${category.name}" onerror="this.parentElement.innerHTML='<div class=\'category-card-image-placeholder\'>${category.icon}</div>'">`
+                    : `<div class="category-card-image-placeholder">${category.icon}</div>`;
+                
+                card.innerHTML = `
+                    <div class="category-card-image">
+                        ${imagePlaceholder}
+                    </div>
+                    <div class="category-card-content">
+                        <div class="category-card-title">${category.name}</div>
+                        <div class="category-card-desc">${category.desc}</div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    // Remove selection from all cards
+                    document.querySelectorAll('.category-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+                    // Add selection to clicked card
+                    card.classList.add('selected');
+                    
+                    // Show variants section after a brief delay
+                    setTimeout(() => {
+                        showVariantsSection(product, category);
+                    }, 300);
+                });
+                
+                categoryGrid.appendChild(card);
+            });
+            
+            categorySection.classList.add('active');
+        }
+
+        // Show variants section
+        function showVariantsSection(product, category) {
+            const variantsSection = document.getElementById('variantsSection');
+            const variantsContainer = document.getElementById('variantsContainer');
+            const continueBtn = document.getElementById('continueBtn');
+            
+            // Hide category section
+            document.getElementById('categorySection').classList.remove('active');
+            
+            // Clear previous variants
+            variantsContainer.innerHTML = '';
+            
+            // Check if category has variants
+            if (category.variants && Object.keys(category.variants).length > 0) {
+                // Create variant groups
+                Object.entries(category.variants).forEach(([groupName, variants]) => {
+                    const groupDiv = document.createElement('div');
+                    groupDiv.className = 'variants-group';
+                    
+                    const groupTitle = document.createElement('div');
+                    groupTitle.className = 'variants-group-title';
+                    groupTitle.textContent = groupName;
+                    groupDiv.appendChild(groupTitle);
+                    
+                    const variantsGrid = document.createElement('div');
+                    variantsGrid.className = 'variants-grid';
+                    
+                    variants.forEach(variant => {
+                        const card = document.createElement('div');
+                        card.className = 'variant-card';
+                        
+                        const imageUrl = variant.imageUrl || null;
+                        const imagePlaceholder = imageUrl 
+                            ? `<img src="${imageUrl}" alt="${variant.label}" onerror="this.parentElement.innerHTML='<div class=\'variant-card-image-placeholder\'>📦</div>'">`
+                            : `<div class="variant-card-image-placeholder">📦</div>`;
+                        
+                        card.innerHTML = `
+                            <div class="variant-card-image">
+                                ${imagePlaceholder}
+                                ${variant.tooltip ? `<div class="variant-card-tooltip">${variant.tooltip}</div>` : ''}
+                            </div>
+                            <div class="variant-card-label">
+                                <div class="variant-card-label-title">${variant.label}</div>
+                                ${variant.subtitle ? `<div class="variant-card-label-subtitle">${variant.subtitle}</div>` : ''}
+                            </div>
+                        `;
+                        
+                        variantsGrid.appendChild(card);
+                    });
+                    
+                    groupDiv.appendChild(variantsGrid);
+                    variantsContainer.appendChild(groupDiv);
+                });
+                
+                continueBtn.style.display = 'block';
+                continueBtn.onclick = () => {
+                    analyzeProductCategory(product.name, category.name);
+                };
+            } else {
+                // No variants, proceed directly to analysis
+                continueBtn.style.display = 'none';
+                setTimeout(() => {
+                    analyzeProductCategory(product.name, category.name);
+                }, 300);
+            }
+            
+            // Show variants section
+            variantsSection.classList.add('active');
+        }
+
+        // Analyze selected product category
+        function analyzeProductCategory(productName, categoryName) {
+            // Hide variants section
+            document.getElementById('variantsSection').classList.remove('active');
+            
+            // Use the full product name with category for analysis
+            const fullProductName = `${productName} - ${categoryName}`;
+            
+            // Collect optional context if section is expanded
+            const clarificationContent = document.getElementById('clarificationContent');
+            if (clarificationContent.classList.contains('expanded')) {
+                contextAnswers = collectContextAnswers();
+            } else {
+                contextAnswers = {};
+            }
+            
+            // Reset to beginner view
+            currentView = 'beginner';
+            const beginnerBtn = document.getElementById('beginnerViewBtn');
+            const expertBtn = document.getElementById('expertViewBtn');
+            if (beginnerBtn) beginnerBtn.classList.add('active');
+            if (expertBtn) expertBtn.classList.remove('active');
+            
+            // Display analysis
+            displayProductInfo(fullProductName, contextAnswers, 'beginner');
+        }
 
         // Generate questions based on product category
         function generateQuestions(categoryType, productName) {
@@ -843,62 +1957,6 @@
             return questions;
         }
 
-        // Show clarification questions
-        function showClarificationQuestions(productName) {
-            const nameLower = productName.toLowerCase().trim();
-            let categoryType = 'general';
-            
-            if (nameLower.match(/\b(ball|racket|bat|helmet|glove|shoe|sneaker|equipment|fitness|sport|athletic|gym|workout)\b/)) {
-                categoryType = 'sports';
-            } else if (nameLower.match(/\b(food|snack|cereal|beverage|drink|ingredient|organic|natural|nutrition|meal|recipe)\b/)) {
-                categoryType = 'food';
-            } else if (nameLower.match(/\b(phone|tablet|laptop|computer|device|electronic|tech|charger|cable|battery|screen|display|gadget)\b/)) {
-                categoryType = 'electronics';
-            } else if (nameLower.match(/\b(shirt|pants|dress|jacket|clothing|apparel|fabric|textile|garment|wear)\b/)) {
-                categoryType = 'clothing';
-            }
-
-            const questions = generateQuestions(categoryType, productName);
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
-
-            questions.forEach((q, index) => {
-                const group = document.createElement('div');
-                group.className = 'question-group';
-                
-                const label = document.createElement('label');
-                label.textContent = `${index + 1}. ${q.label}:`;
-                group.appendChild(label);
-
-                if (q.type === 'select') {
-                    const select = document.createElement('select');
-                    select.id = q.id;
-                    select.name = q.id;
-                    const defaultOption = document.createElement('option');
-                    defaultOption.value = '';
-                    defaultOption.textContent = '-- Select --';
-                    select.appendChild(defaultOption);
-                    q.options.forEach(opt => {
-                        const option = document.createElement('option');
-                        option.value = opt;
-                        option.textContent = opt;
-                        select.appendChild(option);
-                    });
-                    group.appendChild(select);
-                } else {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.id = q.id;
-                    input.name = q.id;
-                    input.placeholder = q.placeholder || '';
-                    group.appendChild(input);
-                }
-
-                container.appendChild(group);
-            });
-
-            document.getElementById('clarificationSection').classList.add('active');
-        }
 
         // Collect answers from clarification form
         function collectContextAnswers() {
@@ -1189,6 +2247,148 @@
             return industryExamples[categoryType] || industryExamples.general;
         }
 
+        // Generate AI Blind Spots - specific things AI misses
+        function generateAIBlindSpots(categoryType, context, industry, productName) {
+            const blindSpots = [];
+            
+            if (categoryType === 'sports') {
+                blindSpots.push({
+                    blindspot: 'proper sizing requirements and age-appropriate usage',
+                    why: 'AI systems focus on general product descriptions rather than individual fit and safety considerations',
+                    consequence: 'Users may select incorrectly sized equipment, leading to injury risk or poor performance'
+                });
+                blindSpots.push({
+                    blindspot: 'maintenance requirements for safety-critical components',
+                    why: 'AI descriptions emphasize features but rarely cover ongoing care needed for safety',
+                    consequence: 'Equipment may degrade unnoticed, creating hidden safety hazards during use'
+                });
+                blindSpots.push({
+                    blindspot: 'environmental conditions that affect performance or durability',
+                    why: 'AI systems don\'t account for real-world weather, storage, or usage environments',
+                    consequence: 'Products may fail prematurely or perform poorly in conditions they weren\'t designed for'
+                });
+                blindSpots.push({
+                    blindspot: 'impact forces and stress points that could lead to equipment failure',
+                    why: 'AI lacks understanding of physical mechanics and failure modes',
+                    consequence: 'Unexpected equipment failure during high-intensity use can cause serious injury'
+                });
+            } else if (categoryType === 'food') {
+                blindSpots.push({
+                    blindspot: 'allergen content and cross-contamination risks',
+                    why: 'AI systems often summarize ingredients without highlighting allergen implications',
+                    consequence: 'Consumers with allergies may experience reactions due to incomplete information'
+                });
+                blindSpots.push({
+                    blindspot: 'proper storage conditions to prevent spoilage or contamination',
+                    why: 'AI descriptions focus on product features rather than practical storage requirements',
+                    consequence: 'Food may spoil faster than expected or become unsafe to consume'
+                });
+                blindSpots.push({
+                    blindspot: 'expiration dates and shelf-life considerations',
+                    why: 'AI systems don\'t emphasize time-sensitive safety and quality factors',
+                    consequence: 'Consumers may use expired products, risking foodborne illness or poor quality'
+                });
+                blindSpots.push({
+                    blindspot: 'signs of spoilage or contamination',
+                    why: 'AI descriptions don\'t teach users how to recognize when products are no longer safe',
+                    consequence: 'People may consume unsafe food because they can\'t identify warning signs'
+                });
+            } else if (categoryType === 'electronics') {
+                blindSpots.push({
+                    blindspot: 'compatibility constraints with existing devices or systems',
+                    why: 'AI systems describe features in isolation without considering integration requirements',
+                    consequence: 'Users may purchase devices that don\'t work with their existing setup, wasting money'
+                });
+                blindSpots.push({
+                    blindspot: 'power and charging requirements that affect daily usage',
+                    why: 'AI focuses on features but not practical power management needs',
+                    consequence: 'Devices may not meet usage demands, requiring frequent charging or power adapters'
+                });
+                blindSpots.push({
+                    blindspot: 'environmental operating conditions and temperature limits',
+                    why: 'AI descriptions don\'t emphasize environmental constraints that affect performance',
+                    consequence: 'Devices may malfunction or fail when used outside recommended conditions'
+                });
+                blindSpots.push({
+                    blindspot: 'battery safety considerations and degradation over time',
+                    why: 'AI systems don\'t explain long-term battery behavior and safety implications',
+                    consequence: 'Batteries may degrade unexpectedly or pose safety risks if not properly maintained'
+                });
+            } else if (categoryType === 'clothing') {
+                blindSpots.push({
+                    blindspot: 'proper sizing and fit guidance for different body types',
+                    why: 'AI systems provide generic size information without accounting for fit variations',
+                    consequence: 'Clothing may not fit properly, leading to discomfort, poor appearance, or returns'
+                });
+                blindSpots.push({
+                    blindspot: 'care instructions that preserve quality and appearance',
+                    why: 'AI descriptions focus on style but not maintenance requirements',
+                    consequence: 'Clothing may shrink, fade, or deteriorate faster than expected with improper care'
+                });
+                blindSpots.push({
+                    blindspot: 'material-specific limitations and durability expectations',
+                    why: 'AI systems don\'t explain how different materials behave over time',
+                    consequence: 'Users may have unrealistic expectations about how long items will last'
+                });
+                blindSpots.push({
+                    blindspot: 'suitability for different occasions or environments',
+                    why: 'AI focuses on style descriptions rather than practical usage contexts',
+                    consequence: 'Clothing may be inappropriate for intended occasions or environments'
+                });
+            } else {
+                blindSpots.push({
+                    blindspot: 'usage limits and environmental conditions',
+                    why: 'AI systems describe capabilities without explaining constraints',
+                    consequence: 'Products may fail or perform poorly when used beyond their intended limits'
+                });
+                blindSpots.push({
+                    blindspot: 'storage requirements and handling procedures',
+                    why: 'AI focuses on features rather than practical maintenance and storage needs',
+                    consequence: 'Products may degrade or become damaged due to improper storage or handling'
+                });
+                blindSpots.push({
+                    blindspot: 'compatibility requirements with other products or systems',
+                    why: 'AI descriptions don\'t emphasize integration and compatibility needs',
+                    consequence: 'Products may not work as expected when integrated with existing systems'
+                });
+                blindSpots.push({
+                    blindspot: 'maintenance needs and signs of wear or deterioration',
+                    why: 'AI systems don\'t explain ongoing care requirements or warning signs',
+                    consequence: 'Products may fail unexpectedly or require costly repairs due to lack of maintenance'
+                });
+            }
+            
+            // Add industry-specific blind spots
+            if (industry === 'E-commerce') {
+                blindSpots.push({
+                    blindspot: 'return rates and customer satisfaction factors',
+                    why: 'AI systems don\'t analyze real customer feedback and return patterns',
+                    consequence: 'Sellers may stock products with high return rates, impacting profitability'
+                });
+            } else if (industry === 'Warehouse / Logistics') {
+                blindSpots.push({
+                    blindspot: 'operational efficiency and handling requirements',
+                    why: 'AI systems don\'t consider warehouse workflows and logistics constraints',
+                    consequence: 'Products may slow down operations or require expensive handling equipment'
+                });
+            } else if (industry === 'Manufacturing / Industrial') {
+                blindSpots.push({
+                    blindspot: 'production line integration and downtime risks',
+                    why: 'AI systems don\'t evaluate impact on manufacturing processes',
+                    consequence: 'Products may cause production delays or require expensive modifications'
+                });
+            } else if (industry === 'Technology / SaaS') {
+                blindSpots.push({
+                    blindspot: 'integration complexity and scalability limitations',
+                    why: 'AI systems don\'t assess technical integration challenges',
+                    consequence: 'Products may require extensive customization or fail to scale with business growth'
+                });
+            }
+            
+            // Return 3-5 blind spots
+            return blindSpots.slice(0, 5);
+        }
+
         // Generate "Who This Product Is NOT Suitable For" content
         function generateNotSuitableContent(categoryType, context, industry, productName) {
             const notSuitable = [];
@@ -1348,28 +2548,68 @@
             return comparisons;
         }
 
+        // Generate Beginner Summary - 5-line simplified takeaway
+        function generateBeginnerSummary(productName, categoryType, context, industry, overview, attributes, comparisons) {
+            const summary = [];
+            
+            // Line 1: What it is (simple)
+            summary.push(`This is ${productName} - a ${categoryType === 'sports' ? 'sports item' : categoryType === 'food' ? 'food product' : categoryType === 'electronics' ? 'device' : categoryType === 'clothing' ? 'piece of clothing' : 'product'} that does its job well.`);
+            
+            // Line 2: Key thing to know
+            if (categoryType === 'sports') {
+                summary.push(`Make sure it fits you properly and matches your skill level to stay safe.`);
+            } else if (categoryType === 'food') {
+                summary.push(`Check ingredients for allergies and store it correctly to keep it fresh.`);
+            } else if (categoryType === 'electronics') {
+                summary.push(`Make sure it works with your other devices and you have the right power setup.`);
+            } else if (categoryType === 'clothing') {
+                summary.push(`Pick the right size and follow care instructions to make it last.`);
+            } else {
+                summary.push(`Read the basics about how to use it and what it needs to work properly.`);
+            }
+            
+            // Line 3: Main trade-off
+            if (context.budget && context.budget.includes('Cost-first')) {
+                summary.push(`Budget options save money now but may need replacing sooner than premium versions.`);
+            } else if (context.budget && context.budget.includes('Quality-first')) {
+                summary.push(`Premium options cost more upfront but usually last longer and work better.`);
+            } else {
+                summary.push(`You can find options at different price points - cheaper ones work fine for basic use.`);
+            }
+            
+            // Line 4: What AI often misses
+            if (categoryType === 'sports' || categoryType === 'food') {
+                summary.push(`AI descriptions often skip safety details - always check sizing, storage, or handling requirements yourself.`);
+            } else {
+                summary.push(`AI descriptions often miss important details like compatibility, maintenance needs, or usage limits.`);
+            }
+            
+            // Line 5: Bottom line
+            summary.push(`Bottom line: This product works well for most people, but make sure it fits your specific needs and situation.`);
+            
+            return summary;
+        }
+
         // Generate product-agnostic content based on product name and context
         function generateContent(productName, context = {}) {
             const name = productName.trim();
             const nameLower = name.toLowerCase();
             
-            // Product Overview - tailored based on context and industry
+            // Product Overview - plain-language summary for beginners
             const industry = context.industry || 'General / Consumer';
             const terminology = getIndustryTerminology(industry);
             let userContext = context.intendedUser || 'general users';
             let envContext = context.environment || 'typical environments';
             let budgetContext = context.budget || 'standard considerations';
             
-            let overview = `${name} is a product designed for ${userContext.includes('Individual') ? 'personal' : userContext.includes('Business') ? 'commercial' : 'general'} use`;
-            if (industry !== 'General / Consumer') {
-                overview += ` in ${industry.toLowerCase()} contexts`;
-            }
-            overview += `. `;
-            overview += `It serves its intended purpose within its category and is commonly found in ${envContext.toLowerCase()}. `;
-            overview += `This product represents a ${budgetContext.includes('Cost-first') ? 'budget-conscious' : budgetContext.includes('Quality-first') ? 'premium' : 'standard'} offering in its market segment, designed to meet ${terminology.considerations}.`;
+            // Plain language overview for beginners
+            let overview = `This is ${name}, a product you can use for ${userContext.includes('Individual') ? 'personal' : userContext.includes('Business') ? 'business' : 'everyday'} needs. `;
+            overview += `It's designed to work well in ${envContext.toLowerCase()}. `;
+            overview += `You'll find it's a ${budgetContext.includes('Cost-first') ? 'budget-friendly' : budgetContext.includes('Quality-first') ? 'higher-quality' : 'standard'} option that fits most people's needs. `;
+            overview += `Think of it as a practical choice that does what it's supposed to do without being too complicated.`;
             
             if (context.constraints) {
-                overview += ` Specific considerations include ${context.constraints.toLowerCase()}.`;
+                overview += ` Keep in mind: ${context.constraints.toLowerCase()}.`;
             }
             
             // Detect product category and determine category type
@@ -1525,6 +2765,12 @@
             // Who This Product Is NOT Suitable For
             const notSuitable = generateNotSuitableContent(categoryType, context, industry, name);
             
+            // AI Blind Spots - specific things AI misses
+            const aiBlindSpots = generateAIBlindSpots(categoryType, context, industry, name);
+            
+            // Beginner Summary - 5-line simplified takeaway
+            const beginnerSummary = generateBeginnerSummary(name, categoryType, context, industry, overview, attributes, comparisons);
+            
             return {
                 overview: overview,
                 attributes: attributes,
@@ -1532,19 +2778,257 @@
                 steps: steps,
                 insight: insight,
                 comparisons: comparisons,
-                notSuitable: notSuitable
+                notSuitable: notSuitable,
+                aiBlindSpots: aiBlindSpots,
+                beginnerSummary: beginnerSummary
             };
         }
 
+        // Format content for beginner view
+        function formatBeginnerView(content, productName, categoryType) {
+            const beginner = {
+                overview: content.overview, // Already simplified
+                attributes: content.attributes.map(attr => {
+                    // Simplify technical language
+                    return attr.replace(/Constructed from materials such as/g, 'Made from')
+                               .replace(/Designed with considerations for/g, 'Good for')
+                               .replace(/Available in standard sizing options/g, 'Comes in different sizes');
+                }),
+                dimensions: content.dimensions.map(dim => {
+                    return dim.replace(/typically include/g, 'include')
+                              .replace(/may be available/g, 'available')
+                              .replace(/specifications vary/g, 'options vary');
+                }),
+                steps: content.steps.map(step => {
+                    return step.replace(/Employed in/g, 'Used in')
+                               .replace(/Utilized for/g, 'Good for')
+                               .replace(/Applied in/g, 'Used in');
+                }),
+                aiBlindSpots: content.aiBlindSpots.map(bs => ({
+                    blindspot: bs.blindspot.replace(/proper sizing requirements/g, 'getting the right size')
+                                           .replace(/maintenance requirements/g, 'taking care of it'),
+                    why: bs.why.replace(/AI systems focus on/g, 'AI focuses on')
+                               .replace(/AI descriptions emphasize/g, 'AI talks about'),
+                    consequence: bs.consequence.replace(/Users may/g, 'You might')
+                                               .replace(/Equipment may/g, 'It might')
+                                               .replace(/Products may/g, 'It might')
+                })),
+                notSuitable: content.notSuitable.slice(0, 3).map(item => {
+                    return item.replace(/Users who require/g, 'Not for people who need')
+                                .replace(/Environments with/g, 'Not for places with')
+                                .replace(/Individuals with/g, 'Not for people with');
+                }),
+                comparisons: content.comparisons.slice(0, 2).map(comp => ({
+                    title: comp.title.replace(/Budget vs Premium/g, 'Cheap vs Expensive'),
+                    content: comp.content.replace(/Cost-effective options/g, 'Cheaper options')
+                                         .replace(/Premium variants/g, 'Expensive versions')
+                                         .replace(/initial cost/g, 'price')
+                })),
+                beginnerSummary: content.beginnerSummary
+            };
+            return beginner;
+        }
+
+        // Format content for expert view
+        function formatExpertView(content, productName, categoryType, context, industry) {
+            const expert = {
+                overview: content.overview + (industry !== 'General / Consumer' ? ` For ${industry} operations, consider scalability, compliance requirements, and operational efficiency.` : ''),
+                attributes: [...content.attributes, 
+                    'Technical specifications and performance metrics',
+                    'Material composition and construction details',
+                    'Compatibility and integration requirements',
+                    'Maintenance schedules and service intervals',
+                    'Performance benchmarks and limitations'
+                ],
+                dimensions: [...content.dimensions,
+                    'Precise measurements and tolerances',
+                    'Weight distribution and balance specifications',
+                    'Compatibility with standard accessories or components',
+                    'Custom configuration options and variants'
+                ],
+                steps: content.steps.map(step => step + ' (Technical considerations: performance metrics, efficiency ratings, and operational parameters.)'),
+                aiBlindSpots: [
+                    ...content.aiBlindSpots,
+                    {
+                        blindspot: 'technical specifications and performance trade-offs',
+                        why: 'AI systems provide generic descriptions without detailed technical analysis',
+                        consequence: 'Users may select products with incompatible specifications or performance limitations'
+                    },
+                    {
+                        blindspot: 'maintenance requirements and total cost of ownership',
+                        why: 'AI focuses on initial purchase rather than long-term operational costs',
+                        consequence: 'Hidden costs from maintenance, replacement parts, and service intervals may significantly exceed initial price'
+                    },
+                    {
+                        blindspot: 'performance degradation and lifespan under specific conditions',
+                        why: 'AI descriptions assume ideal conditions without addressing real-world usage patterns',
+                        consequence: 'Products may fail prematurely or underperform in actual operating environments'
+                    }
+                ],
+                notSuitable: [
+                    ...content.notSuitable,
+                    'Applications requiring specific technical certifications or compliance standards',
+                    'High-performance environments where specifications do not meet requirements',
+                    'Systems requiring precise integration with existing technical infrastructure',
+                    'Operations with strict performance benchmarks that the product cannot achieve'
+                ],
+                comparisons: [
+                    ...content.comparisons,
+                    {
+                        title: 'Performance vs Cost Trade-offs',
+                        content: `Evaluate total cost of ownership including training, maintenance, and downtime. Standard options may require more staff time but lower upfront costs. Enterprise solutions offer better efficiency but require significant investment and change management.`
+                    },
+                    {
+                        title: 'Compliance and Risk Considerations',
+                        content: `Standard products may meet basic requirements but lack certifications needed for regulated industries. Premium options often include compliance documentation, audit trails, and regulatory support but at higher cost. Assess your specific compliance needs before selecting.`
+                    }
+                ],
+                beginnerSummary: [
+                    content.beginnerSummary[0],
+                    `For business use, evaluate operational impact, compliance requirements, and scalability needs.`,
+                    `Consider total cost of ownership including training, maintenance, and potential downtime.`,
+                    `Assess vendor support quality, warranty terms, and supply chain reliability.`,
+                    `Bottom line: Ensure the product aligns with your business operations, compliance needs, and growth plans.`
+                ]
+            };
+            return business;
+        }
+
         // Display product information
-        function displayProductInfo(productName, context = {}) {
+        // Generate AI misses data based on product category
+        function generateAIMisses(productName, categoryType) {
+            const nameLower = productName.toLowerCase();
+            const misses = [];
+            
+            // Cricket Bat specific misses
+            if (nameLower.includes('cricket bat') || nameLower.includes('bat')) {
+                misses.push({
+                    icon: '📏',
+                    title: 'Wrong bat size for player height',
+                    explanation: 'Generic AI doesn\'t explain that bat length should match player height. Too long causes poor control, too short limits reach.'
+                });
+                misses.push({
+                    icon: '⚖️',
+                    title: 'Weight causing wrist injury',
+                    explanation: 'AI descriptions rarely mention that heavy bats (1.3kg+) can cause wrist strain for players under 16 or those with weaker wrists.'
+                });
+                misses.push({
+                    icon: '🏏',
+                    title: 'Using tennis bat for leather ball',
+                    explanation: 'Most AI doesn\'t warn that tennis ball bats lack the durability needed for leather balls, leading to quick damage and safety risks.'
+                });
+                misses.push({
+                    icon: '💧',
+                    title: 'Storage and moisture damage',
+                    explanation: 'AI explanations often skip that willow bats must be stored in dry conditions. Moisture causes warping and reduces performance significantly.'
+                });
+            }
+            // Safety Gloves
+            else if (nameLower.includes('glove') || nameLower.includes('safety')) {
+                misses.push({
+                    icon: '✋',
+                    title: 'Wrong glove size reduces protection',
+                    explanation: 'AI doesn\'t emphasize that loose gloves can catch on machinery, while tight gloves reduce dexterity and cause fatigue.'
+                });
+                misses.push({
+                    icon: '🧪',
+                    title: 'Material compatibility with chemicals',
+                    explanation: 'Generic AI often misses that different glove materials react differently to specific chemicals, causing degradation or failure.'
+                });
+                misses.push({
+                    icon: '⏱️',
+                    title: 'Replacement frequency overlooked',
+                    explanation: 'AI descriptions rarely mention that gloves degrade over time even without visible damage, requiring regular replacement for safety.'
+                });
+            }
+            // Forklift
+            else if (nameLower.includes('forklift')) {
+                misses.push({
+                    icon: '🔋',
+                    title: 'Battery capacity vs shift length',
+                    explanation: 'AI doesn\'t explain that electric forklifts need battery capacity matching shift duration, or you\'ll face mid-shift downtime.'
+                });
+                misses.push({
+                    icon: '🏗️',
+                    title: 'Floor load capacity requirements',
+                    explanation: 'Most AI misses that warehouse floors must support forklift weight plus load. Weak floors cause structural damage over time.'
+                });
+                misses.push({
+                    icon: '🌡️',
+                    title: 'Indoor vs outdoor operation limits',
+                    explanation: 'AI rarely clarifies that electric forklifts are indoor-only, while diesel/LPG models have ventilation requirements for indoor use.'
+                });
+            }
+            // General/Default
+            else {
+                misses.push({
+                    icon: '📐',
+                    title: 'Size and fit considerations',
+                    explanation: 'Generic AI often provides dimensions but doesn\'t explain how improper sizing affects performance, safety, or usability.'
+                });
+                misses.push({
+                    icon: '⚙️',
+                    title: 'Maintenance requirements',
+                    explanation: 'AI descriptions frequently skip ongoing maintenance needs, replacement parts, or service intervals that impact long-term costs.'
+                });
+                misses.push({
+                    icon: '🌍',
+                    title: 'Environmental compatibility',
+                    explanation: 'Most AI doesn\'t mention how temperature, humidity, or environmental conditions affect product performance or lifespan.'
+                });
+                misses.push({
+                    icon: '👥',
+                    title: 'User skill level requirements',
+                    explanation: 'AI explanations often miss that some products require specific training or experience to use safely and effectively.'
+                });
+            }
+            
+            return misses;
+        }
+
+        // Display AI misses section
+        function displayAIMisses(productName, categoryType) {
+            const aiMissesSection = document.getElementById('aiMissesSection');
+            const aiMissesGrid = document.getElementById('aiMissesGrid');
+            
+            if (!aiMissesSection || !aiMissesGrid) return;
+            
+            const misses = generateAIMisses(productName, categoryType);
+            
+            if (misses.length === 0) {
+                aiMissesSection.style.display = 'none';
+                return;
+            }
+            
+            aiMissesGrid.innerHTML = '';
+            
+            misses.forEach(miss => {
+                const card = document.createElement('div');
+                card.className = 'ai-miss-card';
+                card.innerHTML = `
+                    <div class="ai-miss-icon">${miss.icon}</div>
+                    <div class="ai-miss-content">
+                        <div class="ai-miss-title">${miss.title}</div>
+                        <div class="ai-miss-explanation">${miss.explanation}</div>
+                    </div>
+                `;
+                aiMissesGrid.appendChild(card);
+            });
+            
+            aiMissesSection.style.display = 'block';
+        }
+
+        function displayProductInfo(productName, context = {}, view = 'beginner') {
             if (!productName.trim()) {
                 // Hide all sections if input is empty
                 document.querySelectorAll('.content-section').forEach(section => {
                     section.classList.remove('active');
                 });
+                document.getElementById('viewToggleSection').classList.remove('active');
                 document.getElementById('clarificationSection').classList.remove('active');
                 document.getElementById('exportSection').classList.remove('active');
+                const aiMissesSection = document.getElementById('aiMissesSection');
+                if (aiMissesSection) aiMissesSection.style.display = 'none';
                 currentProductName = '';
                 currentContent = null;
                 return;
@@ -1555,72 +3039,154 @@
             // Store for export
             currentProductName = productName;
             currentContent = content;
+            currentView = view;
+            
+            // Format content based on view
+            const nameLower = productName.toLowerCase();
+            let categoryType = 'general';
+            if (nameLower.match(/\b(ball|racket|bat|helmet|glove|shoe|sneaker|equipment|fitness|sport|athletic|gym|workout)\b/)) {
+                categoryType = 'sports';
+            } else if (nameLower.match(/\b(food|snack|cereal|beverage|drink|ingredient|organic|natural|nutrition|meal|recipe)\b/)) {
+                categoryType = 'food';
+            } else if (nameLower.match(/\b(phone|tablet|laptop|computer|device|electronic|tech|charger|cable|battery|screen|display|gadget)\b/)) {
+                categoryType = 'electronics';
+            } else if (nameLower.match(/\b(shirt|pants|dress|jacket|clothing|apparel|fabric|textile|garment|wear)\b/)) {
+                categoryType = 'clothing';
+            }
+            
+            // Show "What Generic AI Often Misses" section FIRST (before other content)
+            displayAIMisses(productName, categoryType);
+            
+            // Show view toggle
+            document.getElementById('viewToggleSection').classList.add('active');
+            
+            const displayContent = view === 'beginner' 
+                ? formatBeginnerView(content, productName, categoryType)
+                : formatExpertView(content, productName, categoryType, context, context.industry || 'General / Consumer');
             
             // Show Product Overview
-            document.getElementById('overviewText').textContent = content.overview;
-            document.getElementById('productOverview').classList.add('active');
+            document.getElementById('overviewText').textContent = displayContent.overview;
+            setTimeout(() => {
+                document.getElementById('productOverview').classList.add('active');
+            }, 50);
+            
+            // Show Beginner Recommendation (only in Beginner View)
+            const beginnerRecommendationSection = document.getElementById('beginnerRecommendation');
+            if (view === 'beginner' && displayContent.beginnerRecommendation) {
+                document.getElementById('beginnerRecommendationText').textContent = displayContent.beginnerRecommendation;
+                beginnerRecommendationSection.style.display = 'block';
+                setTimeout(() => {
+                    beginnerRecommendationSection.classList.add('active');
+                }, 75);
+            } else {
+                beginnerRecommendationSection.style.display = 'none';
+                beginnerRecommendationSection.classList.remove('active');
+            }
             
             // Show Key Attributes / Specifications
             const attributesList = document.getElementById('attributesList');
             attributesList.innerHTML = '';
-            content.attributes.forEach(attr => {
+            displayContent.attributes.forEach(attr => {
                 const li = document.createElement('li');
                 li.textContent = attr;
                 attributesList.appendChild(li);
             });
-            document.getElementById('keyAttributes').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('keyAttributes').classList.add('active');
+            }, 100);
             
-            // Show Dimensions / Variants
-            const dimensionsList = document.getElementById('dimensionsList');
-            dimensionsList.innerHTML = '';
-            content.dimensions.forEach(dim => {
+            // Show Variants & Options
+            const variantsList = document.getElementById('variantsList');
+            variantsList.innerHTML = '';
+            displayContent.dimensions.forEach(dim => {
                 const li = document.createElement('li');
                 li.textContent = dim;
-                dimensionsList.appendChild(li);
+                variantsList.appendChild(li);
             });
-            document.getElementById('dimensionsVariants').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('variantsOptions').classList.add('active');
+            }, 150);
             
-            // Show How It's Used
-            const stepsList = document.getElementById('stepsList');
-            stepsList.innerHTML = '';
-            content.steps.forEach(step => {
+            // Show Real-World Usage Scenarios
+            const usageScenariosList = document.getElementById('usageScenariosList');
+            usageScenariosList.innerHTML = '';
+            displayContent.steps.forEach(step => {
                 const li = document.createElement('li');
                 li.textContent = step;
-                stepsList.appendChild(li);
+                usageScenariosList.appendChild(li);
             });
-            document.getElementById('howItsUsed').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('realWorldUsage').classList.add('active');
+            }, 200);
             
-            // Show AI Insight
-            document.getElementById('insightMainText').textContent = content.insight;
+            // Show AI Insight: What Typical AI Misses (Blind Spots)
+            const aiInsightContainer = document.getElementById('aiInsightBlindspots');
+            aiInsightContainer.innerHTML = '';
+            
+            const blindSpots = displayContent.aiBlindSpots || content.aiBlindSpots || [];
+            blindSpots.forEach(blindspot => {
+                const blindspotDiv = document.createElement('div');
+                blindspotDiv.className = 'ai-blindspot';
+                
+                const title = document.createElement('div');
+                title.className = 'ai-blindspot-title';
+                title.textContent = `Most AI descriptions ignore ${blindspot.blindspot}.`;
+                
+                const reason = document.createElement('div');
+                reason.className = 'ai-blindspot-reason';
+                reason.textContent = `Why: ${blindspot.why}`;
+                
+                const consequence = document.createElement('div');
+                consequence.className = 'ai-blindspot-consequence';
+                consequence.textContent = `In real usage, this causes ${blindspot.consequence}`;
+                
+                blindspotDiv.appendChild(title);
+                blindspotDiv.appendChild(reason);
+                blindspotDiv.appendChild(consequence);
+                aiInsightContainer.appendChild(blindspotDiv);
+            });
             
             // Show "Who This Product Is NOT Suitable For"
             const notSuitableList = document.getElementById('notSuitableList');
             notSuitableList.innerHTML = '';
-            content.notSuitable.forEach(item => {
+            displayContent.notSuitable.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = item;
                 notSuitableList.appendChild(li);
             });
             
-            document.getElementById('aiInsight').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('aiInsight').classList.add('active');
+            }, 250);
             
-            // Show Comparison Insight
+            // Show Comparison Insight (as bullets)
             const comparisonContainer = document.getElementById('comparisonText');
             comparisonContainer.innerHTML = '';
-            content.comparisons.forEach(comparison => {
-                const item = document.createElement('div');
-                item.className = 'comparison-item';
-                const title = document.createElement('div');
-                title.className = 'comparison-title';
-                title.textContent = comparison.title;
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'comparison-content';
-                contentDiv.textContent = comparison.content;
-                item.appendChild(title);
-                item.appendChild(contentDiv);
-                comparisonContainer.appendChild(item);
+            const comparisonList = document.createElement('ul');
+            comparisonList.className = 'card-bullets';
+            displayContent.comparisons.forEach(comparison => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${comparison.title}:</strong> ${comparison.content}`;
+                comparisonList.appendChild(li);
             });
-            document.getElementById('comparisonInsight').classList.add('active');
+            comparisonContainer.appendChild(comparisonList);
+            setTimeout(() => {
+                document.getElementById('comparisonInsight').classList.add('active');
+            }, 300);
+            
+            // Show Beginner Summary (with delay for soft animation)
+            const beginnerSummaryContainer = document.getElementById('beginnerSummaryText');
+            beginnerSummaryContainer.innerHTML = '';
+            displayContent.beginnerSummary.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                beginnerSummaryContainer.appendChild(li);
+            });
+            
+            // Add beginner summary last with slight delay for soft animation
+            setTimeout(() => {
+                document.getElementById('beginnerSummary').classList.add('active');
+            }, 400);
             
             // Show export section
             document.getElementById('exportSection').classList.add('active');
@@ -1644,24 +3210,32 @@
             });
             text += `\n`;
             
-            text += `3. DIMENSIONS / VARIANTS\n`;
+            text += `3. VARIANTS & OPTIONS\n`;
             text += `${'-'.repeat(60)}\n`;
             content.dimensions.forEach((dim, index) => {
                 text += `${index + 1}. ${dim}\n`;
             });
             text += `\n`;
             
-            text += `4. HOW IT'S USED\n`;
+            text += `4. REAL-WORLD USAGE SCENARIOS\n`;
             text += `${'-'.repeat(60)}\n`;
-            text += `Real-world use cases:\n`;
             content.steps.forEach((step, index) => {
                 text += `${index + 1}. ${step}\n`;
             });
             text += `\n`;
             
-            text += `5. AI INSIGHT: WHAT'S MISSING / RISKY / OVERLOOKED\n`;
+            text += `5. AI INSIGHT: WHAT TYPICAL AI MISSES\n`;
             text += `${'-'.repeat(60)}\n`;
-            text += `${content.insight}\n\n`;
+            if (content.aiBlindSpots && content.aiBlindSpots.length > 0) {
+                content.aiBlindSpots.forEach((blindspot, index) => {
+                    text += `\n${index + 1}. Most AI descriptions ignore ${blindspot.blindspot}.\n`;
+                    text += `   Why: ${blindspot.why}\n`;
+                    text += `   In real usage, this causes ${blindspot.consequence}\n`;
+                });
+            } else {
+                text += `${content.insight}\n`;
+            }
+            text += `\n`;
             
             text += `WHO THIS PRODUCT IS NOT SUITABLE FOR\n`;
             text += `${'-'.repeat(60)}\n`;
@@ -1677,8 +3251,15 @@
                 text += `${comparison.content}\n\n`;
             });
             
+            text += `7. BEGINNER SUMMARY\n`;
+            text += `${'-'.repeat(60)}\n`;
+            content.beginnerSummary.forEach((item, index) => {
+                text += `${index + 1}. ${item}\n`;
+            });
+            text += `\n`;
+            
             text += `\n${'='.repeat(60)}\n`;
-            text += `This is an early-stage MVP using illustrative data.\n`;
+            text += `This is an early-stage Product Intelligence MVP using illustrative data. The platform demonstrates structured decision-support logic, not generic AI content generation.\n`;
             
             return text;
         }
@@ -1739,39 +3320,125 @@
             window.print();
         }
 
-        // Event listener for input
+        // Event listener for input - autocomplete
         const productInput = document.getElementById('productInput');
         
         productInput.addEventListener('input', function() {
-            if (!this.value.trim()) {
-                document.getElementById('clarificationSection').classList.remove('active');
+            const query = this.value.trim();
+            
+            if (!query) {
+                document.getElementById('autocompleteDropdown').classList.remove('active');
+                document.getElementById('categorySection').classList.remove('active');
                 document.querySelectorAll('.content-section').forEach(section => {
                     section.classList.remove('active');
                 });
+                document.getElementById('exportSection').classList.remove('active');
+                document.getElementById('viewToggleSection').classList.remove('active');
+                selectedProduct = null;
+                return;
+            }
+            
+            // Show autocomplete after 2 characters
+            if (query.length >= 2) {
+                showAutocompleteSuggestions(query);
+            } else {
+                document.getElementById('autocompleteDropdown').classList.remove('active');
             }
         });
 
-        // Handle Enter key - show questions
+        // Handle Enter key - try to select first suggestion or analyze
         productInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && this.value.trim()) {
                 e.preventDefault();
-                showClarificationQuestions(this.value);
+                const suggestions = getProductSuggestions(this.value.trim());
+                if (suggestions.length > 0) {
+                    selectProduct(suggestions[0].key);
+                }
             }
         });
 
-        // Generate button - collect answers and show results
-        document.getElementById('generateBtn').addEventListener('click', function() {
-            contextAnswers = collectContextAnswers();
-            document.getElementById('clarificationSection').classList.remove('active');
-            displayProductInfo(productInput.value, contextAnswers);
+        // Close autocomplete when clicking outside
+        document.addEventListener('click', function(e) {
+            const inputSection = document.querySelector('.input-section');
+            if (!inputSection.contains(e.target)) {
+                document.getElementById('autocompleteDropdown').classList.remove('active');
+            }
         });
 
-        // Skip button - use defaults
-        document.getElementById('skipBtn').addEventListener('click', function() {
-            contextAnswers = {};
-            document.getElementById('clarificationSection').classList.remove('active');
-            displayProductInfo(productInput.value, {});
+        // Optional clarification section expand/collapse
+        const clarificationHeader = document.getElementById('clarificationHeader');
+        const clarificationContent = document.getElementById('clarificationContent');
+        const clarificationToggle = document.getElementById('clarificationToggle');
+
+        clarificationHeader.addEventListener('click', function() {
+            const isExpanded = clarificationContent.classList.contains('expanded');
+            if (isExpanded) {
+                clarificationContent.classList.remove('expanded');
+                clarificationToggle.classList.remove('expanded');
+            } else {
+                clarificationContent.classList.add('expanded');
+                clarificationToggle.classList.add('expanded');
+                // Populate questions when expanded
+                if (productInput.value.trim()) {
+                    showClarificationQuestions(productInput.value);
+                }
+            }
         });
+
+        // Update showClarificationQuestions to not require button clicks
+        function showClarificationQuestions(productName) {
+            const nameLower = productName.toLowerCase().trim();
+            let categoryType = 'general';
+            
+            if (nameLower.match(/\b(ball|racket|bat|helmet|glove|shoe|sneaker|equipment|fitness|sport|athletic|gym|workout)\b/)) {
+                categoryType = 'sports';
+            } else if (nameLower.match(/\b(food|snack|cereal|beverage|drink|ingredient|organic|natural|nutrition|meal|recipe)\b/)) {
+                categoryType = 'food';
+            } else if (nameLower.match(/\b(phone|tablet|laptop|computer|device|electronic|tech|charger|cable|battery|screen|display|gadget)\b/)) {
+                categoryType = 'electronics';
+            } else if (nameLower.match(/\b(shirt|pants|dress|jacket|clothing|apparel|fabric|textile|garment|wear)\b/)) {
+                categoryType = 'clothing';
+            }
+
+            const questions = generateQuestions(categoryType, productName);
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const group = document.createElement('div');
+                group.className = 'question-group';
+                
+                const label = document.createElement('label');
+                label.textContent = `${index + 1}. ${q.label}:`;
+                group.appendChild(label);
+
+                if (q.type === 'select') {
+                    const select = document.createElement('select');
+                    select.id = q.id;
+                    select.name = q.id;
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = '-- Select --';
+                    select.appendChild(defaultOption);
+                    q.options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.textContent = opt;
+                        select.appendChild(option);
+                    });
+                    group.appendChild(select);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.name = q.id;
+                    input.placeholder = q.placeholder || '';
+                    group.appendChild(input);
+                }
+
+                container.appendChild(group);
+            });
+        }
 
         // Export button event listeners
         document.getElementById('copyBtn').addEventListener('click', function() {
@@ -1805,6 +3472,36 @@
             } else {
                 roadmapContent.classList.add('expanded');
                 roadmapToggle.classList.add('expanded');
+            }
+        });
+
+        // View toggle event listeners
+        const beginnerViewBtn = document.getElementById('beginnerViewBtn');
+        const expertViewBtn = document.getElementById('expertViewBtn');
+
+        beginnerViewBtn.addEventListener('click', function() {
+            if (currentProductName) {
+                currentView = 'beginner';
+                beginnerViewBtn.classList.add('active');
+                expertViewBtn.classList.remove('active');
+                const clarificationContent = document.getElementById('clarificationContent');
+                const context = clarificationContent.classList.contains('expanded') 
+                    ? collectContextAnswers() 
+                    : contextAnswers;
+                displayProductInfo(currentProductName, context, 'beginner');
+            }
+        });
+
+        expertViewBtn.addEventListener('click', function() {
+            if (currentProductName) {
+                currentView = 'expert';
+                expertViewBtn.classList.add('active');
+                beginnerViewBtn.classList.remove('active');
+                const clarificationContent = document.getElementById('clarificationContent');
+                const context = clarificationContent.classList.contains('expanded') 
+                    ? collectContextAnswers() 
+                    : contextAnswers;
+                displayProductInfo(currentProductName, context, 'expert');
             }
         });
     </script>
