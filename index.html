@@ -39,6 +39,13 @@
             position: relative;
         }
 
+        .search-note {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+
         .input-wrapper {
             display: flex;
             gap: 0;
@@ -232,8 +239,10 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .variants-section {
@@ -283,7 +292,7 @@
 
         .variants-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 12px;
             max-width: 1200px;
             margin: 0 auto;
@@ -578,7 +587,7 @@
 
         @media (max-width: 768px) {
             .category-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 15px;
             }
             
@@ -599,7 +608,7 @@
             }
             
             .variants-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 15px;
             }
             
@@ -1729,6 +1738,7 @@
                 <button class="analyze-btn" id="analyzeBtn" style="display: none;">Analyse Product</button>
             </div>
             <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+            <div class="search-note">Currently supports selected product categories only</div>
         </div>
 
         <div class="selection-flow-container">
@@ -1988,10 +1998,62 @@
         let selectedType = null; // Selected category type
         let selectedVariant = null; // Selected variant
 
+
+        // Single helper function to get image for product/category/variant
+        // Returns image URL or null (for fallback gradient)
+        function getImageFor(productId, categoryId = null, variantId = null) {
+            const product = productDatabase[productId];
+            if (!product) return null;
+            
+            // If variant requested, check variant image first
+            if (variantId && categoryId) {
+                const category = product.categories.find(c => c.name === categoryId);
+                if (category && category.variants) {
+                    // Search through all variant groups
+                    for (const variantGroup of Object.values(category.variants)) {
+                        const variant = variantGroup.find(v => v.label === variantId);
+                        if (variant && variant.image) {
+                            return variant.image;
+                        }
+                    }
+                }
+            }
+            
+            // If category requested, check category hero image
+            if (categoryId) {
+                const category = product.categories.find(c => c.name === categoryId);
+                if (category && product.images && product.images[categoryId]) {
+                    return product.images[categoryId].hero;
+                }
+                // Fallback to old imageUrl field if images.hero doesn't exist
+                if (category && category.imageUrl) {
+                    return category.imageUrl;
+                }
+            }
+            
+            // Default: return null for fallback gradient
+            return null;
+        }
+
+        // Supported product categories for MVP
+        const SUPPORTED_CATEGORIES = [
+            'Sports Equipment',
+            'Warehouse & Logistics Equipment',
+            'Safety & Compliance Equipment',
+            'Consumer Electronics'
+        ];
+
         // Mock product database
         const productDatabase = {
             'cricket bat': {
                 name: 'Cricket Bat',
+                supportedCategory: 'Sports Equipment',
+                images: {
+                    'Leather Ball Bat': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Tennis Ball Bat': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Plastic Ball Bat': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Training Bat': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' }
+                },
                 categories: [
                     { 
                         name: 'Leather Ball Bat', 
@@ -2000,17 +2062,17 @@
                         imageUrl: 'images/cricket/leather-bat.jpg',
                         variants: {
                             'Handle Length': [
-                                { label: 'Short Handle', subtitle: '28-30 inches', imageUrl: 'images/cricket/leather-bat-short-handle.jpg', tooltip: 'Better control, lighter swing' },
-                                { label: 'Long Handle', subtitle: '32-34 inches', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'More power, extended reach' }
+                                { label: 'Short Handle', subtitle: '28-30 inches', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Better control, lighter swing' },
+                                { label: 'Long Handle', subtitle: '32-34 inches', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'More power, extended reach' }
                             ],
                             'Willow Type': [
-                                { label: 'English Willow', subtitle: 'Premium quality', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Professional grade, superior performance' },
-                                { label: 'Kashmir Willow', subtitle: 'Budget friendly', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'Affordable, good for practice' }
+                                { label: 'English Willow', subtitle: 'Premium quality', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Professional grade, superior performance' },
+                                { label: 'Kashmir Willow', subtitle: 'Budget friendly', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Affordable, good for practice' }
                             ],
                             'Weight Range': [
-                                { label: 'Light (1.1-1.2 kg)', subtitle: 'Quick swing', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop', tooltip: 'Easier to handle, faster strokes' },
-                                { label: 'Medium (1.2-1.3 kg)', subtitle: 'Balanced', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Good balance of power and control' },
-                                { label: 'Heavy (1.3-1.4 kg)', subtitle: 'Maximum power', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'More power, requires strength' }
+                                { label: 'Light (1.1-1.2 kg)', subtitle: 'Quick swing', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Easier to handle, faster strokes' },
+                                { label: 'Medium (1.2-1.3 kg)', subtitle: 'Balanced', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Good balance of power and control' },
+                                { label: 'Heavy (1.3-1.4 kg)', subtitle: 'Maximum power', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'More power, requires strength' }
                             ]
                         }
                     },
@@ -2021,12 +2083,12 @@
                         imageUrl: 'images/cricket/tennis-bat.jpg',
                         variants: {
                             'Size': [
-                                { label: 'Junior', subtitle: 'Ages 5-10', imageUrl: 'images/cricket/tennis-bat-junior.jpg', tooltip: 'Smaller size for kids' },
-                                { label: 'Senior', subtitle: 'Standard size', imageUrl: 'images/cricket/tennis-bat-senior.jpg', tooltip: 'Full-size for adults' }
+                                { label: 'Junior', subtitle: 'Ages 5-10', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Smaller size for kids' },
+                                { label: 'Senior', subtitle: 'Standard size', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Full-size for adults' }
                             ],
                             'Material': [
-                                { label: 'Wood', subtitle: 'Traditional', imageUrl: 'images/cricket/tennis-bat-wood.jpg', tooltip: 'Classic feel and durability' },
-                                { label: 'Composite', subtitle: 'Modern', imageUrl: 'images/cricket/tennis-bat-composite.jpg', tooltip: 'Lightweight and durable' }
+                                { label: 'Wood', subtitle: 'Traditional', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Classic feel and durability' },
+                                { label: 'Composite', subtitle: 'Modern', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Lightweight and durable' }
                             ]
                         }
                     },
@@ -2034,12 +2096,11 @@
                         name: 'Plastic Ball Bat', 
                         icon: '🏏', 
                         desc: 'Lightweight option for beginners and children', 
-                        imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
                         variants: {
                             'Size': [
-                                { label: 'Small', subtitle: 'Kids 5-8 years', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop', tooltip: 'Perfect for young beginners' },
-                                { label: 'Medium', subtitle: 'Kids 8-12 years', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'Growing players' },
-                                { label: 'Large', subtitle: 'Teens & adults', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Full-size lightweight option' }
+                                { label: 'Small', subtitle: 'Kids 5-8 years', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Perfect for young beginners' },
+                                { label: 'Medium', subtitle: 'Kids 8-12 years', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Growing players' },
+                                { label: 'Large', subtitle: 'Teens & adults', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Full-size lightweight option' }
                             ]
                         }
                     },
@@ -2047,12 +2108,11 @@
                         name: 'Training Bat', 
                         icon: '🏏', 
                         desc: 'Specialized bat for practice and skill development', 
-                        imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop',
                         variants: {
                             'Type': [
-                                { label: 'Heavy Bat', subtitle: 'Strength training', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Builds wrist and arm strength' },
-                                { label: 'Light Bat', subtitle: 'Speed training', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop', tooltip: 'Improves swing speed' },
-                                { label: 'Weighted Bat', subtitle: 'Conditioning', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'Advanced training tool' }
+                                { label: 'Heavy Bat', subtitle: 'Strength training', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Builds wrist and arm strength' },
+                                { label: 'Light Bat', subtitle: 'Speed training', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Improves swing speed' },
+                                { label: 'Weighted Bat', subtitle: 'Conditioning', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg', tooltip: 'Advanced training tool' }
                             ]
                         }
                     }
@@ -2060,6 +2120,13 @@
             },
             'cricket ball': {
                 name: 'Cricket Ball',
+                supportedCategory: 'Sports Equipment',
+                images: {
+                    'Red Leather Ball': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'White Leather Ball': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Tennis Ball': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Tennis_ball.jpg/800px-Tennis_ball.jpg' },
+                    'Plastic Ball': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Tennis_ball.jpg/800px-Tennis_ball.jpg' }
+                },
                 categories: [
                     { name: 'Red Leather Ball', icon: '⚾', desc: 'Standard ball for test matches and first-class cricket', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop' },
                     { name: 'White Leather Ball', icon: '⚾', desc: 'Used in limited-overs and day-night matches', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop' },
@@ -2069,6 +2136,12 @@
             },
             'cricket kit': {
                 name: 'Cricket Kit',
+                supportedCategory: 'Sports Equipment',
+                images: {
+                    'Professional Kit': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Beginner Kit': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Practice Kit': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' }
+                },
                 categories: [
                     { name: 'Professional Kit', icon: '🎒', desc: 'Complete set for competitive cricket', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop' },
                     { name: 'Beginner Kit', icon: '🎒', desc: 'Essential equipment for new players', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop' },
@@ -2077,6 +2150,13 @@
             },
             'safety gloves': {
                 name: 'Safety Gloves',
+                supportedCategory: 'Safety & Compliance Equipment',
+                images: {
+                    'Cut-Resistant Gloves': { hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    'Chemical-Resistant Gloves': { hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    'Heat-Resistant Gloves': { hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    'General Purpose Gloves': { hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' }
+                },
                 categories: [
                     { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
                     { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
@@ -2086,6 +2166,13 @@
             },
             'forklift': {
                 name: 'Forklift',
+                supportedCategory: 'Warehouse & Logistics Equipment',
+                images: {
+                    'Electric Forklift': { hero: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
+                    'Diesel Forklift': { hero: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
+                    'LPG Forklift': { hero: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
+                    'Pallet Jack': { hero: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' }
+                },
                 categories: [
                     { name: 'Electric Forklift', icon: '🚜', desc: 'Indoor use with zero emissions', imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
                     { name: 'Diesel Forklift', icon: '🚜', desc: 'Heavy-duty outdoor operations', imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
@@ -2095,6 +2182,12 @@
             },
             'helmet': {
                 name: 'Helmet',
+                supportedCategory: 'Safety & Compliance Equipment',
+                images: {
+                    'Sports Helmet': { hero: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' },
+                    'Safety Helmet': { hero: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' },
+                    'Motorcycle Helmet': { hero: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' }
+                },
                 categories: [
                     { name: 'Sports Helmet', icon: '⛑️', desc: 'Protection for cricket, cycling, and other sports', imageUrl: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' },
                     { name: 'Safety Helmet', icon: '⛑️', desc: 'Industrial and construction safety', imageUrl: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' },
@@ -2103,6 +2196,12 @@
             },
             'racket': {
                 name: 'Racket',
+                supportedCategory: 'Sports Equipment',
+                images: {
+                    'Tennis Racket': { hero: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' },
+                    'Badminton Racket': { hero: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' },
+                    'Squash Racket': { hero: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' }
+                },
                 categories: [
                     { name: 'Tennis Racket', icon: '🎾', desc: 'For tennis court play', imageUrl: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' },
                     { name: 'Badminton Racket', icon: '🏸', desc: 'Lightweight for badminton courts', imageUrl: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' },
@@ -2111,6 +2210,12 @@
             },
             'laptop': {
                 name: 'Laptop',
+                supportedCategory: 'Consumer Electronics',
+                images: {
+                    'Business Laptop': { hero: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' },
+                    'Gaming Laptop': { hero: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' },
+                    'Student Laptop': { hero: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' }
+                },
                 categories: [
                     { name: 'Business Laptop', icon: '💻', desc: 'Professional use and productivity', imageUrl: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' },
                     { name: 'Gaming Laptop', icon: '💻', desc: 'High-performance for gaming', imageUrl: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' },
@@ -2119,6 +2224,12 @@
             },
             'bat': {
                 name: 'Cricket Bat',
+                supportedCategory: 'Sports Equipment',
+                images: {
+                    'Leather Ball Bat': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Tennis Ball Bat': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' },
+                    'Plastic Ball Bat': { hero: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Cricket_bat_and_ball.jpg/800px-Cricket_bat_and_ball.jpg' }
+                },
                 categories: [
                     { name: 'Leather Ball Bat', icon: '🏏', desc: 'Used in professional matches and competitive cricket', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop' },
                     { name: 'Tennis Ball Bat', icon: '🏏', desc: 'Designed for casual play and practice sessions', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop' },
@@ -2127,6 +2238,12 @@
             },
             'gloves': {
                 name: 'Safety Gloves',
+                supportedCategory: 'Safety & Compliance Equipment',
+                images: {
+                    'Cut-Resistant Gloves': { hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    'Chemical-Resistant Gloves': { hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    'Heat-Resistant Gloves': { hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' }
+                },
                 categories: [
                     { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
                     { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
@@ -2136,6 +2253,7 @@
         };
 
         // Smart search: Get product suggestions with fuzzy matching and relevance scoring
+        // Only returns products from supported categories
         function getProductSuggestions(query) {
             if (query.length < 2) return [];
             
@@ -2143,8 +2261,12 @@
             const suggestions = [];
             const queryWords = lowerQuery.split(/\s+/).filter(w => w.length > 0);
             
-            // Score products based on match quality
+            // Score products based on match quality - ONLY from supported categories
             for (const [key, product] of Object.entries(productDatabase)) {
+                // Skip products that don't have a supported category
+                if (!product.supportedCategory || !SUPPORTED_CATEGORIES.includes(product.supportedCategory)) {
+                    continue;
+                }
                 const productNameLower = product.name.toLowerCase();
                 const keyLower = key.toLowerCase();
                 let score = 0;
@@ -2174,9 +2296,9 @@
                 }
                 
                 if (score > 0) {
-                    // Get product image from first category
+                    // Get product image using new helper
                     const firstCategory = product.categories[0];
-                    const productImage = firstCategory?.imageUrl || null;
+                    const productImage = getImageFor(key, firstCategory?.name) || null;
                     
                     suggestions.push({
                         key: key,
@@ -2238,6 +2360,27 @@
             const product = productDatabase[productKey];
             if (!product) return;
             
+            // Check if product is in a supported category
+            if (!product.supportedCategory || !SUPPORTED_CATEGORIES.includes(product.supportedCategory)) {
+                // Show error message
+                const input = document.getElementById('productInput');
+                input.value = '';
+                input.placeholder = 'This product category is not supported in the current MVP.';
+                input.style.borderColor = '#ef4444';
+                input.style.backgroundColor = '#fef2f2';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    input.placeholder = 'Search for a product (e.g. Cricket Bat, Forklift, Safety Gloves)';
+                    input.style.borderColor = '';
+                    input.style.backgroundColor = '';
+                }, 3000);
+                
+                // Hide autocomplete
+                document.getElementById('autocompleteDropdown').classList.remove('active');
+                return;
+            }
+            
             selectedProduct = product;
             document.getElementById('productInput').value = product.name;
             document.getElementById('autocompleteDropdown').classList.remove('active');
@@ -2269,6 +2412,9 @@
             const categorySection = document.getElementById('categorySection');
             const categoryGrid = document.getElementById('categoryGrid');
             
+            // Find productId (key) from product object
+            const productId = Object.keys(productDatabase).find(key => productDatabase[key] === product);
+            
             // Add helpful hint for beginners
             const existingHint = categorySection.querySelector('.category-hint');
             if (existingHint) {
@@ -2285,21 +2431,37 @@
                 const card = document.createElement('div');
                 card.className = 'category-card';
                 
-                // Set background image if available
-                const imageUrl = category.imageUrl || null;
+                // Get image using new helper, fallback to gradient if none
+                const imageUrl = getImageFor(productId, category.name);
                 if (imageUrl) {
                     card.style.backgroundImage = `url(${imageUrl})`;
                 } else {
-                    // Fallback gradient background if no image
+                    // Fallback: clean gradient (no random photo)
                     card.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    card.style.display = 'flex';
+                    card.style.alignItems = 'center';
+                    card.style.justifyContent = 'center';
+                    card.style.flexDirection = 'column';
+                    card.style.gap = '8px';
                 }
                 
-                card.innerHTML = `
-                    <div class="category-card-content">
-                        <div class="category-card-title">${category.name}</div>
-                        <div class="category-card-desc">${category.desc}</div>
-                    </div>
-                `;
+                // If no image, show icon prominently
+                if (!imageUrl) {
+                    card.innerHTML = `
+                        <div style="font-size: 48px; margin-bottom: 8px;">${category.icon || '📦'}</div>
+                        <div class="category-card-content">
+                            <div class="category-card-title">${category.name}</div>
+                            <div class="category-card-desc">${category.desc}</div>
+                        </div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="category-card-content">
+                            <div class="category-card-title">${category.name}</div>
+                            <div class="category-card-desc">${category.desc}</div>
+                        </div>
+                    `;
+                }
                 
                 // Stagger animation for visual appeal
                 card.style.opacity = '0';
@@ -2384,22 +2546,40 @@
                         const card = document.createElement('div');
                         card.className = 'variant-card';
                         
-                        // Set background image if available
-                        const imageUrl = variant.imageUrl || null;
+                        // Get image using new helper, fallback to gradient if none
+                        const productId = Object.keys(productDatabase).find(key => productDatabase[key] === product);
+                        const imageUrl = getImageFor(productId, category.name, variant.label);
                         if (imageUrl) {
                             card.style.backgroundImage = `url(${imageUrl})`;
                         } else {
-                            // Fallback gradient background if no image
+                            // Fallback: show icon + text instead of unrelated image
                             card.style.background = 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)';
+                            card.style.display = 'flex';
+                            card.style.alignItems = 'center';
+                            card.style.justifyContent = 'center';
+                            card.style.flexDirection = 'column';
+                            card.style.gap = '8px';
                         }
                         
-                        card.innerHTML = `
-                            ${variant.tooltip ? `<div class="variant-card-tooltip">${variant.tooltip}</div>` : ''}
-                            <div class="variant-card-label">
-                                <div class="variant-card-label-title">${variant.label}</div>
-                                ${variant.subtitle ? `<div class="variant-card-label-subtitle">${variant.subtitle}</div>` : ''}
-                            </div>
-                        `;
+                        // If no image, show icon prominently
+                        if (!imageUrl) {
+                            card.innerHTML = `
+                                <div style="font-size: 36px; margin-bottom: 8px;">${category.icon || '📦'}</div>
+                                ${variant.tooltip ? `<div class="variant-card-tooltip">${variant.tooltip}</div>` : ''}
+                                <div class="variant-card-label">
+                                    <div class="variant-card-label-title">${variant.label}</div>
+                                    ${variant.subtitle ? `<div class="variant-card-label-subtitle">${variant.subtitle}</div>` : ''}
+                                </div>
+                            `;
+                        } else {
+                            card.innerHTML = `
+                                ${variant.tooltip ? `<div class="variant-card-tooltip">${variant.tooltip}</div>` : ''}
+                                <div class="variant-card-label">
+                                    <div class="variant-card-label-title">${variant.label}</div>
+                                    ${variant.subtitle ? `<div class="variant-card-label-subtitle">${variant.subtitle}</div>` : ''}
+                                </div>
+                            `;
+                        }
                         
                         // Add click handler for variant selection
                         card.addEventListener('click', () => {
@@ -2444,17 +2624,21 @@
                 
                 continueBtn.style.display = 'block';
                 continueBtn.onclick = () => {
-                    if (!continueBtn.disabled) {
-                        analyzeProductCategory(product.name, category.name);
+                    if (!continueBtn.disabled && selectedType) {
+                        // Use selectedType to ensure we analyze the correct category
+                        analyzeProductCategory(product.name, selectedType.name);
                     }
                 };
             } else {
-                // No variants, proceed directly to analysis
-                continueBtn.style.display = 'none';
-                continueBtn.disabled = true;
-                setTimeout(() => {
-                    analyzeProductCategory(product.name, category.name);
-                }, 300);
+                // No variants, show and enable Continue button immediately
+                continueBtn.style.display = 'block';
+                continueBtn.disabled = false;
+                continueBtn.onclick = () => {
+                    if (!continueBtn.disabled && selectedType) {
+                        // Use selectedType to ensure we analyze the correct category
+                        analyzeProductCategory(product.name, selectedType.name);
+                    }
+                };
             }
             
             // Show variants section
@@ -4247,13 +4431,31 @@
             }
         });
 
-        // Handle Enter key - try to select first suggestion or analyze
+        // Handle Enter key - try to select first suggestion or show error
         productInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && this.value.trim()) {
                 e.preventDefault();
-                const suggestions = getProductSuggestions(this.value.trim());
+                const query = this.value.trim().toLowerCase();
+                const suggestions = getProductSuggestions(query);
+                
                 if (suggestions.length > 0) {
                     selectProduct(suggestions[0].key);
+                } else {
+                    // No suggestions found - product not supported
+                    this.value = '';
+                    this.placeholder = 'This product category is not supported in the current MVP.';
+                    this.style.borderColor = '#ef4444';
+                    this.style.backgroundColor = '#fef2f2';
+                    
+                    // Reset after 3 seconds
+                    setTimeout(() => {
+                        this.placeholder = 'Search for a product (e.g. Cricket Bat, Forklift, Safety Gloves)';
+                        this.style.borderColor = '';
+                        this.style.backgroundColor = '';
+                    }, 3000);
+                    
+                    // Hide autocomplete
+                    document.getElementById('autocompleteDropdown').classList.remove('active');
                 }
             }
         });
