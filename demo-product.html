@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Intelligence Report – Semi-Automatic Carton Sealing Machine</title>
+    <meta name="description" content="Complete product intelligence report for Semi-Automatic Carton Sealing Machine. Understand features, uses, and buying considerations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --success: #059669;
+            --success-light: #ecfdf5;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--background-alt);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .page-header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .back-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Report Header */
+        .report-header {
+            background: var(--background);
+            padding: 48px 0 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .report-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+        }
+
+        .report-title {
+            font-size: clamp(28px, 4vw, 38px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .report-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Product Snapshot */
+        .snapshot-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin: -24px auto 32px;
+            max-width: 800px;
+            box-shadow: var(--shadow);
+        }
+
+        .snapshot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 40px;
+            margin-bottom: 24px;
+        }
+
+        .snapshot-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .snapshot-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .snapshot-value {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .snapshot-summary {
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .snapshot-summary-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .snapshot-summary-text {
+            font-size: 17px;
+            color: var(--text-primary);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Main Content */
+        .report-content {
+            padding: 16px 0 60px;
+        }
+
+        .content-wrapper {
+            background: var(--background);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        /* Section */
+        .section {
+            padding: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Two Column Grid */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Cards */
+        .info-card {
+            padding: 20px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .info-card.success {
+            background: var(--success-light);
+            border-color: #a7f3d0;
+        }
+
+        .info-card.warning {
+            background: var(--warning-light);
+            border-color: #fde68a;
+        }
+
+        .info-card.danger {
+            background: var(--danger-light);
+            border-color: #fecaca;
+        }
+
+        .info-card.neutral {
+            background: var(--background-alt);
+        }
+
+        .info-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card.success h4 { color: var(--success); }
+        .info-card.warning h4 { color: var(--warning); }
+        .info-card.danger h4 { color: var(--danger); }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .info-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .info-card li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Variants Grid */
+        .variants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .variant-card {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+        }
+
+        .variant-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .variant-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Features List */
+        .features-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .feature-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .feature-value {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .comparison-table th {
+            background: var(--background-alt);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .comparison-table td {
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Recommendation Box */
+        .recommendation-box {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius-sm);
+            padding: 24px 28px;
+        }
+
+        .recommendation-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .recommendation-box p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Buy Links */
+        .buy-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .buy-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--background);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+
+        .buy-link:hover {
+            background: var(--background-alt);
+            border-color: #d1d5db;
+        }
+
+        /* Mode Insights */
+        .mode-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .mode-card {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+        }
+
+        .mode-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .mode-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .mode-card ul {
+            list-style: none;
+        }
+
+        .mode-card li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .mode-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .page-footer {
+            background: var(--text-primary);
+            color: rgba(255,255,255,0.7);
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        .page-footer p {
+            font-size: 14px;
+        }
+
+        .page-footer a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+
+        .page-footer a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .snapshot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-item {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .mode-tabs {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 24px 20px;
+            }
+
+            .comparison-table {
+                font-size: 13px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .snapshot-card {
+                padding: 24px 20px;
+                margin: -16px 16px 24px;
+            }
+
+            .buy-grid {
+                flex-direction: column;
+            }
+
+            .buy-link {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PI</div>
+                    <span>Product Intelligence</span>
+                </a>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Report Header -->
+    <section class="report-header">
+        <div class="container">
+            <span class="report-label">Product Intelligence Report</span>
+            <h1 class="report-title">Semi-Automatic Carton Sealing Machine</h1>
+            <p class="report-subtitle">A comprehensive analysis to help you understand, evaluate, and decide on this product.</p>
+        </div>
+    </section>
+
+    <!-- Product Snapshot -->
+    <div class="container">
+        <div class="snapshot-card">
+            <div class="snapshot-grid">
+                <div class="snapshot-item">
+                    <span class="snapshot-label">Product Name</span>
+                    <span class="snapshot-value">Semi-Automatic Carton Sealing Machine</span>
+                </div>
+                <div class="snapshot-item">
+                    <span class="snapshot-label">Category</span>
+                    <span class="snapshot-value">Warehouse & Packaging Equipment</span>
+                </div>
+                <div class="snapshot-item">
+                    <span class="snapshot-label">Primary Use</span>
+                    <span class="snapshot-value">Sealing cardboard boxes for shipping</span>
+                </div>
+                <div class="snapshot-item">
+                    <span class="snapshot-label">Typical Price Range</span>
+                    <span class="snapshot-value">£600 – £2,500</span>
+                </div>
+            </div>
+            <div class="snapshot-summary">
+                <div class="snapshot-summary-label">Decision Summary</div>
+                <p class="snapshot-summary-text">"A practical packaging solution for small to medium warehouses seeking faster and more consistent box sealing without full automation costs."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Content -->
+    <main class="report-content">
+        <div class="container">
+            <div class="content-wrapper">
+
+                <!-- Section 1: What This Product Is -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">1</span>
+                        What This Product Is
+                    </h2>
+                    <p class="section-text">
+                        A semi-automatic carton sealing machine is a packaging device that applies adhesive tape to the top and bottom flaps of cardboard boxes. Unlike manual taping, the machine uses adjustable side rails and driven rollers to guide boxes through automatically, applying consistent tape pressure and positioning. The operator manually feeds boxes into the machine, but the sealing process itself is mechanised. These machines are commonly found in warehouses, fulfilment centres, and manufacturing facilities where consistent, fast box sealing is needed without the cost of fully automated lines.
+                    </p>
+                </section>
+
+                <!-- Section 2: Who This Product Is For -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">2</span>
+                        Who This Product Is For
+                    </h2>
+                    <div class="two-column">
+                        <div class="info-card success">
+                            <h4>✓ Useful For</h4>
+                            <ul>
+                                <li>Small to medium warehouses processing 50–500 boxes per day</li>
+                                <li>E-commerce fulfilment centres with consistent box sizes</li>
+                                <li>Manufacturing facilities with outbound shipping needs</li>
+                                <li>Third-party logistics (3PL) providers</li>
+                                <li>Businesses looking to reduce labour time on packing</li>
+                            </ul>
+                        </div>
+                        <div class="info-card warning">
+                            <h4>✗ Not Useful For</h4>
+                            <ul>
+                                <li>Very low volume operations (under 20 boxes/day)</li>
+                                <li>Businesses using highly irregular box sizes</li>
+                                <li>Facilities with no dedicated packing area</li>
+                                <li>Operations requiring custom sealing patterns</li>
+                                <li>Environments needing fully hands-free automation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Types, Variants & Options -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">3</span>
+                        Types, Variants & Options
+                    </h2>
+                    <div class="variants-grid">
+                        <div class="variant-card">
+                            <h4>Top-Only Sealer</h4>
+                            <p>Seals only the top flap. Lower cost, suitable when bottom is pre-sealed or taped manually.</p>
+                        </div>
+                        <div class="variant-card">
+                            <h4>Top & Bottom Sealer</h4>
+                            <p>Seals both flaps simultaneously. More efficient for high-throughput operations.</p>
+                        </div>
+                        <div class="variant-card">
+                            <h4>Uniform Size Model</h4>
+                            <p>Fixed rails for one box size. Faster but less flexible. Ideal for standardised packaging.</p>
+                        </div>
+                        <div class="variant-card">
+                            <h4>Adjustable Model</h4>
+                            <p>Side rails adjust for different box widths. Requires more setup time but handles variety.</p>
+                        </div>
+                        <div class="variant-card">
+                            <h4>Belt-Driven</h4>
+                            <p>Uses belts to move boxes through. Suitable for heavier cartons and continuous use.</p>
+                        </div>
+                        <div class="variant-card">
+                            <h4>Roller-Driven</h4>
+                            <p>Uses rollers for transport. Generally quieter and suited for lighter boxes.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Key Features & Practical Benefits -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">4</span>
+                        Key Features & Practical Benefits
+                    </h2>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="feature-label">Tape Application</span>
+                            <span class="feature-value">Applies 48mm or 75mm tape consistently with adjustable tension. Eliminates uneven sealing and wasted tape.</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-label">Throughput Speed</span>
+                            <span class="feature-value">Typically 10–30 boxes per minute depending on model and operator speed.</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-label">Box Size Range</span>
+                            <span class="feature-value">Most models handle boxes from 150mm to 600mm wide, and 100mm to 500mm high.</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-label">Build Quality</span>
+                            <span class="feature-value">Stainless steel or powder-coated steel frame. Industrial-grade for continuous daily use.</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-label">Maintenance</span>
+                            <span class="feature-value">Minimal. Requires occasional blade replacement and cleaning. No specialist skills needed.</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-label">Power Requirements</span>
+                            <span class="feature-value">Standard 220V outlet. Low energy consumption (typically under 100W).</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Pros, Cons & Limitations -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">5</span>
+                        Pros, Cons & Limitations
+                    </h2>
+                    <div class="two-column">
+                        <div class="info-card success">
+                            <h4>✓ Pros</h4>
+                            <ul>
+                                <li>Significantly faster than manual taping</li>
+                                <li>Consistent, professional-looking seals</li>
+                                <li>Reduces tape waste by 15–30%</li>
+                                <li>Lower cost than fully automatic systems</li>
+                                <li>Easy to train staff (under 10 minutes)</li>
+                                <li>Compact footprint for most facilities</li>
+                            </ul>
+                        </div>
+                        <div class="info-card danger">
+                            <h4>✗ Cons & Limitations</h4>
+                            <ul>
+                                <li>Still requires manual box feeding</li>
+                                <li>Not suitable for very small or oversized boxes</li>
+                                <li>Setup time needed when changing box sizes</li>
+                                <li>Initial investment may not suit very small businesses</li>
+                                <li>Noise level may be noticeable in quiet environments</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6: Comparison & Alternatives -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">6</span>
+                        Comparison & Alternatives
+                    </h2>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Option</th>
+                                <th>Best For</th>
+                                <th>Price Range</th>
+                                <th>Speed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Manual Tape Dispenser</strong></td>
+                                <td>Very low volume, budget-conscious</td>
+                                <td>£10 – £50</td>
+                                <td>5–10 boxes/min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Semi-Automatic Sealer</strong></td>
+                                <td>Small to medium warehouses</td>
+                                <td>£600 – £2,500</td>
+                                <td>15–30 boxes/min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fully Automatic Sealer</strong></td>
+                                <td>High-volume, hands-free operations</td>
+                                <td>£3,000 – £15,000+</td>
+                                <td>30–60 boxes/min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Robotic Case Sealer</strong></td>
+                                <td>Enterprise, integrated lines</td>
+                                <td>£20,000+</td>
+                                <td>Variable</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Section 7: Recommendation -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">7</span>
+                        Recommendation
+                    </h2>
+                    <div class="recommendation-box">
+                        <h4>Our Assessment</h4>
+                        <p>
+                            A semi-automatic carton sealing machine is a sensible investment for businesses processing between 50 and 500 boxes per day. It offers the right balance of speed, consistency, and cost-effectiveness without the complexity of full automation. For operations with standardised box sizes, a uniform-size top-and-bottom sealer in the £800–£1,500 range offers the best value. Businesses with varied box sizes should opt for an adjustable model, budgeting closer to £1,500–£2,500. Consider your current throughput, growth plans, and available floor space before purchasing.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 8: Where to Buy or Source -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">8</span>
+                        Where to Buy or Source
+                    </h2>
+                    <div class="buy-grid">
+                        <a href="#" class="buy-link">Amazon Business →</a>
+                        <a href="#" class="buy-link">Rajapack →</a>
+                        <a href="#" class="buy-link">ULINE →</a>
+                        <a href="#" class="buy-link">Packaging Supplies Direct →</a>
+                        <a href="#" class="buy-link">RS Components →</a>
+                        <a href="#" class="buy-link">Alibaba (bulk) →</a>
+                    </div>
+                </section>
+
+                <!-- Section 9: Mode-Specific Insights -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">9</span>
+                        Mode-Specific Insights
+                    </h2>
+                    <div class="mode-tabs">
+                        <div class="mode-card">
+                            <h4>For Individuals</h4>
+                            <p>If you're running a home-based business or small online shop, this product may be more than you need right now.</p>
+                            <ul>
+                                <li>Consider manual tape dispensers first</li>
+                                <li>Upgrade when volume exceeds 30–50 boxes/day</li>
+                                <li>Look for compact, adjustable models</li>
+                            </ul>
+                        </div>
+                        <div class="mode-card">
+                            <h4>For Businesses</h4>
+                            <p>A practical investment that can reduce packing labour costs and improve consistency in your shipping operation.</p>
+                            <ul>
+                                <li>Calculate ROI based on boxes per day</li>
+                                <li>Factor in reduced tape waste</li>
+                                <li>Consider service and warranty terms</li>
+                            </ul>
+                        </div>
+                        <div class="mode-card">
+                            <h4>For Sellers</h4>
+                            <p>If you're considering stocking or reselling this product, it has steady B2B demand with good margins.</p>
+                            <ul>
+                                <li>Target warehouse and logistics buyers</li>
+                                <li>Offer installation or training services</li>
+                                <li>Bundle with tape and replacement blades</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="container">
+            <p>Generated by <a href="index.html">Product Intelligence</a> · © 2025</p>
+        </div>
+    </footer>
+
+</body>
+</html>
