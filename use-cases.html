@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Cases | Product Intelligence</title>
+    <meta name="description" content="Discover how Product Intelligence helps individuals, businesses, and sellers make smarter product decisions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--background);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: all var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--background-alt);
+            color: var(--text-primary);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .mobile-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 160px 0 80px;
+            text-align: center;
+            background: var(--background-alt);
+        }
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .page-header p {
+            font-size: clamp(16px, 2vw, 19px);
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Use Case Sections */
+        .use-case {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .use-case:last-of-type {
+            border-bottom: none;
+        }
+
+        .use-case-header {
+            margin-bottom: 32px;
+        }
+
+        .use-case-label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .use-case-title {
+            font-size: clamp(26px, 3.5vw, 32px);
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .use-case-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .use-case-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .use-case-list {
+            list-style: none;
+        }
+
+        .use-case-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .use-case-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .use-case-outcome {
+            background: var(--background-alt);
+            padding: 24px 28px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+        }
+
+        .use-case-outcome p {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* Business Section Styling */
+        .use-case.business {
+            background: var(--background-alt);
+        }
+
+        .use-case.business .use-case-outcome {
+            background: white;
+        }
+
+        /* Closing CTA */
+        .closing-cta {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .closing-cta h2 {
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .closing-cta .btn {
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: 50px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: rgba(255,255,255,0.7);
+            padding: 40px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .footer p {
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                height: 64px;
+            }
+
+            .nav-links,
+            .nav-cta {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-header {
+                padding: 120px 0 60px;
+            }
+
+            .use-case {
+                padding: 60px 0;
+            }
+
+            .use-case-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .closing-cta {
+                padding: 80px 0;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .use-case-list li {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">PI</div>
+                <span>Product Intelligence</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="use-cases.html" class="active">Use Cases</a></li>
+                    <li><a href="index.html#values">Why Us</a></li>
+                    <li><a href="index.html#how-it-works">How It Works</a></li>
+                </ul>
+                <div class="nav-cta">
+                    <a href="app.html" class="btn btn-secondary">Log In</a>
+                    <a href="app.html" class="btn btn-primary">Get Started</a>
+                </div>
+            </nav>
+            <button class="mobile-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Product Intelligence for Every Decision</h1>
+            <p>One intelligence platform. Three ways to use it — depending on who you are and what decision you need to make.</p>
+        </div>
+    </section>
+
+    <!-- Use Case 1: Individuals -->
+    <section class="use-case">
+        <div class="container">
+            <div class="use-case-header">
+                <span class="use-case-label">Use Case 1</span>
+                <h2 class="use-case-title">For Individuals</h2>
+                <p class="use-case-subtitle">Buy the right product with confidence.</p>
+            </div>
+            <div class="use-case-content">
+                <ul class="use-case-list">
+                    <li>Understand what a product actually is</li>
+                    <li>Know who it is useful for and not useful for</li>
+                    <li>Compare options without reading hundreds of reviews</li>
+                    <li>Get a clear recommendation based on needs and budget</li>
+                    <li>See trusted places to buy the product</li>
+                </ul>
+                <div class="use-case-outcome">
+                    <p>Individuals make faster, smarter purchase decisions with less confusion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Case 2: Businesses & Industry -->
+    <section class="use-case business">
+        <div class="container">
+            <div class="use-case-header">
+                <span class="use-case-label">Use Case 2</span>
+                <h2 class="use-case-title">For Businesses & Industry</h2>
+                <p class="use-case-subtitle">Make structured, risk-aware product decisions.</p>
+            </div>
+            <div class="use-case-content">
+                <ul class="use-case-list">
+                    <li>Structured product evaluation for business use</li>
+                    <li>Understand cost vs value before purchasing</li>
+                    <li>Compare suppliers, types, and long-term suitability</li>
+                    <li>Identify risks and limitations early</li>
+                    <li>Support procurement and operational decisions</li>
+                </ul>
+                <div class="use-case-outcome">
+                    <p>Businesses reduce risk, save time, and make confident purchasing decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Case 3: E-commerce & Sellers -->
+    <section class="use-case">
+        <div class="container">
+            <div class="use-case-header">
+                <span class="use-case-label">Use Case 3</span>
+                <h2 class="use-case-title">For E-commerce & Sellers</h2>
+                <p class="use-case-subtitle">Choose profitable products and describe them clearly.</p>
+            </div>
+            <div class="use-case-content">
+                <ul class="use-case-list">
+                    <li>Decide whether a product is worth selling</li>
+                    <li>Understand demand, competition, and variants</li>
+                    <li>Identify who the product is best suited for</li>
+                    <li>Generate clear, honest product descriptions</li>
+                    <li>Compare products before adding them to a store</li>
+                    <li>Access sourcing and buying links</li>
+                </ul>
+                <div class="use-case-outcome">
+                    <p>Sellers choose better products, reduce mistakes, and build trust with customers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="closing-cta">
+        <div class="container">
+            <h2>Choose how you want to use Product Intelligence.</h2>
+            <a href="app.html" class="btn btn-primary">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">
+                    <div class="logo-icon">PI</div>
+                    Product Intelligence
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="use-cases.html">Use Cases</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+                <p>&copy; 2025 Product Intelligence. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+
