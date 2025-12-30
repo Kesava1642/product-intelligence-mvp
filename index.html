@@ -15,17 +15,16 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 16px;
         }
 
         .container {
-            max-width: 1600px;
-            width: 100%;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
+            width: min(1500px, 96vw);
+            margin: 24px auto;
+            background: #fff;
+            border-radius: 16px;
             padding: 32px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
         }
 
         h1 {
@@ -259,30 +258,24 @@
         .variants-grid {
             display: grid;
             gap: 20px;
-            width: 100%;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            align-items: stretch;
         }
 
-        /* Desktop */
-        @media (min-width: 1024px) {
+        /* Tablet: 2 per row */
+        @media (max-width: 1024px) {
             .category-grid,
             .variants-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
-        /* Tablet */
-        @media (max-width: 1023px) {
+        /* Mobile: 2 per row */
+        @media (max-width: 640px) {
             .category-grid,
             .variants-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        /* Mobile — MUST BE 2 CARDS */
-        @media (max-width: 767px) {
-            .category-grid,
-            .variants-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
             }
         }
 
@@ -653,7 +646,7 @@
             }
 
             body {
-                padding: 24px;
+                padding: 16px;
             }
 
             .container {
@@ -661,10 +654,22 @@
             }
         }
 
+        /* Remove any fixed widths that shrink cards */
         .category-card,
         .variant-card {
-            width: 100%;
+            width: auto !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            flex: none !important;
             border-radius: 14px;
+        }
+
+        /* Ensure images fill cards */
+        .category-card,
+        .variant-card {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .category-card {
