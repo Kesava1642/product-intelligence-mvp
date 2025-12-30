@@ -19,43 +19,64 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
-            padding: 40px;
+            padding: 32px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 16px;
             text-align: center;
+            font-size: 24px;
         }
 
         .input-section {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             position: relative;
         }
 
         .input-wrapper {
             display: flex;
-            gap: 10px;
+            gap: 0;
             position: relative;
+            align-items: center;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-icon-wrapper {
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            color: #9ca3af;
+        }
+
+        .search-icon {
+            font-size: 18px;
         }
 
         input[type="text"] {
             flex: 1;
-            padding: 15px;
+            padding: 15px 15px 15px 0;
             font-size: 16px;
-            border: 2px solid #e0e0e0;
+            border: none;
             border-radius: 8px;
-            transition: border-color 0.3s;
+            transition: none;
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
         }
 
         .autocomplete-dropdown {
@@ -78,13 +99,14 @@
         }
 
         .suggestion-card {
-            padding: 12px 16px;
+            padding: 0;
             cursor: pointer;
             border-bottom: 1px solid #f0f0f0;
-            transition: all 0.2s ease;
+            transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
             display: flex;
-            align-items: center;
-            gap: 12px;
+            align-items: stretch;
+            overflow: hidden;
+            background: white;
         }
 
         .suggestion-card:first-child {
@@ -100,30 +122,65 @@
 
         .suggestion-card:hover {
             background: #f8f9fa;
-            transform: translateX(4px);
+            transform: translateX(4px) scale(1.01);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .suggestion-icon {
-            font-size: 20px;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .suggestion-card.selected {
             background: #f0f4ff;
-            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .suggestion-image {
+            width: 80px;
+            min-width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f9fafb;
+            position: relative;
+            filter: contrast(1.05) saturate(1.05);
+            transition: filter 0.25s ease;
+        }
+
+        .suggestion-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent);
+        }
+
+        .suggestion-content {
+            flex: 1;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .suggestion-text {
-            flex: 1;
-            font-size: 14px;
-            color: #333;
-            font-weight: 500;
+            font-size: 15px;
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-category {
+            font-size: 12px;
+            color: #6b7280;
         }
 
         .category-section {
-            margin-top: 30px;
+            margin-top: 16px;
             display: none;
+            animation: fadeInUp 0.3s ease-out;
+            max-height: 70vh;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .category-section.active {
@@ -132,21 +189,60 @@
 
         .category-section h3 {
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             font-size: 18px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-section h3::before {
+            content: '🎯';
+            font-size: 20px;
+        }
+
+        .category-hint {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #0369a1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hint-icon {
+            font-size: 16px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
         }
 
         .variants-section {
-            margin-top: 40px;
+            margin-top: 16px;
             display: none;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeInUp 0.4s ease-out;
+            max-height: 70vh;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .variants-section.active {
@@ -155,91 +251,129 @@
 
         .variants-section h3 {
             color: #333;
-            margin-bottom: 24px;
-            font-size: 20px;
+            margin-bottom: 8px;
+            font-size: 18px;
             font-weight: 600;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .variants-section h3::before {
+            content: '📦';
+            font-size: 20px;
+        }
+
+        .variants-hint {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #166534;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+            justify-content: center;
         }
 
         .variants-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .variant-card {
-            background: white;
+            background: #f9fafb;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             position: relative;
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            filter: contrast(1.05) saturate(1.05);
         }
 
         .variant-card:hover {
             border-color: #667eea;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            transform: scale(1.03);
         }
 
-        .variant-card-image {
-            width: 100%;
-            height: 140px;
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+        .variant-card.selected {
+            border: 2px solid #667eea;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.35);
         }
 
-        .variant-card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .variant-card-image-placeholder {
-            font-size: 40px;
-            color: #9ca3af;
-        }
-
-        .variant-card-label {
-            padding: 12px;
-            text-align: center;
-            background: white;
-        }
-
-        .variant-card-label-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 4px;
-        }
-
-        .variant-card-label-subtitle {
-            font-size: 12px;
-            color: #6b7280;
-            line-height: 1.4;
-        }
-
-        .variant-card-tooltip {
+        .variant-card::before {
+            content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .variant-card-image {
+            display: none;
+        }
+
+        .variant-card-image-placeholder {
+            display: none;
+        }
+
+        .variant-card-label {
+            padding: 12px 10px 10px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .variant-card-label-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .variant-card-label-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .variant-card-tooltip {
+            position: absolute;
+            top: 8px;
+            right: 8px;
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 8px;
+            padding: 6px 10px;
             font-size: 11px;
             text-align: center;
+            border-radius: 4px;
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            z-index: 2;
         }
 
         .variant-card:hover .variant-card-tooltip {
@@ -247,14 +381,14 @@
         }
 
         .variants-group {
-            margin-bottom: 32px;
+            margin-bottom: 16px;
         }
 
         .variants-group-title {
             font-size: 16px;
             font-weight: 600;
             color: #4b5563;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             text-align: left;
         }
 
@@ -273,17 +407,58 @@
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
         }
 
-        .continue-btn:hover {
+        .continue-btn:hover:not(:disabled) {
             background: #5568d3;
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
             transform: translateY(-2px);
         }
 
+        .continue-btn:disabled {
+            background: #cbd5e1;
+            color: #94a3b8;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+
+        .selection-confirmation {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: #f0f9ff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .selection-confirmation.active {
+            display: flex;
+        }
+
+        .selection-confirmation-icon {
+            font-size: 20px;
+            color: #667eea;
+        }
+
+        .selection-confirmation-text {
+            flex: 1;
+            font-size: 14px;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        .selection-confirmation-label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
         /* What AI Often Misses Section */
         .ai-misses-section {
-            margin-top: 40px;
-            margin-bottom: 40px;
-            padding: 30px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            padding: 20px;
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
             border-radius: 16px;
             border: 2px solid #f59e0b;
@@ -312,9 +487,9 @@
 
         .ai-misses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            margin-top: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
         }
 
         .ai-miss-card {
@@ -322,7 +497,7 @@
             border: 2px solid #fbbf24;
             border-left: 4px solid #f59e0b;
             border-radius: 12px;
-            padding: 16px;
+            padding: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             display: flex;
@@ -407,12 +582,12 @@
                 gap: 15px;
             }
             
-            .category-card-image {
-                height: 120px;
+            .category-card {
+                height: 180px;
             }
             
             .category-card-content {
-                padding: 12px;
+                padding: 12px 10px 10px;
             }
             
             .category-card-title {
@@ -423,21 +598,17 @@
                 font-size: 12px;
             }
             
-            .category-card-image-placeholder {
-                font-size: 36px;
-            }
-            
             .variants-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: 15px;
             }
             
-            .variant-card-image {
-                height: 120px;
+            .variant-card {
+                height: 160px;
             }
             
             .variant-card-label {
-                padding: 10px;
+                padding: 12px 10px 10px;
             }
             
             .variant-card-label-title {
@@ -451,41 +622,89 @@
             .autocomplete-dropdown {
                 max-height: 300px;
             }
+
+            body {
+                padding: 24px;
+            }
+
+            .container {
+                padding: 24px;
+            }
         }
 
         .category-card {
-            background: white;
+            background: #f9fafb;
             border: 2px solid #e0e0e0;
             border-radius: 12px;
-            padding: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: relative;
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            filter: contrast(1.05) saturate(1.05);
         }
 
         .category-card:hover {
             border-color: #667eea;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            transform: scale(1.03);
+        }
+
+        .category-card.selected {
+            border: 2px solid #667eea;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.35);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .category-card-image {
+            display: none;
+        }
+
+        .category-card-image-placeholder {
+            display: none;
         }
 
         .category-card-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
+            display: none;
+        }
+
+        .category-card-content {
+            padding: 12px 10px 10px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .category-card-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
+            color: white;
+            margin-bottom: 6px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         .category-card-desc {
-            font-size: 12px;
-            color: #666;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .analyze-btn {
@@ -511,7 +730,7 @@
         }
 
         .content-section {
-            margin-top: 20px;
+            margin-top: 12px;
             max-height: 0;
             opacity: 0;
             overflow: hidden;
@@ -521,16 +740,16 @@
         .content-section.active {
             max-height: 5000px;
             opacity: 1;
-            margin-top: 20px;
+            margin-top: 12px;
         }
 
         .decision-card {
             background: white;
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             border-left: 4px solid;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             transition: box-shadow 0.2s ease, transform 0.2s ease;
         }
 
@@ -547,6 +766,22 @@
         .decision-card.safe {
             background: #f0fdf4;
             border-left-color: #22c55e;
+        }
+
+        .decision-card.highlighted-recommendation {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-width: 6px;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+            animation: pulseHighlight 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseHighlight {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+            }
+            50% {
+                box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+            }
         }
 
         /* Beginner summary animation */
@@ -602,8 +837,8 @@
         .ai-blindspot {
             background: white;
             border-left: 4px solid #f59e0b;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
+            margin-bottom: 10px;
             border-radius: 6px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             transition: box-shadow 0.2s ease, transform 0.2s ease;
@@ -642,7 +877,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .card-icon {
@@ -661,6 +896,45 @@
             color: #4b5563;
             font-size: 14px;
             line-height: 1.6;
+        }
+
+        .technical-toggle {
+            background: transparent;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #667eea;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .technical-toggle:hover {
+            background: #f0f4ff;
+            border-color: #667eea;
+        }
+
+        .technical-toggle.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .technical-toggle .toggle-text {
+            font-weight: 500;
+        }
+
+        .technical-toggle .toggle-icon {
+            font-size: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .technical-details {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e0e0e0;
         }
 
         .card-bullets {
@@ -696,6 +970,129 @@
         #comparisonText .card-bullets li:hover {
             background: rgba(59, 130, 246, 0.08);
             transform: translateX(4px);
+        }
+
+        .comparison-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+        }
+
+        .comparison-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        .comparison-card.selected {
+            border: 2px solid #667eea;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.35);
+        }
+
+        .comparison-card-image {
+            width: 100%;
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f9fafb;
+            position: relative;
+            filter: contrast(1.05) saturate(1.05);
+            transition: filter 0.25s ease;
+        }
+
+        .comparison-card-image::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .comparison-card-content {
+            padding: 16px;
+        }
+
+        .comparison-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .comparison-card-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .comparison-card-detail-label {
+            font-weight: 600;
+            color: #6b7280;
+            min-width: 110px;
+            margin-right: 8px;
+            font-size: 12px;
+        }
+
+        .comparison-card-detail-value {
+            color: #1f2937;
+            flex: 1;
+        }
+
+        .durability-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .durability-low {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .durability-medium {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .durability-high {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .beginner-friendly-yes {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .beginner-friendly-no {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
         }
 
         .decision-card.info .card-bullets li::before {
@@ -798,8 +1195,8 @@
 
         .disclaimer {
             text-align: center;
-            margin-top: 30px;
-            padding: 15px;
+            margin-top: 12px;
+            padding: 12px;
             font-size: 13px;
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.6;
@@ -812,20 +1209,87 @@
             font-style: italic;
         }
 
+        .site-footer {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .footer-content {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .footer-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .footer-note {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .footer-audience {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .site-footer {
+                margin-top: 24px;
+                padding-top: 20px;
+            }
+
+            .footer-content {
+                padding: 16px 0;
+            }
+
+            .footer-title {
+                font-size: 15px;
+            }
+
+            .footer-note {
+                font-size: 12px;
+            }
+
+            .footer-audience {
+                font-size: 11px;
+            }
+        }
+
         .clarification-section {
-            margin-top: 15px;
+            margin-top: 12px;
             padding: 0;
             background: #f8f9fa;
             border-radius: 8px;
             border: 1px solid #dee2e6;
             overflow: hidden;
+            display: none;
+        }
+
+        .clarification-section.active {
+            display: block;
         }
 
         .clarification-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 12px 16px;
             cursor: pointer;
             user-select: none;
             background: #f8f9fa;
@@ -869,11 +1333,34 @@
 
         .clarification-content.expanded {
             max-height: 2000px;
-            padding: 20px;
+            padding: 16px;
+        }
+
+        /* Grid layout for desktop - category and variants side by side */
+        .selection-flow-container {
+            display: block;
+        }
+
+        @media (min-width: 1024px) {
+            .selection-flow-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                align-items: start;
+            }
+
+            .category-section,
+            .variants-section {
+                margin-top: 0;
+            }
+
+            .category-section.active + .variants-section.active {
+                margin-top: 0;
+            }
         }
 
         .question-group {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .question-group label {
@@ -902,7 +1389,7 @@
         }
 
         .clarification-actions {
-            margin-top: 25px;
+            margin-top: 12px;
             display: flex;
             gap: 10px;
         }
@@ -936,8 +1423,8 @@
         }
 
         .export-section {
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: 12px;
+            padding: 16px;
             background: #f8f9fa;
             border-radius: 8px;
             border-top: 3px solid #667eea;
@@ -1024,8 +1511,8 @@
         }
 
         .pricing-section {
-            margin-top: 30px;
-            padding: 25px;
+            margin-top: 12px;
+            padding: 16px;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border-radius: 8px;
             border: 2px dashed #dee2e6;
@@ -1230,10 +1717,13 @@
         
         <div class="input-section">
             <div class="input-wrapper">
+                <div class="search-icon-wrapper">
+                    <span class="search-icon">🔍</span>
+                </div>
                 <input 
                     type="text" 
                     id="productInput" 
-                    placeholder="Search for a product (e.g. cricket bat, safety gloves, forklift)"
+                    placeholder="Search for a product (e.g. Cricket Bat, Forklift, Safety Gloves)"
                     autocomplete="off"
                 />
                 <button class="analyze-btn" id="analyzeBtn" style="display: none;">Analyse Product</button>
@@ -1241,15 +1731,29 @@
             <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
         </div>
 
-        <div id="categorySection" class="category-section">
-            <h3>Choose the type</h3>
-            <div class="category-grid" id="categoryGrid"></div>
-        </div>
+        <div class="selection-flow-container">
+            <div id="categorySection" class="category-section">
+                <h3>Choose the type</h3>
+                <div class="category-grid" id="categoryGrid"></div>
+                <div class="selection-confirmation" id="categorySelectionConfirmation">
+                    <span class="selection-confirmation-icon">✓</span>
+                    <span class="selection-confirmation-text">
+                        <span class="selection-confirmation-label">Selected:</span> <span id="selectedCategoryName"></span>
+                    </span>
+                </div>
+            </div>
 
-        <div id="variantsSection" class="variants-section">
-            <h3>Common Variants & Options</h3>
-            <div id="variantsContainer"></div>
-            <button class="continue-btn" id="continueBtn" style="display: none;">Continue to Analysis</button>
+            <div id="variantsSection" class="variants-section">
+                <h3>Common Variants & Options</h3>
+                <div id="variantsContainer"></div>
+                <div class="selection-confirmation" id="variantSelectionConfirmation">
+                    <span class="selection-confirmation-icon">✓</span>
+                    <span class="selection-confirmation-text">
+                        <span class="selection-confirmation-label">Selected:</span> <span id="selectedVariantName"></span>
+                    </span>
+                </div>
+                <button class="continue-btn" id="continueBtn" style="display: none;" disabled>Continue to Analysis</button>
+            </div>
         </div>
 
         <div id="clarificationSection" class="clarification-section">
@@ -1276,7 +1780,7 @@
             <div class="decision-card info">
                 <div class="card-header">
                     <span class="card-icon">📋</span>
-                    <h2 class="card-title">1. Product Overview</h2>
+                    <h2 class="card-title">Product Overview</h2>
                 </div>
                 <div class="card-content">
                     <p class="description" id="overviewText"></p>
@@ -1285,10 +1789,10 @@
         </div>
 
         <div id="beginnerRecommendation" class="content-section" style="display: none;">
-            <div class="decision-card safe">
+            <div class="decision-card safe highlighted-recommendation">
                 <div class="card-header">
                     <span class="card-icon">✨</span>
-                    <h2 class="card-title">Beginner Recommendation</h2>
+                    <h2 class="card-title">What Most Buyers Choose</h2>
                 </div>
                 <div class="card-content">
                     <p class="description" id="beginnerRecommendationText"></p>
@@ -1300,10 +1804,17 @@
             <div class="decision-card info">
                 <div class="card-header">
                     <span class="card-icon">⚙️</span>
-                    <h2 class="card-title">2. Key Attributes / Specifications</h2>
+                    <h2 class="card-title">Common options</h2>
+                    <button class="technical-toggle" id="technicalToggle" style="display: none;">
+                        <span class="toggle-text">Show technical details (optional)</span>
+                        <span class="toggle-icon">▼</span>
+                    </button>
                 </div>
                 <div class="card-content">
                     <ul class="card-bullets" id="attributesList"></ul>
+                    <div class="technical-details" id="technicalDetails" style="display: none;">
+                        <ul class="card-bullets" id="technicalList"></ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1312,7 +1823,7 @@
             <div class="decision-card info">
                 <div class="card-header">
                     <span class="card-icon">📦</span>
-                    <h2 class="card-title">3. Variants & Options</h2>
+                    <h2 class="card-title">Choose the type</h2>
                 </div>
                 <div class="card-content">
                     <ul class="card-bullets" id="variantsList"></ul>
@@ -1324,7 +1835,7 @@
             <div class="decision-card safe">
                 <div class="card-header">
                     <span class="card-icon">✅</span>
-                    <h2 class="card-title">4. Real-World Usage Scenarios</h2>
+                    <h2 class="card-title">How it's used</h2>
                 </div>
                 <div class="card-content">
                     <ul class="card-bullets" id="usageScenariosList"></ul>
@@ -1335,9 +1846,9 @@
         <div id="aiMissesSection" class="ai-misses-section" style="display: none;">
             <h3>
                 <span>⚠️</span>
-                What Generic AI Often Misses
+                Important Considerations
             </h3>
-            <div class="section-subtitle">Decision intelligence, not product recommendations</div>
+            <div class="section-subtitle">Key factors buyers often overlook</div>
             <div class="ai-misses-grid" id="aiMissesGrid"></div>
         </div>
 
@@ -1345,7 +1856,7 @@
             <div class="decision-card ai-insight">
                 <div class="card-header">
                     <span class="card-icon">⚠️</span>
-                    <h2 class="card-title">5. AI Insight: What Typical AI Misses</h2>
+                    <h2 class="card-title">Important Considerations</h2>
                 </div>
                 <div class="card-content" id="aiInsightBlindspots">
                     <!-- Blind spots will be inserted here -->
@@ -1366,9 +1877,12 @@
             <div class="decision-card info">
                 <div class="card-header">
                     <span class="card-icon">⚖️</span>
-                    <h2 class="card-title">6. Comparison Insight</h2>
+                    <h2 class="card-title">Key Variants Compared</h2>
                 </div>
-                <div class="card-content" id="comparisonText"></div>
+                <div class="card-content">
+                    <div class="comparison-cards-grid" id="comparisonCards"></div>
+                    <div id="comparisonText" style="display: none;"></div>
+                </div>
             </div>
         </div>
 
@@ -1453,6 +1967,15 @@
         This is an early-stage Product Intelligence MVP using illustrative data. The platform demonstrates structured decision-support logic, not generic AI content generation.
     </div>
 
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-title">Product Intelligence MVP</div>
+            <div class="footer-subtitle">Early-stage</div>
+            <div class="footer-note">Illustrative data — not commercial advice</div>
+            <div class="footer-audience">Built for businesses, warehouses, and operational teams</div>
+        </div>
+    </footer>
+
     <script>
         // Store context answers
         let contextAnswers = {};
@@ -1462,6 +1985,8 @@
         let currentContent = null;
         let currentView = 'beginner'; // 'beginner' or 'expert'
         let selectedProduct = null;
+        let selectedType = null; // Selected category type
+        let selectedVariant = null; // Selected variant
 
         // Mock product database
         const productDatabase = {
@@ -1472,20 +1997,20 @@
                         name: 'Leather Ball Bat', 
                         icon: '🏏', 
                         desc: 'Used in professional matches and competitive cricket', 
-                        imageUrl: 'https://via.placeholder.com/200x140/667eea/ffffff?text=Leather+Bat',
+                        imageUrl: 'images/cricket/leather-bat.jpg',
                         variants: {
                             'Handle Length': [
-                                { label: 'Short Handle', subtitle: '28-30 inches', imageUrl: 'https://via.placeholder.com/160x140/667eea/ffffff?text=Short', tooltip: 'Better control, lighter swing' },
-                                { label: 'Long Handle', subtitle: '32-34 inches', imageUrl: 'https://via.placeholder.com/160x140/8b5cf6/ffffff?text=Long', tooltip: 'More power, extended reach' }
+                                { label: 'Short Handle', subtitle: '28-30 inches', imageUrl: 'images/cricket/leather-bat-short-handle.jpg', tooltip: 'Better control, lighter swing' },
+                                { label: 'Long Handle', subtitle: '32-34 inches', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'More power, extended reach' }
                             ],
                             'Willow Type': [
-                                { label: 'English Willow', subtitle: 'Premium quality', imageUrl: 'https://via.placeholder.com/160x140/22c55e/ffffff?text=English', tooltip: 'Professional grade, superior performance' },
-                                { label: 'Kashmir Willow', subtitle: 'Budget friendly', imageUrl: 'https://via.placeholder.com/160x140/f59e0b/ffffff?text=Kashmir', tooltip: 'Affordable, good for practice' }
+                                { label: 'English Willow', subtitle: 'Premium quality', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Professional grade, superior performance' },
+                                { label: 'Kashmir Willow', subtitle: 'Budget friendly', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'Affordable, good for practice' }
                             ],
                             'Weight Range': [
-                                { label: 'Light (1.1-1.2 kg)', subtitle: 'Quick swing', imageUrl: 'https://via.placeholder.com/160x140/3b82f6/ffffff?text=Light', tooltip: 'Easier to handle, faster strokes' },
-                                { label: 'Medium (1.2-1.3 kg)', subtitle: 'Balanced', imageUrl: 'https://via.placeholder.com/160x140/6366f1/ffffff?text=Medium', tooltip: 'Good balance of power and control' },
-                                { label: 'Heavy (1.3-1.4 kg)', subtitle: 'Maximum power', imageUrl: 'https://via.placeholder.com/160x140/ec4899/ffffff?text=Heavy', tooltip: 'More power, requires strength' }
+                                { label: 'Light (1.1-1.2 kg)', subtitle: 'Quick swing', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop', tooltip: 'Easier to handle, faster strokes' },
+                                { label: 'Medium (1.2-1.3 kg)', subtitle: 'Balanced', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Good balance of power and control' },
+                                { label: 'Heavy (1.3-1.4 kg)', subtitle: 'Maximum power', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'More power, requires strength' }
                             ]
                         }
                     },
@@ -1493,15 +2018,15 @@
                         name: 'Tennis Ball Bat', 
                         icon: '🏏', 
                         desc: 'Designed for casual play and practice sessions', 
-                        imageUrl: 'https://via.placeholder.com/200x140/22c55e/ffffff?text=Tennis+Bat',
+                        imageUrl: 'images/cricket/tennis-bat.jpg',
                         variants: {
                             'Size': [
-                                { label: 'Junior', subtitle: 'Ages 5-10', imageUrl: 'https://via.placeholder.com/160x140/22c55e/ffffff?text=Junior', tooltip: 'Smaller size for kids' },
-                                { label: 'Senior', subtitle: 'Standard size', imageUrl: 'https://via.placeholder.com/160x140/10b981/ffffff?text=Senior', tooltip: 'Full-size for adults' }
+                                { label: 'Junior', subtitle: 'Ages 5-10', imageUrl: 'images/cricket/tennis-bat-junior.jpg', tooltip: 'Smaller size for kids' },
+                                { label: 'Senior', subtitle: 'Standard size', imageUrl: 'images/cricket/tennis-bat-senior.jpg', tooltip: 'Full-size for adults' }
                             ],
                             'Material': [
-                                { label: 'Wood', subtitle: 'Traditional', imageUrl: 'https://via.placeholder.com/160x140/059669/ffffff?text=Wood', tooltip: 'Classic feel and durability' },
-                                { label: 'Composite', subtitle: 'Modern', imageUrl: 'https://via.placeholder.com/160x140/34d399/ffffff?text=Composite', tooltip: 'Lightweight and durable' }
+                                { label: 'Wood', subtitle: 'Traditional', imageUrl: 'images/cricket/tennis-bat-wood.jpg', tooltip: 'Classic feel and durability' },
+                                { label: 'Composite', subtitle: 'Modern', imageUrl: 'images/cricket/tennis-bat-composite.jpg', tooltip: 'Lightweight and durable' }
                             ]
                         }
                     },
@@ -1509,12 +2034,12 @@
                         name: 'Plastic Ball Bat', 
                         icon: '🏏', 
                         desc: 'Lightweight option for beginners and children', 
-                        imageUrl: 'https://via.placeholder.com/200x140/f59e0b/ffffff?text=Plastic+Bat',
+                        imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
                         variants: {
                             'Size': [
-                                { label: 'Small', subtitle: 'Kids 5-8 years', imageUrl: 'https://via.placeholder.com/160x140/f59e0b/ffffff?text=Small', tooltip: 'Perfect for young beginners' },
-                                { label: 'Medium', subtitle: 'Kids 8-12 years', imageUrl: 'https://via.placeholder.com/160x140/fbbf24/ffffff?text=Medium', tooltip: 'Growing players' },
-                                { label: 'Large', subtitle: 'Teens & adults', imageUrl: 'https://via.placeholder.com/160x140/fcd34d/ffffff?text=Large', tooltip: 'Full-size lightweight option' }
+                                { label: 'Small', subtitle: 'Kids 5-8 years', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop', tooltip: 'Perfect for young beginners' },
+                                { label: 'Medium', subtitle: 'Kids 8-12 years', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'Growing players' },
+                                { label: 'Large', subtitle: 'Teens & adults', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Full-size lightweight option' }
                             ]
                         }
                     },
@@ -1522,12 +2047,12 @@
                         name: 'Training Bat', 
                         icon: '🏏', 
                         desc: 'Specialized bat for practice and skill development', 
-                        imageUrl: 'https://via.placeholder.com/200x140/8b5cf6/ffffff?text=Training+Bat',
+                        imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop',
                         variants: {
                             'Type': [
-                                { label: 'Heavy Bat', subtitle: 'Strength training', imageUrl: 'https://via.placeholder.com/160x140/8b5cf6/ffffff?text=Heavy', tooltip: 'Builds wrist and arm strength' },
-                                { label: 'Light Bat', subtitle: 'Speed training', imageUrl: 'https://via.placeholder.com/160x140/a78bfa/ffffff?text=Light', tooltip: 'Improves swing speed' },
-                                { label: 'Weighted Bat', subtitle: 'Conditioning', imageUrl: 'https://via.placeholder.com/160x140/c084fc/ffffff?text=Weighted', tooltip: 'Advanced training tool' }
+                                { label: 'Heavy Bat', subtitle: 'Strength training', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=200&fit=crop', tooltip: 'Builds wrist and arm strength' },
+                                { label: 'Light Bat', subtitle: 'Speed training', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop', tooltip: 'Improves swing speed' },
+                                { label: 'Weighted Bat', subtitle: 'Conditioning', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop', tooltip: 'Advanced training tool' }
                             ]
                         }
                     }
@@ -1536,117 +2061,141 @@
             'cricket ball': {
                 name: 'Cricket Ball',
                 categories: [
-                    { name: 'Red Leather Ball', icon: '⚾', desc: 'Standard ball for test matches and first-class cricket' },
-                    { name: 'White Leather Ball', icon: '⚾', desc: 'Used in limited-overs and day-night matches' },
-                    { name: 'Tennis Ball', icon: '⚾', desc: 'Soft ball for casual play and practice' },
-                    { name: 'Plastic Ball', icon: '⚾', desc: 'Durable option for street cricket and beginners' }
+                    { name: 'Red Leather Ball', icon: '⚾', desc: 'Standard ball for test matches and first-class cricket', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop' },
+                    { name: 'White Leather Ball', icon: '⚾', desc: 'Used in limited-overs and day-night matches', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop' },
+                    { name: 'Tennis Ball', icon: '⚾', desc: 'Soft ball for casual play and practice', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop' },
+                    { name: 'Plastic Ball', icon: '⚾', desc: 'Durable option for street cricket and beginners', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop' }
                 ]
             },
             'cricket kit': {
                 name: 'Cricket Kit',
                 categories: [
-                    { name: 'Professional Kit', icon: '🎒', desc: 'Complete set for competitive cricket' },
-                    { name: 'Beginner Kit', icon: '🎒', desc: 'Essential equipment for new players' },
-                    { name: 'Practice Kit', icon: '🎒', desc: 'Basic kit for training sessions' }
+                    { name: 'Professional Kit', icon: '🎒', desc: 'Complete set for competitive cricket', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop' },
+                    { name: 'Beginner Kit', icon: '🎒', desc: 'Essential equipment for new players', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop' },
+                    { name: 'Practice Kit', icon: '🎒', desc: 'Basic kit for training sessions', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop' }
                 ]
             },
             'safety gloves': {
                 name: 'Safety Gloves',
                 categories: [
-                    { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades' },
-                    { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals' },
-                    { name: 'Heat-Resistant Gloves', icon: '🧤', desc: 'Protection from high temperatures' },
-                    { name: 'General Purpose Gloves', icon: '🧤', desc: 'Multi-purpose protection for various tasks' }
+                    { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    { name: 'Heat-Resistant Gloves', icon: '🧤', desc: 'Protection from high temperatures', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    { name: 'General Purpose Gloves', icon: '🧤', desc: 'Multi-purpose protection for various tasks', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' }
                 ]
             },
             'forklift': {
                 name: 'Forklift',
                 categories: [
-                    { name: 'Electric Forklift', icon: '🚜', desc: 'Indoor use with zero emissions' },
-                    { name: 'Diesel Forklift', icon: '🚜', desc: 'Heavy-duty outdoor operations' },
-                    { name: 'LPG Forklift', icon: '🚜', desc: 'Versatile fuel option for various environments' },
-                    { name: 'Pallet Jack', icon: '🚜', desc: 'Manual handling for smaller loads' }
+                    { name: 'Electric Forklift', icon: '🚜', desc: 'Indoor use with zero emissions', imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
+                    { name: 'Diesel Forklift', icon: '🚜', desc: 'Heavy-duty outdoor operations', imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
+                    { name: 'LPG Forklift', icon: '🚜', desc: 'Versatile fuel option for various environments', imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' },
+                    { name: 'Pallet Jack', icon: '🚜', desc: 'Manual handling for smaller loads', imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop' }
                 ]
             },
             'helmet': {
                 name: 'Helmet',
                 categories: [
-                    { name: 'Sports Helmet', icon: '⛑️', desc: 'Protection for cricket, cycling, and other sports' },
-                    { name: 'Safety Helmet', icon: '⛑️', desc: 'Industrial and construction safety' },
-                    { name: 'Motorcycle Helmet', icon: '⛑️', desc: 'Road safety for motorcyclists' }
+                    { name: 'Sports Helmet', icon: '⛑️', desc: 'Protection for cricket, cycling, and other sports', imageUrl: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' },
+                    { name: 'Safety Helmet', icon: '⛑️', desc: 'Industrial and construction safety', imageUrl: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' },
+                    { name: 'Motorcycle Helmet', icon: '⛑️', desc: 'Road safety for motorcyclists', imageUrl: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' }
                 ]
             },
             'racket': {
                 name: 'Racket',
                 categories: [
-                    { name: 'Tennis Racket', icon: '🎾', desc: 'For tennis court play' },
-                    { name: 'Badminton Racket', icon: '🏸', desc: 'Lightweight for badminton courts' },
-                    { name: 'Squash Racket', icon: '🎾', desc: 'Compact design for squash courts' }
+                    { name: 'Tennis Racket', icon: '🎾', desc: 'For tennis court play', imageUrl: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' },
+                    { name: 'Badminton Racket', icon: '🏸', desc: 'Lightweight for badminton courts', imageUrl: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' },
+                    { name: 'Squash Racket', icon: '🎾', desc: 'Compact design for squash courts', imageUrl: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop' }
                 ]
             },
             'laptop': {
                 name: 'Laptop',
                 categories: [
-                    { name: 'Business Laptop', icon: '💻', desc: 'Professional use and productivity' },
-                    { name: 'Gaming Laptop', icon: '💻', desc: 'High-performance for gaming' },
-                    { name: 'Student Laptop', icon: '💻', desc: 'Affordable option for education' }
+                    { name: 'Business Laptop', icon: '💻', desc: 'Professional use and productivity', imageUrl: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' },
+                    { name: 'Gaming Laptop', icon: '💻', desc: 'High-performance for gaming', imageUrl: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' },
+                    { name: 'Student Laptop', icon: '💻', desc: 'Affordable option for education', imageUrl: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop' }
                 ]
             },
             'bat': {
                 name: 'Cricket Bat',
                 categories: [
-                    { name: 'Leather Ball Bat', icon: '🏏', desc: 'Used in professional matches and competitive cricket' },
-                    { name: 'Tennis Ball Bat', icon: '🏏', desc: 'Designed for casual play and practice sessions' },
-                    { name: 'Plastic Ball Bat', icon: '🏏', desc: 'Lightweight option for beginners and children' }
+                    { name: 'Leather Ball Bat', icon: '🏏', desc: 'Used in professional matches and competitive cricket', imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop' },
+                    { name: 'Tennis Ball Bat', icon: '🏏', desc: 'Designed for casual play and practice sessions', imageUrl: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop' },
+                    { name: 'Plastic Ball Bat', icon: '🏏', desc: 'Lightweight option for beginners and children', imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop' }
                 ]
             },
             'gloves': {
                 name: 'Safety Gloves',
                 categories: [
-                    { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades' },
-                    { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals' },
-                    { name: 'Heat-Resistant Gloves', icon: '🧤', desc: 'Protection from high temperatures' }
+                    { name: 'Cut-Resistant Gloves', icon: '🧤', desc: 'Protection against sharp objects and blades', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    { name: 'Chemical-Resistant Gloves', icon: '🧤', desc: 'For handling hazardous chemicals', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' },
+                    { name: 'Heat-Resistant Gloves', icon: '🧤', desc: 'Protection from high temperatures', imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop' }
                 ]
             }
         };
 
-        // Get product suggestions based on input
+        // Smart search: Get product suggestions with fuzzy matching and relevance scoring
         function getProductSuggestions(query) {
             if (query.length < 2) return [];
             
-            const lowerQuery = query.toLowerCase();
+            const lowerQuery = query.toLowerCase().trim();
             const suggestions = [];
+            const queryWords = lowerQuery.split(/\s+/).filter(w => w.length > 0);
             
+            // Score products based on match quality
             for (const [key, product] of Object.entries(productDatabase)) {
-                if (key.includes(lowerQuery) || product.name.toLowerCase().includes(lowerQuery)) {
+                const productNameLower = product.name.toLowerCase();
+                const keyLower = key.toLowerCase();
+                let score = 0;
+                
+                // Exact match gets highest score
+                if (keyLower === lowerQuery || productNameLower === lowerQuery) {
+                    score = 100;
+                }
+                // Starts with query
+                else if (keyLower.startsWith(lowerQuery) || productNameLower.startsWith(lowerQuery)) {
+                    score = 80;
+                }
+                // Contains query
+                else if (keyLower.includes(lowerQuery) || productNameLower.includes(lowerQuery)) {
+                    score = 60;
+                }
+                // Word matches
+                else {
+                    queryWords.forEach(word => {
+                        if (keyLower.includes(word)) score += 30;
+                        if (productNameLower.includes(word)) score += 20;
+                        // Check category names
+                        product.categories.forEach(cat => {
+                            if (cat.name.toLowerCase().includes(word)) score += 10;
+                        });
+                    });
+                }
+                
+                if (score > 0) {
+                    // Get product image from first category
+                    const firstCategory = product.categories[0];
+                    const productImage = firstCategory?.imageUrl || null;
+                    
                     suggestions.push({
                         key: key,
                         name: product.name,
-                        icon: product.categories[0]?.icon || '📦'
+                        icon: firstCategory?.icon || '📦',
+                        image: productImage,
+                        category: firstCategory?.name || 'Product',
+                        score: score
                     });
                 }
             }
             
-            // Also check individual words
-            const words = lowerQuery.split(' ');
-            words.forEach(word => {
-                if (word.length >= 2) {
-                    for (const [key, product] of Object.entries(productDatabase)) {
-                        if (key.includes(word) && !suggestions.find(s => s.key === key)) {
-                            suggestions.push({
-                                key: key,
-                                name: product.name,
-                                icon: product.categories[0]?.icon || '📦'
-                            });
-                        }
-                    }
-                }
-            });
+            // Sort by relevance score (highest first)
+            suggestions.sort((a, b) => b.score - a.score);
             
             return suggestions.slice(0, 5);
         }
 
-        // Show autocomplete suggestions
+        // Show autocomplete suggestions with image-first cards
         function showAutocompleteSuggestions(query) {
             const dropdown = document.getElementById('autocompleteDropdown');
             const suggestions = getProductSuggestions(query);
@@ -1660,9 +2209,20 @@
             suggestions.forEach(suggestion => {
                 const card = document.createElement('div');
                 card.className = 'suggestion-card';
+                
+                // Use product image if available, otherwise use gradient with icon
+                const imageStyle = suggestion.image 
+                    ? `background-image: url('${suggestion.image}');`
+                    : `background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 32px;`;
+                
                 card.innerHTML = `
-                    <div class="suggestion-icon">${suggestion.icon}</div>
-                    <div class="suggestion-text">${suggestion.name}</div>
+                    <div class="suggestion-image" style="${imageStyle}">
+                        ${!suggestion.image ? suggestion.icon : ''}
+                    </div>
+                    <div class="suggestion-content">
+                        <div class="suggestion-text">${suggestion.name}</div>
+                        <div class="suggestion-category">${suggestion.category}</div>
+                    </div>
                 `;
                 card.addEventListener('click', () => {
                     selectProduct(suggestion.key);
@@ -1682,6 +2242,10 @@
             document.getElementById('productInput').value = product.name;
             document.getElementById('autocompleteDropdown').classList.remove('active');
             
+            // Reset selection state
+            selectedType = null;
+            selectedVariant = null;
+            
             // Hide all content sections
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
@@ -1690,35 +2254,61 @@
             document.getElementById('exportSection').classList.remove('active');
             document.getElementById('variantsSection').classList.remove('active');
             
+            // Hide any confirmation messages
+            const categoryConfirmation = document.getElementById('categorySelectionConfirmation');
+            const variantConfirmation = document.getElementById('variantSelectionConfirmation');
+            if (categoryConfirmation) categoryConfirmation.classList.remove('active');
+            if (variantConfirmation) variantConfirmation.classList.remove('active');
+            
             // Show category section
             showCategorySection(product);
         }
 
-        // Show category selection cards
+        // Show category selection cards with beginner-friendly flow
         function showCategorySection(product) {
             const categorySection = document.getElementById('categorySection');
             const categoryGrid = document.getElementById('categoryGrid');
+            
+            // Add helpful hint for beginners
+            const existingHint = categorySection.querySelector('.category-hint');
+            if (existingHint) {
+                existingHint.remove();
+            }
+            
+            const hint = document.createElement('div');
+            hint.className = 'category-hint';
+            hint.innerHTML = '<span class="hint-icon">💡</span> <span>Choose the type that matches your needs</span>';
+            categorySection.insertBefore(hint, categoryGrid);
             
             categoryGrid.innerHTML = '';
             product.categories.forEach((category, index) => {
                 const card = document.createElement('div');
                 card.className = 'category-card';
                 
-                // Use image placeholder URL or icon
+                // Set background image if available
                 const imageUrl = category.imageUrl || null;
-                const imagePlaceholder = imageUrl 
-                    ? `<img src="${imageUrl}" alt="${category.name}" onerror="this.parentElement.innerHTML='<div class=\'category-card-image-placeholder\'>${category.icon}</div>'">`
-                    : `<div class="category-card-image-placeholder">${category.icon}</div>`;
+                if (imageUrl) {
+                    card.style.backgroundImage = `url(${imageUrl})`;
+                } else {
+                    // Fallback gradient background if no image
+                    card.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                }
                 
                 card.innerHTML = `
-                    <div class="category-card-image">
-                        ${imagePlaceholder}
-                    </div>
                     <div class="category-card-content">
                         <div class="category-card-title">${category.name}</div>
                         <div class="category-card-desc">${category.desc}</div>
                     </div>
                 `;
+                
+                // Stagger animation for visual appeal
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.3s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
                 
                 card.addEventListener('click', () => {
                     // Remove selection from all cards
@@ -1727,6 +2317,15 @@
                     });
                     // Add selection to clicked card
                     card.classList.add('selected');
+                    
+                    // Save selection state
+                    selectedType = category;
+                    
+                    // Show confirmation message
+                    const confirmation = document.getElementById('categorySelectionConfirmation');
+                    const selectedName = document.getElementById('selectedCategoryName');
+                    selectedName.textContent = category.name;
+                    confirmation.classList.add('active');
                     
                     // Show variants section after a brief delay
                     setTimeout(() => {
@@ -1740,17 +2339,31 @@
             categorySection.classList.add('active');
         }
 
-        // Show variants section
+        // Show variants section with beginner-friendly guidance
         function showVariantsSection(product, category) {
             const variantsSection = document.getElementById('variantsSection');
             const variantsContainer = document.getElementById('variantsContainer');
             const continueBtn = document.getElementById('continueBtn');
+            const variantConfirmation = document.getElementById('variantSelectionConfirmation');
             
             // Hide category section
             document.getElementById('categorySection').classList.remove('active');
             
-            // Clear previous variants
+            // Reset variant selection state
+            selectedVariant = null;
+            
+            // Clear previous variants and hide confirmation
             variantsContainer.innerHTML = '';
+            variantConfirmation.classList.remove('active');
+            
+            // Disable Continue button initially
+            continueBtn.disabled = true;
+            
+            // Add beginner-friendly hint
+            const hint = document.createElement('div');
+            hint.className = 'variants-hint';
+            hint.innerHTML = '<span class="hint-icon">✨</span> <span>Explore your options — click any card to see details</span>';
+            variantsContainer.appendChild(hint);
             
             // Check if category has variants
             if (category.variants && Object.keys(category.variants).length > 0) {
@@ -1771,21 +2384,56 @@
                         const card = document.createElement('div');
                         card.className = 'variant-card';
                         
+                        // Set background image if available
                         const imageUrl = variant.imageUrl || null;
-                        const imagePlaceholder = imageUrl 
-                            ? `<img src="${imageUrl}" alt="${variant.label}" onerror="this.parentElement.innerHTML='<div class=\'variant-card-image-placeholder\'>📦</div>'">`
-                            : `<div class="variant-card-image-placeholder">📦</div>`;
+                        if (imageUrl) {
+                            card.style.backgroundImage = `url(${imageUrl})`;
+                        } else {
+                            // Fallback gradient background if no image
+                            card.style.background = 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)';
+                        }
                         
                         card.innerHTML = `
-                            <div class="variant-card-image">
-                                ${imagePlaceholder}
-                                ${variant.tooltip ? `<div class="variant-card-tooltip">${variant.tooltip}</div>` : ''}
-                            </div>
+                            ${variant.tooltip ? `<div class="variant-card-tooltip">${variant.tooltip}</div>` : ''}
                             <div class="variant-card-label">
                                 <div class="variant-card-label-title">${variant.label}</div>
                                 ${variant.subtitle ? `<div class="variant-card-label-subtitle">${variant.subtitle}</div>` : ''}
                             </div>
                         `;
+                        
+                        // Add click handler for variant selection
+                        card.addEventListener('click', () => {
+                            // Remove selection from all variant cards in this group
+                            variantsGrid.querySelectorAll('.variant-card').forEach(c => {
+                                c.classList.remove('selected');
+                            });
+                            // Add selection to clicked card
+                            card.classList.add('selected');
+                            
+                            // Save selection state
+                            selectedVariant = variant;
+                            
+                            // Show confirmation message
+                            const confirmation = document.getElementById('variantSelectionConfirmation');
+                            const selectedName = document.getElementById('selectedVariantName');
+                            const displayText = variant.subtitle 
+                                ? `${variant.label} – ${variant.subtitle}`
+                                : variant.label;
+                            selectedName.textContent = displayText;
+                            confirmation.classList.add('active');
+                            
+                            // Enable Continue button
+                            const continueBtn = document.getElementById('continueBtn');
+                            continueBtn.disabled = false;
+                            
+                            // Smooth scroll to Continue button
+                            setTimeout(() => {
+                                continueBtn.scrollIntoView({ 
+                                    behavior: 'smooth', 
+                                    block: 'nearest' 
+                                });
+                            }, 100);
+                        });
                         
                         variantsGrid.appendChild(card);
                     });
@@ -1796,11 +2444,14 @@
                 
                 continueBtn.style.display = 'block';
                 continueBtn.onclick = () => {
-                    analyzeProductCategory(product.name, category.name);
+                    if (!continueBtn.disabled) {
+                        analyzeProductCategory(product.name, category.name);
+                    }
                 };
             } else {
                 // No variants, proceed directly to analysis
                 continueBtn.style.display = 'none';
+                continueBtn.disabled = true;
                 setTimeout(() => {
                     analyzeProductCategory(product.name, category.name);
                 }, 300);
@@ -1812,7 +2463,8 @@
 
         // Analyze selected product category
         function analyzeProductCategory(productName, categoryName) {
-            // Hide variants section
+            // Hide selection sections when analysis starts
+            document.getElementById('categorySection').classList.remove('active');
             document.getElementById('variantsSection').classList.remove('active');
             
             // Use the full product name with category for analysis
@@ -2247,29 +2899,29 @@
             return industryExamples[categoryType] || industryExamples.general;
         }
 
-        // Generate AI Blind Spots - specific things AI misses
+        // Generate Important Considerations - key factors buyers often overlook
         function generateAIBlindSpots(categoryType, context, industry, productName) {
             const blindSpots = [];
             
             if (categoryType === 'sports') {
                 blindSpots.push({
                     blindspot: 'proper sizing requirements and age-appropriate usage',
-                    why: 'AI systems focus on general product descriptions rather than individual fit and safety considerations',
+                    why: 'Product descriptions often focus on general features rather than individual fit and safety considerations',
                     consequence: 'Users may select incorrectly sized equipment, leading to injury risk or poor performance'
                 });
                 blindSpots.push({
                     blindspot: 'maintenance requirements for safety-critical components',
-                    why: 'AI descriptions emphasize features but rarely cover ongoing care needed for safety',
+                    why: 'Product information emphasizes features but rarely covers ongoing care needed for safety',
                     consequence: 'Equipment may degrade unnoticed, creating hidden safety hazards during use'
                 });
                 blindSpots.push({
                     blindspot: 'environmental conditions that affect performance or durability',
-                    why: 'AI systems don\'t account for real-world weather, storage, or usage environments',
+                    why: 'Many product descriptions don\'t account for real-world weather, storage, or usage environments',
                     consequence: 'Products may fail prematurely or perform poorly in conditions they weren\'t designed for'
                 });
                 blindSpots.push({
                     blindspot: 'impact forces and stress points that could lead to equipment failure',
-                    why: 'AI lacks understanding of physical mechanics and failure modes',
+                    why: 'Product information often lacks details about physical mechanics and failure modes',
                     consequence: 'Unexpected equipment failure during high-intensity use can cause serious injury'
                 });
             } else if (categoryType === 'food') {
@@ -2461,6 +3113,135 @@
             return notSuitable;
         }
 
+        // Generate visual comparison cards data
+        function generateVisualComparisons(productName, categoryType) {
+            const nameLower = productName.toLowerCase();
+            const comparisons = [];
+            
+            // Cricket Bat comparisons
+            if (nameLower.includes('cricket bat') || nameLower.includes('bat')) {
+                comparisons.push({
+                    title: 'Leather Ball Bat',
+                    image: 'images/cricket/leather-bat.jpg',
+                    bestFor: 'Professional matches and competitive cricket',
+                    durability: 'High',
+                    beginnerFriendly: 'No'
+                });
+                comparisons.push({
+                    title: 'Tennis Ball Bat',
+                    image: 'images/cricket/tennis-bat.jpg',
+                    bestFor: 'Casual play and practice sessions',
+                    durability: 'Medium',
+                    beginnerFriendly: 'Yes'
+                });
+                comparisons.push({
+                    title: 'Plastic Ball Bat',
+                    image: 'images/cricket/plastic-bat.jpg',
+                    bestFor: 'Beginners and children',
+                    durability: 'Low',
+                    beginnerFriendly: 'Yes'
+                });
+            }
+            // Safety Gloves comparisons
+            else if (nameLower.includes('glove') || nameLower.includes('safety')) {
+                comparisons.push({
+                    title: 'Cut-Resistant Gloves',
+                    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop',
+                    bestFor: 'Handling sharp objects and blades',
+                    durability: 'High',
+                    beginnerFriendly: 'Yes'
+                });
+                comparisons.push({
+                    title: 'Chemical-Resistant Gloves',
+                    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop',
+                    bestFor: 'Handling hazardous chemicals',
+                    durability: 'High',
+                    beginnerFriendly: 'No'
+                });
+                comparisons.push({
+                    title: 'General Purpose Gloves',
+                    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop',
+                    bestFor: 'Multi-purpose protection tasks',
+                    durability: 'Medium',
+                    beginnerFriendly: 'Yes'
+                });
+            }
+            // Forklift comparisons
+            else if (nameLower.includes('forklift')) {
+                comparisons.push({
+                    title: 'Electric Forklift',
+                    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop',
+                    bestFor: 'Indoor use with zero emissions',
+                    durability: 'High',
+                    beginnerFriendly: 'Yes'
+                });
+                comparisons.push({
+                    title: 'Diesel Forklift',
+                    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop',
+                    bestFor: 'Heavy-duty outdoor operations',
+                    durability: 'High',
+                    beginnerFriendly: 'No'
+                });
+                comparisons.push({
+                    title: 'Pallet Jack',
+                    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop',
+                    bestFor: 'Manual handling for smaller loads',
+                    durability: 'Medium',
+                    beginnerFriendly: 'Yes'
+                });
+            }
+            // Laptop comparisons
+            else if (nameLower.includes('laptop')) {
+                comparisons.push({
+                    title: 'Business Laptop',
+                    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop',
+                    bestFor: 'Professional use and productivity',
+                    durability: 'High',
+                    beginnerFriendly: 'Yes'
+                });
+                comparisons.push({
+                    title: 'Gaming Laptop',
+                    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop',
+                    bestFor: 'High-performance gaming',
+                    durability: 'High',
+                    beginnerFriendly: 'No'
+                });
+                comparisons.push({
+                    title: 'Student Laptop',
+                    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop',
+                    bestFor: 'Education and basic tasks',
+                    durability: 'Medium',
+                    beginnerFriendly: 'Yes'
+                });
+            }
+            // Racket comparisons
+            else if (nameLower.includes('racket')) {
+                comparisons.push({
+                    title: 'Tennis Racket',
+                    image: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop',
+                    bestFor: 'Tennis court play',
+                    durability: 'High',
+                    beginnerFriendly: 'Yes'
+                });
+                comparisons.push({
+                    title: 'Badminton Racket',
+                    image: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop',
+                    bestFor: 'Badminton courts',
+                    durability: 'Medium',
+                    beginnerFriendly: 'Yes'
+                });
+                comparisons.push({
+                    title: 'Squash Racket',
+                    image: 'https://images.unsplash.com/photo-1622163642999-958314b993f3?w=400&h=300&fit=crop',
+                    bestFor: 'Squash courts',
+                    durability: 'High',
+                    beginnerFriendly: 'No'
+                });
+            }
+            
+            return comparisons;
+        }
+
         // Generate comparison insights
         function generateComparisonInsight(categoryType, context, industry) {
             const comparisons = [];
@@ -2602,14 +3383,12 @@
             let envContext = context.environment || 'typical environments';
             let budgetContext = context.budget || 'standard considerations';
             
-            // Plain language overview for beginners
-            let overview = `This is ${name}, a product you can use for ${userContext.includes('Individual') ? 'personal' : userContext.includes('Business') ? 'business' : 'everyday'} needs. `;
-            overview += `It's designed to work well in ${envContext.toLowerCase()}. `;
-            overview += `You'll find it's a ${budgetContext.includes('Cost-first') ? 'budget-friendly' : budgetContext.includes('Quality-first') ? 'higher-quality' : 'standard'} option that fits most people's needs. `;
-            overview += `Think of it as a practical choice that does what it's supposed to do without being too complicated.`;
+            // Plain language overview for beginners - 1-2 sentences max
+            let overview = `${name} is a ${budgetContext.includes('Cost-first') ? 'budget-friendly' : budgetContext.includes('Quality-first') ? 'quality' : 'standard'} option for ${userContext.includes('Individual') ? 'personal' : userContext.includes('Business') ? 'business' : 'everyday'} use. `;
+            overview += `It works well for most people and does what it's supposed to do.`;
             
             if (context.constraints) {
-                overview += ` Keep in mind: ${context.constraints.toLowerCase()}.`;
+                overview += ` Note: ${context.constraints.toLowerCase()}.`;
             }
             
             // Detect product category and determine category type
@@ -2622,15 +3401,14 @@
             if (nameLower.match(/\b(ball|racket|bat|helmet|glove|shoe|sneaker|equipment|fitness|sport|athletic|gym|workout)\b/)) {
                 categoryType = 'sports';
                 categoryAttributes = [
-                    'Material: Constructed from materials such as synthetic polymers, composite materials, or natural fibers appropriate for the specific item type',
-                    'Size: Available in standard sizing options that accommodate different user body types and skill levels',
-                    'User suitability: Designed with considerations for age, experience level, and intended activity intensity'
+                    'Made from durable materials like wood, plastic, or composite',
+                    'Comes in different sizes to fit different people',
+                    'Suitable for beginners and experienced users'
                 ];
                 categoryDimensions = [
-                    'Length and weight specifications vary by model and intended use',
-                    'Size options typically include standard, large, and extra-large variants',
-                    'Weight classes or categories may be available for competitive use',
-                    'Color and design variations are commonly offered'
+                    'Available in different sizes (small, medium, large)',
+                    'Different weights available',
+                    'Various colors and styles'
                 ];
                 categoryInsight = `General AI-generated explanations of ${name} commonly overlook critical safety and handling considerations such as proper sizing for injury prevention, age-appropriate usage, maintenance requirements for safety-critical components, and environmental conditions that affect performance or durability. AI explanations often fail to mention important handling practices like proper grip techniques, safe storage to prevent damage or degradation, inspection procedures before use, and awareness of impact forces or stress points that could lead to equipment failure. This platform audits AI-generated content to highlight missing context about misuse risks, safety limitations, proper handling procedures, and usage conditions specific to sports equipment.`;
             }
@@ -2638,15 +3416,14 @@
             else if (nameLower.match(/\b(food|snack|cereal|beverage|drink|ingredient|organic|natural|nutrition|meal|recipe)\b/)) {
                 categoryType = 'food';
                 categoryAttributes = [
-                    'Ingredients: Contains standard components typical for products in this category, with specific formulations varying by preparation method',
-                    'Allergens: May contain common allergens such as nuts, dairy, gluten, or soy depending on the product formulation',
-                    'Storage: Requires appropriate storage conditions including temperature control, humidity levels, and shelf-life considerations'
+                    'Contains standard ingredients for this type of product',
+                    'May contain common allergens (check label)',
+                    'Store in a cool, dry place'
                 ];
                 categoryDimensions = [
-                    'Available in various size options such as single-serve, family-size, or bulk packaging',
-                    'Flavor or variety options may include different taste profiles or ingredient combinations',
-                    'Packaging formats vary by intended use and storage requirements',
-                    'Portion sizes and serving recommendations are typically specified'
+                    'Available in single-serve, family-size, or bulk',
+                    'Different flavors and varieties',
+                    'Check expiration date before use'
                 ];
                 categoryInsight = `General AI-generated explanations of ${name} commonly overlook critical safety and handling information such as allergen content, proper storage conditions to prevent spoilage or contamination, expiration and shelf-life considerations, dietary restrictions, and potential food safety risks. AI explanations often fail to mention important handling practices like safe preparation methods, temperature control during storage and serving, cross-contamination prevention, proper hygiene when handling, and recognition of signs of spoilage or contamination. This platform audits AI-generated content to highlight missing context about safety considerations, proper handling procedures, storage limitations, and misuse risks specific to food products.`;
             }
@@ -2654,15 +3431,14 @@
             else if (nameLower.match(/\b(phone|tablet|laptop|computer|device|electronic|tech|charger|cable|battery|screen|display|gadget)\b/)) {
                 categoryType = 'electronics';
                 categoryAttributes = [
-                    'Components: Includes standard electronic components such as processors, memory modules, connectivity interfaces, and power management systems',
-                    'Compatibility: Designed to work with specific operating systems, software versions, or peripheral devices within defined compatibility ranges',
-                    'Power requirements: Operates within specified voltage, current, and power consumption parameters'
+                    'Works with standard devices and software',
+                    'Needs power (battery or plug-in)',
+                    'Compatible with common accessories'
                 ];
                 categoryDimensions = [
-                    'Storage capacity or memory size options are typically available in multiple tiers',
-                    'Model versions may include different feature sets, performance levels, or generation variants',
-                    'Color and finish options are commonly offered across product lines',
-                    'Accessory compatibility and bundle options may vary by configuration'
+                    'Different storage sizes available',
+                    'Various models with different features',
+                    'Multiple color options'
                 ];
                 categoryInsight = `General AI-generated explanations of ${name} commonly overlook critical technical limitations and safety considerations such as compatibility constraints, power and charging requirements, environmental operating conditions, data security considerations, and warranty or support limitations. AI explanations often fail to mention important handling practices like proper charging procedures to prevent overheating, safe storage to avoid physical damage, protection from moisture or extreme temperatures, appropriate handling to prevent drops or impacts, and awareness of battery safety considerations. This platform audits AI-generated content to highlight missing context about compatibility risks, usage limitations, proper handling procedures, and potential misuse scenarios specific to electronic devices.`;
             }
@@ -2670,60 +3446,58 @@
             else if (nameLower.match(/\b(shirt|pants|dress|jacket|clothing|apparel|fabric|textile|garment|wear)\b/)) {
                 categoryType = 'clothing';
                 categoryAttributes = [
-                    'Material composition: Made from textile materials such as cotton, polyester, wool, or blended fabrics with specific care requirements',
-                    'Size and fit: Available in standard sizing systems with fit considerations for different body types',
-                    'Care instructions: Requires specific washing, drying, and maintenance procedures to preserve quality and appearance'
+                    'Made from materials like cotton, polyester, or blends',
+                    'Available in standard sizes (S, M, L, XL)',
+                    'Follow care label instructions'
                 ];
                 categoryDimensions = [
-                    'Size options typically include standard sizing from small to extra-large, with extended sizes sometimes available',
-                    'Color and pattern variations are commonly offered within product lines',
-                    'Style variants may include different cuts, fits, or design elements',
-                    'Seasonal or occasion-specific versions may be available'
+                    'Sizes from small to extra-large',
+                    'Various colors and patterns',
+                    'Different styles and fits available'
                 ];
                 categoryInsight = `General AI-generated explanations of ${name} commonly overlook important considerations and safety aspects such as proper sizing and fit guidance, care instructions to maintain quality, material-specific limitations, durability expectations, and suitability for different occasions or environments. AI explanations often fail to mention important handling practices like proper washing techniques to preserve fabric integrity, safe storage to prevent damage or discoloration, awareness of material-specific care requirements, recognition of signs of wear or damage, and appropriate handling of delicate or specialized materials. This platform audits AI-generated content to highlight missing context about care limitations, fit considerations, proper handling procedures, and usage constraints specific to clothing and apparel.`;
             }
             // Default / general products
             else {
                 categoryAttributes = [
-                    'Material type: Constructed from materials standard to this product category with appropriate durability characteristics',
-                    'Core specifications: Meets typical industry standards and quality benchmarks for products of this nature',
-                    'Design features: Incorporates design elements that support primary functionality and user needs'
+                    'Made from standard materials for this product type',
+                    'Meets typical quality standards',
+                    'Designed for everyday use'
                 ];
                 categoryDimensions = [
-                    'Available in standard sizes common to this product category',
-                    'Multiple variants may include different color, style, or configuration options',
-                    'Packaging and presentation follow industry standards',
-                    'Weight and dimensions vary by specific variant selected'
+                    'Available in standard sizes',
+                    'Different colors and styles',
+                    'Various options to choose from'
                 ];
                 categoryInsight = `General AI-generated explanations of ${name} commonly overlook important context including safety and handling considerations such as usage limits, storage guidance, environmental conditions, compatibility requirements, and maintenance needs. AI explanations often fail to mention important handling practices like proper storage methods to preserve product integrity, safe handling techniques to prevent damage or injury, awareness of material limitations or degradation factors, recognition of signs of wear or deterioration, and appropriate usage conditions for optimal performance and safety. This platform audits AI-generated content to highlight missing context, safety considerations, proper handling procedures, limitations, and misuse risks specific to this product category.`;
             }
             
-            // Key Attributes / Specifications - use category-specific attributes, tailored by industry and context
+            // Key Attributes - simple for beginners
             let attributes = [...categoryAttributes];
             
-            // Add industry-specific attributes
+            // Technical details - hidden by default
+            let technicalDetails = [];
             if (industry === 'E-commerce') {
-                attributes.push('Product listing compatibility and digital catalog integration');
-                attributes.push('Customer review and rating considerations');
+                technicalDetails.push('Product listing compatibility and digital catalog integration');
+                technicalDetails.push('Customer review and rating considerations');
             } else if (industry === 'Warehouse / Logistics') {
-                attributes.push('Storage and handling efficiency specifications');
-                attributes.push('Inventory management and tracking compatibility');
+                technicalDetails.push('Storage and handling efficiency specifications');
+                technicalDetails.push('Inventory management and tracking compatibility');
             } else if (industry === 'Manufacturing / Industrial') {
-                attributes.push('Production line integration and compatibility requirements');
-                attributes.push('Quality control and compliance specifications');
+                technicalDetails.push('Production line integration and compatibility requirements');
+                technicalDetails.push('Quality control and compliance specifications');
             } else if (industry === 'Technology / SaaS') {
-                attributes.push('API and integration capabilities');
-                attributes.push('Scalability and performance specifications');
+                technicalDetails.push('API and integration capabilities');
+                technicalDetails.push('Scalability and performance specifications');
             }
             
-            // Add context-specific attributes
             if (context.intendedUser && context.intendedUser.includes('Business')) {
-                attributes.push('Commercial-grade specifications suitable for business use');
+                technicalDetails.push('Commercial-grade specifications suitable for business use');
             }
             if (context.budget && context.budget.includes('Quality-first')) {
-                attributes.push('Premium materials and construction for enhanced durability');
+                technicalDetails.push('Premium materials and construction for enhanced durability');
             } else if (context.budget && context.budget.includes('Cost-first')) {
-                attributes.push('Value-oriented specifications balancing cost and functionality');
+                technicalDetails.push('Value-oriented specifications balancing cost and functionality');
             }
             
             // Dimensions / Variants - use category-specific dimensions, tailored by context
@@ -2774,6 +3548,7 @@
             return {
                 overview: overview,
                 attributes: attributes,
+                technicalDetails: technicalDetails,
                 dimensions: dimensions,
                 steps: steps,
                 insight: insight,
@@ -2784,27 +3559,38 @@
             };
         }
 
-        // Format content for beginner view
+        // Format content for beginner view - minimal specs, highlighted recommendations
         function formatBeginnerView(content, productName, categoryType) {
             const beginner = {
                 overview: content.overview, // Already simplified
-                attributes: content.attributes.map(attr => {
+                beginnerRecommendation: content.beginnerRecommendation, // Highlight recommendations
+                // Minimal specs - only show 2-3 most important attributes
+                attributes: content.attributes.slice(0, 3).map(attr => {
                     // Simplify technical language
                     return attr.replace(/Constructed from materials such as/g, 'Made from')
                                .replace(/Designed with considerations for/g, 'Good for')
-                               .replace(/Available in standard sizing options/g, 'Comes in different sizes');
+                               .replace(/Available in standard sizing options/g, 'Comes in different sizes')
+                               .replace(/Material:/g, '')
+                               .replace(/Size:/g, '')
+                               .replace(/User suitability:/g, '');
                 }),
-                dimensions: content.dimensions.map(dim => {
+                // Minimal dimensions
+                dimensions: content.dimensions.slice(0, 3).map(dim => {
                     return dim.replace(/typically include/g, 'include')
                               .replace(/may be available/g, 'available')
                               .replace(/specifications vary/g, 'options vary');
                 }),
-                steps: content.steps.map(step => {
+                // Simplified usage
+                steps: content.steps.slice(0, 3).map(step => {
                     return step.replace(/Employed in/g, 'Used in')
                                .replace(/Utilized for/g, 'Good for')
-                               .replace(/Applied in/g, 'Used in');
+                               .replace(/Applied in/g, 'Used in')
+                               .replace(/Listed in online product catalogs with detailed specifications for customer browsing/g, 'Sold online')
+                               .replace(/Displayed in search results with filtering options/g, 'Found in search results')
+                               .replace(/Packaged for direct-to-consumer shipping/g, 'Shipped to customers');
                 }),
-                aiBlindSpots: content.aiBlindSpots.map(bs => ({
+                // Simplified AI blind spots
+                aiBlindSpots: content.aiBlindSpots.slice(0, 3).map(bs => ({
                     blindspot: bs.blindspot.replace(/proper sizing requirements/g, 'getting the right size')
                                            .replace(/maintenance requirements/g, 'taking care of it'),
                     why: bs.why.replace(/AI systems focus on/g, 'AI focuses on')
@@ -2813,40 +3599,66 @@
                                                .replace(/Equipment may/g, 'It might')
                                                .replace(/Products may/g, 'It might')
                 })),
-                notSuitable: content.notSuitable.slice(0, 3).map(item => {
+                // Minimal not suitable list
+                notSuitable: content.notSuitable.slice(0, 2).map(item => {
                     return item.replace(/Users who require/g, 'Not for people who need')
                                 .replace(/Environments with/g, 'Not for places with')
                                 .replace(/Individuals with/g, 'Not for people with');
                 }),
-                comparisons: content.comparisons.slice(0, 2).map(comp => ({
+                // Simplified comparisons - no trade-offs
+                comparisons: content.comparisons.slice(0, 1).map(comp => ({
                     title: comp.title.replace(/Budget vs Premium/g, 'Cheap vs Expensive'),
                     content: comp.content.replace(/Cost-effective options/g, 'Cheaper options')
                                          .replace(/Premium variants/g, 'Expensive versions')
                                          .replace(/initial cost/g, 'price')
+                                         .substring(0, 150) + '...' // Limit length
                 })),
                 beginnerSummary: content.beginnerSummary
             };
             return beginner;
         }
 
-        // Format content for expert view
+        // Format content for expert view - full specs, trade-offs, usage constraints
         function formatExpertView(content, productName, categoryType, context, industry) {
             const expert = {
                 overview: content.overview + (industry !== 'General / Consumer' ? ` For ${industry} operations, consider scalability, compliance requirements, and operational efficiency.` : ''),
-                attributes: [...content.attributes, 
+                // Full specifications
+                attributes: [
+                    ...content.attributes,
+                    ...(content.technicalDetails || []),
                     'Technical specifications and performance metrics',
                     'Material composition and construction details',
                     'Compatibility and integration requirements',
                     'Maintenance schedules and service intervals',
-                    'Performance benchmarks and limitations'
+                    'Performance benchmarks and limitations',
+                    'Environmental operating conditions and constraints',
+                    'Certification and compliance standards'
                 ],
-                dimensions: [...content.dimensions,
+                // Full dimensions with technical details
+                dimensions: [
+                    ...content.dimensions,
                     'Precise measurements and tolerances',
                     'Weight distribution and balance specifications',
                     'Compatibility with standard accessories or components',
-                    'Custom configuration options and variants'
+                    'Custom configuration options and variants',
+                    'Dimensional constraints and space requirements',
+                    'Weight limits and capacity specifications'
                 ],
-                steps: content.steps.map(step => step + ' (Technical considerations: performance metrics, efficiency ratings, and operational parameters.)'),
+                // Full usage scenarios with constraints
+                steps: content.steps.map(step => {
+                    let enhanced = step;
+                    // Add usage constraints
+                    if (step.includes('online') || step.includes('shipping')) {
+                        enhanced += ' (Constraints: packaging requirements, shipping regulations, delivery timeframes)';
+                    } else if (step.includes('warehouse') || step.includes('storage')) {
+                        enhanced += ' (Constraints: storage capacity, handling equipment requirements, environmental conditions)';
+                    } else if (step.includes('manufacturing') || step.includes('production')) {
+                        enhanced += ' (Constraints: production line compatibility, quality control requirements, throughput limitations)';
+                    } else {
+                        enhanced += ' (Technical considerations: performance metrics, efficiency ratings, and operational parameters)';
+                    }
+                    return enhanced;
+                }),
                 aiBlindSpots: [
                     ...content.aiBlindSpots,
                     {
@@ -2872,26 +3684,36 @@
                     'Systems requiring precise integration with existing technical infrastructure',
                     'Operations with strict performance benchmarks that the product cannot achieve'
                 ],
+                // Full trade-offs and usage constraints
                 comparisons: [
                     ...content.comparisons,
                     {
                         title: 'Performance vs Cost Trade-offs',
-                        content: `Evaluate total cost of ownership including training, maintenance, and downtime. Standard options may require more staff time but lower upfront costs. Enterprise solutions offer better efficiency but require significant investment and change management.`
+                        content: `Evaluate total cost of ownership including training, maintenance, and downtime. Standard options may require more staff time but lower upfront costs. Enterprise solutions offer better efficiency but require significant investment and change management. Usage constraint: Budget limitations may restrict feature access or scalability options.`
                     },
                     {
                         title: 'Compliance and Risk Considerations',
-                        content: `Standard products may meet basic requirements but lack certifications needed for regulated industries. Premium options often include compliance documentation, audit trails, and regulatory support but at higher cost. Assess your specific compliance needs before selecting.`
+                        content: `Standard products may meet basic requirements but lack certifications needed for regulated industries. Premium options often include compliance documentation, audit trails, and regulatory support but at higher cost. Usage constraint: Non-compliant products may face legal restrictions or operational limitations in regulated environments.`
+                    },
+                    {
+                        title: 'Scalability and Capacity Constraints',
+                        content: `Entry-level options may have capacity limitations that require upgrades as usage grows. Mid-range solutions balance current needs with future growth potential. Premium options offer maximum scalability but may include unused capacity costs. Usage constraint: Exceeding capacity limits may result in performance degradation or service interruptions.`
+                    },
+                    {
+                        title: 'Integration and Compatibility Constraints',
+                        content: `Products may require specific software versions, hardware configurations, or network setups. Compatibility issues can create integration challenges with existing systems. Usage constraint: Incompatible systems may require additional middleware, custom development, or system modifications.`
                     }
                 ],
                 beginnerSummary: [
                     content.beginnerSummary[0],
-                    `For business use, evaluate operational impact, compliance requirements, and scalability needs.`,
+                    `For expert use, evaluate technical specifications, performance benchmarks, and integration requirements.`,
                     `Consider total cost of ownership including training, maintenance, and potential downtime.`,
                     `Assess vendor support quality, warranty terms, and supply chain reliability.`,
-                    `Bottom line: Ensure the product aligns with your business operations, compliance needs, and growth plans.`
+                    `Review usage constraints, compatibility requirements, and scalability limitations.`,
+                    `Bottom line: Ensure the product aligns with your technical requirements, compliance needs, and operational constraints.`
                 ]
             };
-            return business;
+            return expert;
         }
 
         // Display product information
@@ -3068,19 +3890,33 @@
             document.getElementById('overviewText').textContent = displayContent.overview;
             setTimeout(() => {
                 document.getElementById('productOverview').classList.add('active');
+                // Auto-scroll to analysis output
+                setTimeout(() => {
+                    document.getElementById('productOverview').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
             }, 50);
             
-            // Show Beginner Recommendation (only in Beginner View)
+            // Show Beginner Recommendation (only in Beginner View) - Highlight recommendations
             const beginnerRecommendationSection = document.getElementById('beginnerRecommendation');
+            const recommendationCard = beginnerRecommendationSection.querySelector('.decision-card');
             if (view === 'beginner' && displayContent.beginnerRecommendation) {
                 document.getElementById('beginnerRecommendationText').textContent = displayContent.beginnerRecommendation;
                 beginnerRecommendationSection.style.display = 'block';
+                if (recommendationCard) {
+                    recommendationCard.classList.add('highlighted-recommendation');
+                }
                 setTimeout(() => {
                     beginnerRecommendationSection.classList.add('active');
                 }, 75);
             } else {
                 beginnerRecommendationSection.style.display = 'none';
                 beginnerRecommendationSection.classList.remove('active');
+                if (recommendationCard) {
+                    recommendationCard.classList.remove('highlighted-recommendation');
+                }
             }
             
             // Show Key Attributes / Specifications
@@ -3091,6 +3927,28 @@
                 li.textContent = attr;
                 attributesList.appendChild(li);
             });
+            
+            // Show/hide technical details toggle
+            const technicalToggle = document.getElementById('technicalToggle');
+            const technicalDetails = document.getElementById('technicalDetails');
+            const technicalList = document.getElementById('technicalList');
+            
+            if (content.technicalDetails && content.technicalDetails.length > 0) {
+                technicalToggle.style.display = 'flex';
+                technicalList.innerHTML = '';
+                content.technicalDetails.forEach(detail => {
+                    const li = document.createElement('li');
+                    li.textContent = detail;
+                    technicalList.appendChild(li);
+                });
+                technicalDetails.style.display = 'none'; // Hidden by default
+                technicalToggle.classList.remove('expanded');
+                technicalToggle.querySelector('.toggle-text').textContent = 'Show technical details (optional)';
+            } else {
+                technicalToggle.style.display = 'none';
+                technicalDetails.style.display = 'none';
+            }
+            
             setTimeout(() => {
                 document.getElementById('keyAttributes').classList.add('active');
             }, 100);
@@ -3159,17 +4017,60 @@
                 document.getElementById('aiInsight').classList.add('active');
             }, 250);
             
-            // Show Comparison Insight (as bullets)
-            const comparisonContainer = document.getElementById('comparisonText');
-            comparisonContainer.innerHTML = '';
-            const comparisonList = document.createElement('ul');
-            comparisonList.className = 'card-bullets';
-            displayContent.comparisons.forEach(comparison => {
-                const li = document.createElement('li');
-                li.innerHTML = `<strong>${comparison.title}:</strong> ${comparison.content}`;
-                comparisonList.appendChild(li);
-            });
-            comparisonContainer.appendChild(comparisonList);
+            // Show Comparison Insight (visual cards)
+            const comparisonCardsContainer = document.getElementById('comparisonCards');
+            const comparisonTextContainer = document.getElementById('comparisonText');
+            comparisonCardsContainer.innerHTML = '';
+            comparisonTextContainer.innerHTML = '';
+            
+            // Generate visual comparisons
+            const visualComparisons = generateVisualComparisons(productName, categoryType);
+            
+            if (visualComparisons.length > 0) {
+                // Show visual cards
+                visualComparisons.forEach(comparison => {
+                    const card = document.createElement('div');
+                    card.className = 'comparison-card';
+                    
+                    const durabilityClass = comparison.durability === 'High' ? 'durability-high' : 
+                                          comparison.durability === 'Medium' ? 'durability-medium' : 'durability-low';
+                    const beginnerClass = comparison.beginnerFriendly === 'Yes' ? 'beginner-friendly-yes' : 'beginner-friendly-no';
+                    
+                    card.innerHTML = `
+                        <div class="comparison-card-image" style="background-image: url('${comparison.image}');"></div>
+                        <div class="comparison-card-content">
+                            <div class="comparison-card-title">${comparison.title}</div>
+                            <div class="comparison-card-detail">
+                                <span class="comparison-card-detail-label">Best for:</span>
+                                <span class="comparison-card-detail-value">${comparison.bestFor}</span>
+                            </div>
+                            <div class="comparison-card-detail">
+                                <span class="comparison-card-detail-label">Durability:</span>
+                                <span class="comparison-card-detail-value">
+                                    <span class="durability-badge ${durabilityClass}">${comparison.durability}</span>
+                                </span>
+                            </div>
+                            <div class="comparison-card-detail">
+                                <span class="comparison-card-detail-label">Beginner friendly:</span>
+                                <span class="comparison-card-detail-value ${beginnerClass}">${comparison.beginnerFriendly}</span>
+                            </div>
+                        </div>
+                    `;
+                    comparisonCardsContainer.appendChild(card);
+                });
+            } else {
+                // Fallback to text-based comparisons if no visual data
+                const comparisonList = document.createElement('ul');
+                comparisonList.className = 'card-bullets';
+                displayContent.comparisons.forEach(comparison => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${comparison.title}:</strong> ${comparison.content}`;
+                    comparisonList.appendChild(li);
+                });
+                comparisonTextContainer.appendChild(comparisonList);
+                comparisonTextContainer.style.display = 'block';
+            }
+            
             setTimeout(() => {
                 document.getElementById('comparisonInsight').classList.add('active');
             }, 300);
@@ -3458,6 +4359,25 @@
                 exportAsPDF(currentProductName);
             }
         });
+
+        // Technical details toggle
+        const technicalToggle = document.getElementById('technicalToggle');
+        if (technicalToggle) {
+            technicalToggle.addEventListener('click', function() {
+                const technicalDetails = document.getElementById('technicalDetails');
+                const isExpanded = technicalDetails.style.display === 'block';
+                
+                if (isExpanded) {
+                    technicalDetails.style.display = 'none';
+                    this.classList.remove('expanded');
+                    this.querySelector('.toggle-text').textContent = 'Show technical details';
+                } else {
+                    technicalDetails.style.display = 'block';
+                    this.classList.add('expanded');
+                    this.querySelector('.toggle-text').textContent = 'Hide technical details';
+                }
+            });
+        }
 
         // Roadmap expandable section
         const roadmapHeader = document.getElementById('roadmapHeader');
