@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Intelligence Template</title>
+    <meta name="description" content="A structured framework for explaining, comparing, and recommending products.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--background);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .page-header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .back-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 42px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content {
+            padding: 60px 0;
+        }
+
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .section-text:last-child {
+            margin-bottom: 0;
+        }
+
+        /* List */
+        .bullet-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Template Sections */
+        .template-list {
+            margin-top: 24px;
+        }
+
+        .template-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .template-item:last-child {
+            border-bottom: none;
+        }
+
+        .template-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .template-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-top: 24px;
+        }
+
+        .highlight-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Note Box */
+        .note-box {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-top: 24px;
+        }
+
+        .note-box h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .note-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .page-footer {
+            background: var(--text-primary);
+            color: rgba(255,255,255,0.7);
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        .page-footer p {
+            font-size: 14px;
+        }
+
+        .page-footer a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+
+        .page-footer a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0 48px;
+            }
+
+            .content {
+                padding: 48px 0;
+            }
+
+            .template-item {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .section {
+                margin-bottom: 44px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .highlight-box,
+            .note-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PI</div>
+                    <span>Product Intelligence</span>
+                </a>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Product Intelligence Template</h1>
+            <p>A structured framework for explaining, comparing, and recommending products.</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <main class="content">
+        <div class="container">
+
+            <!-- Why a Structured Template -->
+            <section class="section">
+                <h2 class="section-title">Why a Structured Template</h2>
+                <p class="section-text">
+                    Product research is often confusing. Descriptions vary wildly between sources. Reviews are subjective. Specifications are scattered. This makes it hard for buyers to compare options or make confident decisions.
+                </p>
+                <p class="section-text">
+                    Unstructured product descriptions lead to poor decisions — buyers miss key details, overlook limitations, or choose based on incomplete information.
+                </p>
+                <p class="section-text">
+                    A fixed, consistent structure solves this. When every product is explained the same way, readers know exactly where to find what they need. It improves clarity, enables fair comparison, and builds trust.
+                </p>
+                <p class="section-text">
+                    This template focuses on decision-making — helping people understand what a product is, who it's for, and whether it's right for them.
+                </p>
+            </section>
+
+            <!-- Core Template Sections -->
+            <section class="section">
+                <h2 class="section-title">Core Template Sections</h2>
+                <p class="section-text">
+                    Each product report follows the same nine-section structure. Here's what each section covers:
+                </p>
+                <div class="template-list">
+                    <div class="template-item">
+                        <span class="template-label">Product Snapshot</span>
+                        <span class="template-desc">Quick overview: name, category, primary use, price range, and a one-line decision summary.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">What This Product Is</span>
+                        <span class="template-desc">A clear, jargon-free explanation of what the product is and how it works.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">Who It Is Useful For</span>
+                        <span class="template-desc">Specific audiences and use cases where this product makes sense — and where it doesn't.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">Types, Variants & Options</span>
+                        <span class="template-desc">Common variations, models, or configurations available in the market.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">Features → Practical Benefits</span>
+                        <span class="template-desc">Key features translated into real-world value — what they actually mean for the buyer.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">Pros, Cons & Limitations</span>
+                        <span class="template-desc">Honest assessment of strengths and weaknesses to set realistic expectations.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">Comparison & Alternatives</span>
+                        <span class="template-desc">How this product compares to similar options in price, capability, and suitability.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">Recommendation</span>
+                        <span class="template-desc">A clear summary of who should buy this, what to look for, and what to budget.</span>
+                    </div>
+                    <div class="template-item">
+                        <span class="template-label">Where to Buy or Source</span>
+                        <span class="template-desc">Trusted retailers, suppliers, or sourcing options relevant to the product.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reusability Across Products -->
+            <section class="section">
+                <h2 class="section-title">Reusability Across Products</h2>
+                <p class="section-text">
+                    This template is designed to work for any product category — from consumer electronics to industrial equipment, sporting goods to packaging machinery.
+                </p>
+                <ul class="bullet-list">
+                    <li>The same structure applies whether the product costs £20 or £20,000</li>
+                    <li>Enables consistent comparison between products in the same category</li>
+                    <li>Reduces bias by asking the same questions for every product</li>
+                    <li>Scales efficiently — the same framework can cover thousands of products</li>
+                </ul>
+                <div class="highlight-box">
+                    <h4>Consistency Builds Trust</h4>
+                    <p>When users see the same structure across every report, they learn where to find answers quickly. This consistency makes Product Intelligence a reliable tool for decision-making.</p>
+                </div>
+            </section>
+
+            <!-- MVP Scope Note -->
+            <section class="section">
+                <h2 class="section-title">MVP Scope Note</h2>
+                <p class="section-text">
+                    This page and the demo product report are part of a proof-of-concept for Product Intelligence.
+                </p>
+                <div class="note-box">
+                    <h4>Current Status</h4>
+                    <p>
+                        This is a static HTML demonstration. There is no backend, no automation, and no live data processing. The purpose is to demonstrate the structure, logic, and value of consistent product reporting — not to claim automated capabilities. Future versions may include dynamic generation, but the current MVP focuses purely on template design and information architecture.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="container">
+            <p>Part of <a href="index.html">Product Intelligence</a> · © 2025</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+

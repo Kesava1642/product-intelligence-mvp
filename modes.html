@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Intelligence Modes</title>
+    <meta name="description" content="How Product Intelligence adapts outputs for different user types — Individuals, Businesses, and Sellers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--background);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .page-header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .back-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 42px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content {
+            padding: 60px 0;
+        }
+
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .section-text:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Mode Cards */
+        .mode-card {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+
+        .mode-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .mode-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .mode-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .mode-list {
+            list-style: none;
+        }
+
+        .mode-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .mode-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .mode-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-top: 24px;
+        }
+
+        .highlight-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Bullet List */
+        .bullet-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Note Box */
+        .note-box {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-top: 24px;
+        }
+
+        .note-box h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .note-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .page-footer {
+            background: var(--text-primary);
+            color: rgba(255,255,255,0.7);
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        .page-footer p {
+            font-size: 14px;
+        }
+
+        .page-footer a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+
+        .page-footer a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0 48px;
+            }
+
+            .content {
+                padding: 48px 0;
+            }
+
+            .section {
+                margin-bottom: 44px;
+            }
+
+            .mode-card {
+                padding: 24px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .highlight-box,
+            .note-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PI</div>
+                    <span>Product Intelligence</span>
+                </a>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Product Intelligence Modes</h1>
+            <p>One structured intelligence system. Different decision contexts.</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <main class="content">
+        <div class="container">
+
+            <!-- Why Modes Exist -->
+            <section class="section">
+                <h2 class="section-title">Why Modes Exist</h2>
+                <p class="section-text">
+                    Different users make different decisions. An individual buying a product for personal use has different priorities than a business evaluating it for operations, or a seller deciding whether to stock it.
+                </p>
+                <p class="section-text">
+                    The same product information must be framed differently depending on who is reading it. A feature that matters to a buyer may be irrelevant to a seller. A risk that concerns a business may not apply to an individual.
+                </p>
+                <p class="section-text">
+                    Modes prevent confusion and misinterpretation. By tailoring the presentation of information to the decision context, Product Intelligence ensures that each user gets clarity — not noise.
+                </p>
+            </section>
+
+            <!-- Mode 1: Individuals -->
+            <section class="section">
+                <h2 class="section-title">The Three Modes</h2>
+
+                <div class="mode-card">
+                    <span class="mode-label">Mode 1</span>
+                    <h3 class="mode-title">For Individuals</h3>
+                    <ul class="mode-list">
+                        <li>Uses simple, jargon-free language that anyone can understand</li>
+                        <li>Focuses on helping the user understand what the product actually is</li>
+                        <li>Highlights budget considerations and value for money</li>
+                        <li>Provides a clear recommendation based on common use cases</li>
+                        <li>Lists trusted places to buy the product</li>
+                    </ul>
+                </div>
+
+                <!-- Mode 2: Businesses -->
+                <div class="mode-card">
+                    <span class="mode-label">Mode 2</span>
+                    <h3 class="mode-title">For Businesses & Industry</h3>
+                    <ul class="mode-list">
+                        <li>Emphasises cost versus value analysis for procurement decisions</li>
+                        <li>Highlights risks, limitations, and potential issues upfront</li>
+                        <li>Assesses operational suitability and long-term use considerations</li>
+                        <li>Supports structured evaluation for procurement teams</li>
+                        <li>Addresses compliance, maintenance, and supplier reliability</li>
+                    </ul>
+                </div>
+
+                <!-- Mode 3: Sellers -->
+                <div class="mode-card">
+                    <span class="mode-label">Mode 3</span>
+                    <h3 class="mode-title">For Sellers & E-commerce</h3>
+                    <ul class="mode-list">
+                        <li>Helps determine whether a product is worth selling</li>
+                        <li>Identifies which variants and options are in demand</li>
+                        <li>Provides description-ready insights for product listings</li>
+                        <li>Assesses monetisation potential and margin considerations</li>
+                        <li>Includes sourcing links and supplier options</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- How the Same Template Adapts -->
+            <section class="section">
+                <h2 class="section-title">How the Same Template Adapts</h2>
+                <p class="section-text">
+                    Product Intelligence uses a single, consistent template structure for all products. However, the emphasis and prioritisation of sections changes based on the selected mode.
+                </p>
+                <ul class="bullet-list">
+                    <li>Same underlying structure ensures consistency and comparability</li>
+                    <li>Sections are prioritised differently depending on user type</li>
+                    <li>Language and framing adapt to the decision context</li>
+                    <li>All modes share the same factual foundation — only the presentation differs</li>
+                </ul>
+                <div class="highlight-box">
+                    <h4>One Source of Truth</h4>
+                    <p>Whether you're an individual, a business, or a seller, the core product information remains the same. Modes simply surface what matters most for your specific decision.</p>
+                </div>
+            </section>
+
+            <!-- MVP Scope Note -->
+            <section class="section">
+                <h2 class="section-title">MVP Scope Note</h2>
+                <p class="section-text">
+                    This page explains the conceptual design of Product Intelligence modes.
+                </p>
+                <div class="note-box">
+                    <h4>Current Status</h4>
+                    <p>
+                        This is a conceptual demonstration using static HTML. There is no backend, no automation, and no dynamic mode switching in the current MVP. The purpose is to demonstrate the logic and scalability of the modes system — not to claim automated capabilities. Future versions may include dynamic mode selection and personalised outputs.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="container">
+            <p>Part of <a href="index.html">Product Intelligence</a> · © 2025</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
