@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Intelligence Modes</title>
-    <meta name="description" content="How Product Intelligence adapts outputs for different user types — Individuals, Businesses, and Sellers.">
+    <title>Monetisation & Revenue Model | Product Intelligence</title>
+    <meta name="description" content="How Product Intelligence creates sustainable value and revenue through subscriptions, affiliate partnerships, and B2B services.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -149,8 +149,8 @@
             margin-bottom: 0;
         }
 
-        /* Mode Cards */
-        .mode-card {
+        /* Revenue Cards */
+        .revenue-card {
             background: var(--background-alt);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -158,11 +158,11 @@
             margin-bottom: 24px;
         }
 
-        .mode-card:last-child {
+        .revenue-card:last-child {
             margin-bottom: 0;
         }
 
-        .mode-label {
+        .revenue-label {
             display: inline-block;
             font-size: 12px;
             font-weight: 600;
@@ -175,58 +175,53 @@
             margin-bottom: 12px;
         }
 
-        .mode-title {
+        .revenue-title {
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 16px;
             color: var(--text-primary);
         }
 
-        .mode-list {
-            list-style: none;
-        }
-
-        .mode-list li {
-            position: relative;
-            padding-left: 24px;
-            margin-bottom: 12px;
+        .revenue-text {
             font-size: 15px;
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
+            margin-bottom: 16px;
         }
 
-        .mode-list li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .mode-list li:last-child {
+        .revenue-text:last-child {
             margin-bottom: 0;
         }
 
-        /* Highlight Box */
-        .highlight-box {
-            background: var(--primary-light);
-            border: 1px solid #bfdbfe;
-            border-radius: var(--radius);
-            padding: 24px 28px;
-            margin-top: 24px;
+        /* Tier List */
+        .tier-list {
+            list-style: none;
+            margin-top: 16px;
         }
 
-        .highlight-box h4 {
-            font-size: 16px;
+        .tier-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tier-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .tier-name {
+            font-size: 15px;
             font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 12px;
+            color: var(--text-primary);
+            min-width: 120px;
         }
 
-        .highlight-box p {
+        .tier-desc {
             font-size: 15px;
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         /* Bullet List */
@@ -253,6 +248,28 @@
             height: 8px;
             background: var(--primary);
             border-radius: 50%;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-top: 24px;
+        }
+
+        .highlight-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         /* Note Box */
@@ -314,8 +331,13 @@
                 margin-bottom: 44px;
             }
 
-            .mode-card {
+            .revenue-card {
                 padding: 24px 20px;
+            }
+
+            .tier-item {
+                flex-direction: column;
+                gap: 4px;
             }
         }
 
@@ -349,15 +371,15 @@
     <!-- MVP Banner -->
     <div style="background: #fef3c7; border-bottom: 1px solid #fcd34d; padding: 12px 0; text-align: center;">
         <div class="container">
-            <p style="font-size: 14px; color: #92400e; font-weight: 500; margin: 0;">📋 <strong>MVP Proof-of-Concept</strong> — This page explains how the framework adapts for different user types.</p>
+            <p style="font-size: 14px; color: #92400e; font-weight: 500; margin: 0;">📋 <strong>MVP Proof-of-Concept</strong> — No payments or affiliate links are active. This demonstrates commercial viability.</p>
         </div>
     </div>
 
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <h1>Product Intelligence Modes</h1>
-            <p>One structured intelligence system. Different decision contexts.</p>
+            <h1>Monetisation & Revenue Model</h1>
+            <p>How Product Intelligence creates sustainable value and revenue.</p>
         </div>
     </section>
 
@@ -365,91 +387,126 @@
     <main class="content">
         <div class="container">
 
-            <!-- Why Modes Exist -->
+            <!-- Who Pays -->
             <section class="section">
-                <h2 class="section-title">Why Modes Exist</h2>
+                <h2 class="section-title">Who Pays</h2>
                 <p class="section-text">
-                    Different users make different decisions. An individual buying a product for personal use has different priorities than a business evaluating it for operations, or a seller deciding whether to stock it.
-                </p>
-                <p class="section-text">
-                    The same product information must be framed differently depending on who is reading it. A feature that matters to a buyer may be irrelevant to a seller. A risk that concerns a business may not apply to an individual.
-                </p>
-                <p class="section-text">
-                    Modes prevent confusion and misinterpretation. By tailoring the presentation of information to the decision context, Product Intelligence ensures that each user gets clarity — not noise.
-                </p>
-            </section>
-
-            <!-- Mode 1: Individuals -->
-            <section class="section">
-                <h2 class="section-title">The Three Modes</h2>
-
-                <div class="mode-card">
-                    <span class="mode-label">Mode 1</span>
-                    <h3 class="mode-title">For Individuals</h3>
-                    <ul class="mode-list">
-                        <li>Uses simple, jargon-free language that anyone can understand</li>
-                        <li>Focuses on helping the user understand what the product actually is</li>
-                        <li>Highlights budget considerations and value for money</li>
-                        <li>Provides a clear recommendation based on common use cases</li>
-                        <li>Lists trusted places to buy the product</li>
-                    </ul>
-                </div>
-
-                <!-- Mode 2: Businesses -->
-                <div class="mode-card">
-                    <span class="mode-label">Mode 2</span>
-                    <h3 class="mode-title">For Businesses & Industry</h3>
-                    <ul class="mode-list">
-                        <li>Emphasises cost versus value analysis for procurement decisions</li>
-                        <li>Highlights risks, limitations, and potential issues upfront</li>
-                        <li>Assesses operational suitability and long-term use considerations</li>
-                        <li>Supports structured evaluation for procurement teams</li>
-                        <li>Addresses compliance, maintenance, and supplier reliability</li>
-                    </ul>
-                </div>
-
-                <!-- Mode 3: Sellers -->
-                <div class="mode-card">
-                    <span class="mode-label">Mode 3</span>
-                    <h3 class="mode-title">For Sellers & E-commerce</h3>
-                    <ul class="mode-list">
-                        <li>Helps determine whether a product is worth selling</li>
-                        <li>Identifies which variants and options are in demand</li>
-                        <li>Provides description-ready insights for product listings</li>
-                        <li>Assesses monetisation potential and margin considerations</li>
-                        <li>Includes sourcing links and supplier options</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- How the Same Template Adapts -->
-            <section class="section">
-                <h2 class="section-title">How the Same Template Adapts</h2>
-                <p class="section-text">
-                    Product Intelligence uses a single, consistent template structure for all products. However, the emphasis and prioritisation of sections changes based on the selected mode.
+                    Product Intelligence serves three distinct user groups, each with different needs and willingness to pay:
                 </p>
                 <ul class="bullet-list">
-                    <li>Same underlying structure ensures consistency and comparability</li>
-                    <li>Sections are prioritised differently depending on user type</li>
-                    <li>Language and framing adapt to the decision context</li>
-                    <li>All modes share the same factual foundation — only the presentation differs</li>
+                    <li><strong>Individuals</strong> — People making personal purchase decisions who want clarity before buying</li>
+                    <li><strong>Businesses</strong> — Companies evaluating products for procurement, operations, or compliance</li>
+                    <li><strong>Sellers</strong> — E-commerce operators deciding what products to stock and how to describe them</li>
                 </ul>
-                <div class="highlight-box">
-                    <h4>One Source of Truth</h4>
-                    <p>Whether you're an individual, a business, or a seller, the core product information remains the same. Modes simply surface what matters most for your specific decision.</p>
+            </section>
+
+            <!-- Why They Pay -->
+            <section class="section">
+                <h2 class="section-title">Why They Pay (Problem → Value)</h2>
+                <p class="section-text">
+                    <strong>The Problem:</strong> Product research is time-consuming, inconsistent, and often unreliable. Reviews are biased, specifications are scattered, and comparison sites prioritise advertisers over accuracy.
+                </p>
+                <p class="section-text">
+                    <strong>The Value:</strong> Product Intelligence provides structured, auditable reports that answer the key questions: What is this product? Who is it for? What are the risks? Should I buy, sell, or pass? This saves time, reduces mistakes, and builds confidence in decisions.
+                </p>
+                <p class="section-text">
+                    Users pay because the cost of a subscription is far less than the cost of a bad purchase, wasted time, or lost opportunity.
+                </p>
+            </section>
+
+            <!-- Pricing Tiers -->
+            <section class="section">
+                <h2 class="section-title">Pricing Tiers (Indicative)</h2>
+                <p class="section-text" style="margin-bottom: 20px;">
+                    Pricing is structured by user type. These are indicative ranges for planning purposes — final pricing will be validated through market testing.
+                </p>
+
+                <div class="revenue-card">
+                    <span class="revenue-label">Tier 1</span>
+                    <h3 class="revenue-title">Individual Plan — £5–10/month</h3>
+                    <p class="revenue-text">
+                        Access to product reports, suitability assessments, and buying recommendations. Designed for personal purchase decisions.
+                    </p>
                 </div>
+
+                <div class="revenue-card">
+                    <span class="revenue-label">Tier 2</span>
+                    <h3 class="revenue-title">Business Plan — £30–50/month</h3>
+                    <p class="revenue-text">
+                        Structured evaluation tools, procurement support, risk assessments, and team access. For operational and purchasing decisions. Includes export and audit features.
+                    </p>
+                </div>
+
+                <div class="revenue-card">
+                    <span class="revenue-label">Tier 3</span>
+                    <h3 class="revenue-title">Seller Plan — £20–40/month</h3>
+                    <p class="revenue-text">
+                        Product viability analysis, variant insights, description generation, and sourcing links. For e-commerce and retail sellers making stocking decisions.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Additional Revenue Streams -->
+            <section class="section">
+                <h2 class="section-title">Additional Revenue Streams</h2>
+
+                <div class="revenue-card">
+                    <span class="revenue-label">Stream A</span>
+                    <h3 class="revenue-title">Affiliate & Referral Links</h3>
+                    <p class="revenue-text">
+                        Commission from trusted product suppliers when users purchase through recommended links. Only for products with clear, honest recommendations. Affiliate status is always disclosed.
+                    </p>
+                </div>
+
+                <div class="revenue-card">
+                    <span class="revenue-label">Stream B</span>
+                    <h3 class="revenue-title">Enterprise & Custom Reports</h3>
+                    <p class="revenue-text">
+                        Custom product intelligence reports for large organisations. Integration with procurement workflows and decision systems. Priced per engagement or annual contract.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sustainability Logic -->
+            <section class="section">
+                <h2 class="section-title">Sustainability & Scalability</h2>
+                <p class="section-text">
+                    The Product Intelligence model is designed for sustainable growth with improving unit economics over time.
+                </p>
+                
+                <div class="highlight-box" style="margin-bottom: 20px;">
+                    <h4>Low Initial Costs</h4>
+                    <p>The MVP uses static HTML and a reusable template structure. No expensive infrastructure is required to validate the concept and acquire early users.</p>
+                </div>
+
+                <div class="highlight-box" style="margin-bottom: 20px;">
+                    <h4>Automation Increases Margins</h4>
+                    <p>As the product library grows and automation is introduced, the cost per report decreases significantly. The same template works for any product category, enabling rapid scaling without proportional cost increases.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Network Effects</h4>
+                    <p>More products attract more users. More users generate more data on what products are in demand. This creates a virtuous cycle that strengthens the platform over time.</p>
+                </div>
+
+                <ul class="bullet-list" style="margin-top: 24px;">
+                    <li>Reusable structure — the same framework works for any product category</li>
+                    <li>Industry-agnostic — applicable to consumer goods, industrial equipment, electronics, and more</li>
+                    <li>Geographically flexible — suitable for UK and global markets with localised sourcing</li>
+                    <li>Low customer acquisition cost — SEO and organic search for product-specific queries</li>
+                </ul>
             </section>
 
             <!-- MVP Scope Note -->
             <section class="section">
                 <h2 class="section-title">MVP Scope Note</h2>
                 <p class="section-text">
-                    This page explains the conceptual design of Product Intelligence modes.
+                    This page describes the intended revenue model for Product Intelligence.
                 </p>
                 <div class="note-box">
                     <h4>Current Status</h4>
                     <p>
-                        This is a conceptual demonstration using static HTML. There is no backend, no automation, and no dynamic mode switching in the current MVP. The purpose is to demonstrate the logic and scalability of the modes system — not to claim automated capabilities. Future versions may include dynamic mode selection and personalised outputs.
+                        No payments are implemented in the current MVP. No live affiliate links are active. This page demonstrates commercial intent and viability for investor and visa assessment purposes. It outlines how Product Intelligence will generate revenue once the product is operational.
                     </p>
                 </div>
             </section>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Intelligence | Understand Any Product in Seconds</title>
-    <meta name="description" content="Get instant, AI-powered insights on any product. Built for product managers, buyers, and business leaders who need clarity fast.">
+    <title>Product Intelligence | Make Better Product Decisions</title>
+    <meta name="description" content="A structured decision framework that helps individuals, businesses, and sellers understand products before buying, selling, or sourcing.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -586,6 +586,111 @@
             border-radius: 2px;
         }
 
+        /* MVP Banner */
+        .mvp-banner {
+            background: #fef3c7;
+            border-bottom: 1px solid #fcd34d;
+            padding: 12px 0;
+            text-align: center;
+        }
+
+        .mvp-banner p {
+            font-size: 14px;
+            color: #92400e;
+            font-weight: 500;
+        }
+
+        .mvp-banner a {
+            color: #92400e;
+            text-decoration: underline;
+        }
+
+        /* Decision Journey */
+        .journey {
+            padding: 100px 0;
+            background: var(--background);
+        }
+
+        .journey-steps {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            position: relative;
+        }
+
+        .journey-steps::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 60px;
+            right: 60px;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .journey-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .journey-step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 auto 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .journey-step h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .journey-step p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .journey-steps {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .journey-steps::before {
+                display: none;
+            }
+
+            .journey-step {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                gap: 16px;
+            }
+
+            .journey-step-number {
+                margin: 0;
+                flex-shrink: 0;
+            }
+
+            .journey-step-content {
+                flex: 1;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 968px) {
             .values-grid,
@@ -706,18 +811,25 @@
         </div>
     </header>
 
+    <!-- MVP Status Banner -->
+    <div class="mvp-banner" style="margin-top: 72px;">
+        <div class="container">
+            <p>📋 <strong>MVP Proof-of-Concept</strong> — This is a static demonstration of the Product Intelligence decision framework. <a href="product-template.html">Learn more about the structure →</a></p>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" style="padding-top: 140px;">
         <div class="container">
             <div class="hero-content">
-                <h1>Turn business data into<br>clear decisions.</h1>
+                <h1>Make better product decisions<br>before you buy or sell.</h1>
                 <p class="hero-subtitle">
-                    A simple intelligence platform that helps businesses understand 
-                    performance, risks, and opportunities — without complexity.
+                    A structured decision framework that helps individuals, businesses, and sellers 
+                    understand any product — its suitability, risks, and alternatives — before committing.
                 </p>
                 <div class="hero-cta">
-                    <a href="app.html" class="btn btn-primary">Get Started</a>
-                    <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+                    <a href="demo-product.html" class="btn btn-primary">See a Demo Report</a>
+                    <a href="#decision-journey" class="btn btn-secondary">How It Works</a>
                 </div>
             </div>
         </div>
@@ -728,28 +840,28 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-label">Who It's For</span>
-                <h2 class="section-title">Built for every kind of business</h2>
+                <h2 class="section-title">Built for every kind of decision-maker</h2>
             </div>
             <div class="audience-grid">
                 <div class="audience-card">
-                    <div class="audience-icon">🏪</div>
-                    <h3>Small Businesses</h3>
-                    <p>Understand your numbers without hiring analysts.</p>
+                    <div class="audience-icon">👤</div>
+                    <h3>Individuals</h3>
+                    <p>Understand products before buying. Avoid costly mistakes.</p>
                 </div>
                 <div class="audience-card">
-                    <div class="audience-icon">🚀</div>
-                    <h3>Startups</h3>
-                    <p>Track performance and growth from day one.</p>
+                    <div class="audience-icon">🏢</div>
+                    <h3>Businesses</h3>
+                    <p>Evaluate products for procurement, operations, and compliance.</p>
                 </div>
                 <div class="audience-card">
-                    <div class="audience-icon">📈</div>
-                    <h3>Growing Companies</h3>
-                    <p>Spot risks and opportunities early.</p>
+                    <div class="audience-icon">🛒</div>
+                    <h3>E-commerce Sellers</h3>
+                    <p>Choose what to sell, understand variants, and source wisely.</p>
                 </div>
                 <div class="audience-card">
-                    <div class="audience-icon">📊</div>
-                    <h3>Operations & Finance Teams</h3>
-                    <p>Make decisions backed by clarity.</p>
+                    <div class="audience-icon">🔍</div>
+                    <h3>Researchers & Analysts</h3>
+                    <p>Get structured product breakdowns for reports and recommendations.</p>
                 </div>
             </div>
         </div>
@@ -760,23 +872,73 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-label">What You Get</span>
-                <h2 class="section-title">Outcomes that matter</h2>
+                <h2 class="section-title">Structured, auditable product intelligence</h2>
             </div>
             <div class="values-grid">
                 <div class="value-item">
-                    <div class="value-icon">✦</div>
-                    <h3>Clarity</h3>
-                    <p>Instant visibility into what matters most.</p>
+                    <div class="value-icon">📋</div>
+                    <h3>Consistency</h3>
+                    <p>Every product is evaluated using the same structured framework.</p>
                 </div>
                 <div class="value-item">
-                    <div class="value-icon">⚡</div>
-                    <h3>Risk Awareness</h3>
-                    <p>Identify issues before they become costly.</p>
+                    <div class="value-icon">⚖️</div>
+                    <h3>Suitability Assessment</h3>
+                    <p>Know who a product is for — and who it's not for.</p>
                 </div>
                 <div class="value-item">
-                    <div class="value-icon">◎</div>
-                    <h3>Better Decisions</h3>
-                    <p>Act confidently with reliable insights.</p>
+                    <div class="value-icon">🔒</div>
+                    <h3>Auditability</h3>
+                    <p>Transparent reasoning you can review and trust.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decision Journey -->
+    <section class="journey" id="decision-journey">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">The Decision Journey</span>
+                <h2 class="section-title">From product to decision in 5 steps</h2>
+                <p class="section-subtitle">
+                    A structured framework for understanding any product.
+                </p>
+            </div>
+            <div class="journey-steps">
+                <div class="journey-step">
+                    <div class="journey-step-number">1</div>
+                    <div class="journey-step-content">
+                        <h4>Product Selection</h4>
+                        <p>Choose a product to evaluate</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="journey-step-number">2</div>
+                    <div class="journey-step-content">
+                        <h4>Structured Evaluation</h4>
+                        <p>Apply the Product Intelligence template</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="journey-step-number">3</div>
+                    <div class="journey-step-content">
+                        <h4>Suitability & Risks</h4>
+                        <p>Assess who it's for and potential issues</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="journey-step-number">4</div>
+                    <div class="journey-step-content">
+                        <h4>Intelligence Report</h4>
+                        <p>Generate a clear, auditable report</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="journey-step-number">5</div>
+                    <div class="journey-step-content">
+                        <h4>Decision Outcome</h4>
+                        <p>Buy, sell, source, or pass — with confidence</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -789,24 +951,24 @@
                 <span class="section-label">How It Works</span>
                 <h2 class="section-title">Three Simple Steps</h2>
                 <p class="section-subtitle">
-                    From question to answer in under a minute.
+                    From product to clarity in under a minute.
                 </p>
             </div>
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Search Any Product</h3>
-                    <p>Enter any product name and select the category that matches your needs.</p>
+                    <h3>Select a Product</h3>
+                    <p>Choose any product and specify your decision context (buying, selling, or sourcing).</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Get AI Insights</h3>
-                    <p>Our AI analyzes thousands of data points to generate comprehensive product intelligence.</p>
+                    <h3>Review the Report</h3>
+                    <p>Get a structured breakdown: what it is, who it's for, pros, cons, and recommendations.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Make Better Decisions</h3>
-                    <p>Use clear, actionable insights to guide your purchasing, planning, or strategy.</p>
+                    <h3>Make Your Decision</h3>
+                    <p>Use clear, auditable insights to guide your purchasing, selling, or sourcing choice.</p>
                 </div>
             </div>
             <p style="text-align: center; margin-top: 48px;">
@@ -817,6 +979,8 @@
                 <a href="modes.html" style="color: #4b5563; font-size: 15px; text-decoration: none; border-bottom: 1px solid #d1d5db;">View Product Intelligence Modes →</a>
                 <span style="margin: 0 16px; color: #d1d5db;">|</span>
                 <a href="monetisation.html" style="color: #4b5563; font-size: 15px; text-decoration: none; border-bottom: 1px solid #d1d5db;">View Monetisation & Revenue Model →</a>
+                <span style="margin: 0 16px; color: #d1d5db;">|</span>
+                <a href="why-not-ai.html" style="color: #4b5563; font-size: 15px; text-decoration: none; border-bottom: 1px solid #d1d5db;">Why Not Just Use Search or AI? →</a>
             </p>
         </div>
     </section>
@@ -825,9 +989,9 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-box">
-                <h2>Ready to Get Started?</h2>
-                <p>Join early access and be among the first to experience smarter product research.</p>
-                <a href="app.html" class="btn btn-primary btn-large">Start Free Trial</a>
+                <h2>See the Framework in Action</h2>
+                <p>Explore a demo product report to understand how Product Intelligence structures decisions.</p>
+                <a href="demo-product.html" class="btn btn-primary btn-large">View Demo Report</a>
             </div>
         </div>
     </section>

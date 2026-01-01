@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Not Just Use Search or AI? | Product Intelligence</title>
+    <meta name="description" content="How Product Intelligence differs from Google search, Amazon reviews, AI chatbots, and comparison sites.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --success: #059669;
+            --success-light: #ecfdf5;
+            --warning: #d97706;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--background);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .page-header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .back-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* MVP Banner */
+        .mvp-banner {
+            background: #fef3c7;
+            border-bottom: 1px solid #fcd34d;
+            padding: 12px 0;
+            text-align: center;
+        }
+
+        .mvp-banner p {
+            font-size: 14px;
+            color: #92400e;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 42px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content {
+            padding: 60px 0;
+        }
+
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+            font-size: 14px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .comparison-table th {
+            background: var(--background-alt);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .comparison-table th:first-child {
+            width: 180px;
+        }
+
+        .comparison-table td {
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .highlight {
+            background: var(--success-light);
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .comparison-table .feature-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Alternative Cards */
+        .alt-card {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+
+        .alt-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .alt-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .alt-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .alt-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .alt-card .limitation {
+            color: var(--warning);
+            font-weight: 500;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-top: 24px;
+        }
+
+        .highlight-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Bullet List */
+        .bullet-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        .page-footer {
+            background: var(--text-primary);
+            color: rgba(255,255,255,0.7);
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        .page-footer p {
+            font-size: 14px;
+        }
+
+        .page-footer a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+
+        .page-footer a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0 48px;
+            }
+
+            .content {
+                padding: 48px 0;
+            }
+
+            .section {
+                margin-bottom: 44px;
+            }
+
+            .comparison-table {
+                font-size: 13px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 10px;
+            }
+
+            .comparison-table th:first-child {
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PI</div>
+                    <span>Product Intelligence</span>
+                </a>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MVP Banner -->
+    <div class="mvp-banner">
+        <div class="container">
+            <p>📋 <strong>MVP Proof-of-Concept</strong> — This page explains the innovation behind the Product Intelligence framework.</p>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Why Not Just Use Search or AI?</h1>
+            <p>How Product Intelligence differs from existing tools — and why a structured decision framework matters.</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <main class="content">
+        <div class="container">
+
+            <!-- The Problem with Existing Tools -->
+            <section class="section">
+                <h2 class="section-title">The Problem with Existing Tools</h2>
+                <p class="section-text">
+                    When people need to understand a product before buying, selling, or sourcing, they typically turn to search engines, review sites, or AI chatbots. But each of these has significant limitations.
+                </p>
+
+                <div class="alt-card">
+                    <h3>Google Search</h3>
+                    <p>Returns millions of results with no structure. Users must manually sift through product pages, reviews, and articles to piece together an understanding. There's no consistency between sources.</p>
+                    <p class="limitation">Limitation: No structured decision framework. Time-consuming. Inconsistent quality.</p>
+                </div>
+
+                <div class="alt-card">
+                    <h3>Amazon Reviews</h3>
+                    <p>Reviews are subjective, often incentivised, and vary wildly in quality. They tell you what individual buyers thought, but not whether a product is suitable for your specific needs or context.</p>
+                    <p class="limitation">Limitation: Biased, anecdotal, no suitability assessment, no business context.</p>
+                </div>
+
+                <div class="alt-card">
+                    <h3>AI Chatbots (ChatGPT, etc.)</h3>
+                    <p>Generative AI can produce fluent text, but outputs are non-deterministic — the same question can yield different answers. There's no audit trail, no consistent structure, and no way to verify the reasoning.</p>
+                    <p class="limitation">Limitation: Non-repeatable, non-auditable, no structured framework, hallucination risk.</p>
+                </div>
+
+                <div class="alt-card">
+                    <h3>Comparison Sites</h3>
+                    <p>These sites prioritise advertisers and affiliate revenue. "Best" lists are often pay-to-play. The comparison criteria are opaque, and suitability for specific use cases is rarely addressed.</p>
+                    <p class="limitation">Limitation: Commercial bias, opaque methodology, no suitability or risk assessment.</p>
+                </div>
+            </section>
+
+            <!-- Comparison Table -->
+            <section class="section">
+                <h2 class="section-title">Feature Comparison</h2>
+                <p class="section-text">
+                    How Product Intelligence compares to existing alternatives:
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Google Search</th>
+                            <th>Amazon Reviews</th>
+                            <th>AI Chatbots</th>
+                            <th>Product Intelligence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="feature-name">Structured Output</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Varies</td>
+                            <td class="highlight">Yes — consistent template</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Suitability Assessment</td>
+                            <td>No</td>
+                            <td>Limited</td>
+                            <td>Inconsistent</td>
+                            <td class="highlight">Yes — who it's for / not for</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Risk & Limitations</td>
+                            <td>No</td>
+                            <td>Anecdotal</td>
+                            <td>Sometimes</td>
+                            <td class="highlight">Yes — explicit section</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Repeatable Results</td>
+                            <td>Varies</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td class="highlight">Yes — deterministic</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Auditable Reasoning</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td class="highlight">Yes — transparent structure</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Business/Seller Context</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Limited</td>
+                            <td class="highlight">Yes — mode-specific views</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Commercial Bias</td>
+                            <td>High (ads)</td>
+                            <td>High (fake reviews)</td>
+                            <td>Low</td>
+                            <td class="highlight">Low — transparent affiliate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- The Innovation -->
+            <section class="section">
+                <h2 class="section-title">The Innovation: A Decision Framework</h2>
+                <p class="section-text">
+                    Product Intelligence is not just another search tool or AI wrapper. It's a <strong>structured decision framework</strong> that applies the same rigorous evaluation process to every product.
+                </p>
+                <ul class="bullet-list">
+                    <li><strong>Auditability</strong> — Every report follows the same structure. Users can see exactly how conclusions were reached.</li>
+                    <li><strong>Repeatability</strong> — The same product evaluated twice produces the same output. This enables trust and comparison.</li>
+                    <li><strong>Suitability Focus</strong> — Rather than just listing features, reports assess who the product is suitable for — and who should avoid it.</li>
+                    <li><strong>Context Modes</strong> — The same product can be viewed from different perspectives: individual buyer, business procurer, or seller.</li>
+                    <li><strong>Risk Awareness</strong> — Limitations, misuse risks, and red flags are surfaced explicitly, not buried in reviews.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>Why This Matters</h4>
+                    <p>In a world of information overload and AI-generated noise, structured decision frameworks become more valuable, not less. Product Intelligence provides the consistency and transparency that existing tools lack — enabling better decisions at scale.</p>
+                </div>
+            </section>
+
+            <!-- Future Direction -->
+            <section class="section">
+                <h2 class="section-title">Future Direction</h2>
+                <p class="section-text">
+                    The current MVP demonstrates the framework using static HTML reports. Future versions will introduce:
+                </p>
+                <ul class="bullet-list">
+                    <li>Automated report generation using structured data and controlled AI assistance</li>
+                    <li>User-specific customisation based on context and preferences</li>
+                    <li>Integration with procurement and e-commerce workflows</li>
+                    <li>API access for B2B applications</li>
+                </ul>
+                <p class="section-text">
+                    However, the core innovation — the structured, auditable decision framework — remains constant. Technology is a means to deliver the framework at scale, not a replacement for it.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="container">
+            <p>Part of <a href="index.html">Product Intelligence</a> · © 2025</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
