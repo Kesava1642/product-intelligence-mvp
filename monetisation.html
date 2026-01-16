@@ -300,21 +300,39 @@
         .page-footer {
             background: var(--text-primary);
             color: rgba(255,255,255,0.7);
-            padding: 32px 0;
+            padding: 40px 0;
             text-align: center;
         }
 
         .page-footer p {
             font-size: 14px;
+            margin-bottom: 12px;
         }
 
         .page-footer a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
+            transition: color var(--transition);
         }
 
         .page-footer a:hover {
             color: white;
+        }
+
+        .page-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .page-footer-privacy {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
         }
 
         /* Responsive */
@@ -518,6 +536,11 @@
     <footer class="page-footer">
         <div class="container">
             <p>Part of <a href="index.html">Product Intelligence</a> · © 2025</p>
+            <div class="page-footer-links">
+                <a href="mailto:productintelligence.uk@gmail.com">Contact: productintelligence.uk@gmail.com</a>
+                <a href="https://www.linkedin.com/in/chennakesava-rao-garlapati-31b504284" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+            <p class="page-footer-privacy">We only collect pilot registration details to contact you about the pilot. No payment required.</p>
         </div>
     </footer>
 

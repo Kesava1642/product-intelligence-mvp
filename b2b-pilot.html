@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Use Cases | Product Intelligence</title>
-    <meta name="description" content="Discover how Product Intelligence helps individuals, businesses, and sellers make smarter product decisions.">
+    <title>B2B Pilot (UK) | Product Intelligence</title>
+    <meta name="description" content="Non-commercial pilot to validate structured product evaluation in real business decisions.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
             --radius-sm: 8px;
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
             --transition: 0.2s ease;
         }
 
@@ -115,8 +116,7 @@
             transition: color var(--transition);
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
+        .nav-links a:hover {
             color: var(--primary);
         }
 
@@ -162,188 +162,228 @@
             color: var(--text-primary);
         }
 
-        /* Mobile Menu Toggle */
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 16px;
+        }
+
         .mobile-toggle {
             display: none;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px;
+            padding: 8px;
         }
 
         .mobile-toggle span {
             width: 24px;
             height: 2px;
             background: var(--text-primary);
-            border-radius: 2px;
+            transition: all var(--transition);
         }
 
-        /* Page Header */
-        .page-header {
-            padding: 160px 0 80px;
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 120px;
             text-align: center;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5.5vw, 56px);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(17px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero .btn {
+            border-radius: 50px;
+            padding: 16px 36px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .hero .btn-primary {
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+        }
+
+        .hero .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+        }
+
+        .hero .btn-secondary {
+            background: white;
+            border: 1.5px solid var(--border);
+        }
+
+        .hero .btn-secondary:hover {
+            background: var(--background-alt);
+            border-color: #d1d5db;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 80px 0;
+        }
+
+        .content-section:nth-child(even) {
             background: var(--background-alt);
         }
 
-        .page-header h1 {
-            font-size: clamp(32px, 5vw, 48px);
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 3.5vw, 36px);
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             letter-spacing: -0.02em;
             color: var(--text-primary);
         }
 
-        .page-header p {
-            font-size: clamp(16px, 2vw, 19px);
+        .section-subtitle {
+            font-size: 18px;
             color: var(--text-secondary);
-            max-width: 640px;
+            max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
         }
 
-        /* Use Case Sections */
-        .use-case {
-            padding: 80px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .use-case:last-of-type {
-            border-bottom: none;
-        }
-
-        .use-case-header {
-            margin-bottom: 32px;
-        }
-
-        .use-case-label {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-
-        .use-case-title {
-            font-size: clamp(26px, 3.5vw, 32px);
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-        }
-
-        .use-case-subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
-        }
-
-        .use-case-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: start;
-        }
-
-        .use-case-list {
-            list-style: none;
-        }
-
-        .use-case-list li {
-            position: relative;
-            padding-left: 28px;
-            margin-bottom: 16px;
-            color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        .use-case-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-        }
-
-        .use-case-outcome {
-            background: var(--background-alt);
-            padding: 24px 28px;
-            border-radius: var(--radius);
-            border-left: 4px solid var(--primary);
-        }
-
-        .use-case-outcome p {
-            font-size: 17px;
-            font-weight: 500;
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        /* Business Section Styling */
-        .use-case.business {
-            background: var(--background-alt);
-        }
-
-        .use-case.business .use-case-outcome {
+        .content-box {
             background: white;
+            border-radius: var(--radius);
+            padding: 48px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
         }
 
-        /* Closing CTA */
-        .closing-cta {
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .closing-cta h2 {
-            font-size: clamp(24px, 3vw, 32px);
-            font-weight: 600;
+        .content-box h3 {
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 24px;
             color: var(--text-primary);
         }
 
-        .closing-cta .btn {
-            padding: 14px 32px;
+        .content-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-box li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
             font-size: 16px;
-            border-radius: 50px;
+            line-height: 1.7;
+        }
+
+        .content-box li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 24px;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .content-box p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .loi-box {
+            background: var(--primary-light);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 40px;
+            margin-top: 32px;
+        }
+
+        .loi-box h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .loi-box p {
+            color: var(--text-primary);
+            margin-bottom: 0;
         }
 
         /* Footer */
         .footer {
             background: var(--text-primary);
             color: rgba(255,255,255,0.7);
-            padding: 40px 0;
+            padding: 60px 0 40px;
         }
 
         .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            text-align: center;
         }
 
         .footer-logo {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             color: white;
             font-weight: 700;
             font-size: 18px;
-        }
-
-        .footer p {
-            font-size: 14px;
+            margin-bottom: 24px;
         }
 
         .footer-links {
             display: flex;
-            gap: 24px;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
@@ -357,12 +397,19 @@
             color: white;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-inner {
-                height: 64px;
-            }
+        .footer-bottom {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
 
+        .footer-bottom p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
             .nav-links,
             .nav-cta {
                 display: none;
@@ -372,36 +419,25 @@
                 display: flex;
             }
 
-            .page-header {
-                padding: 120px 0 60px;
+            .hero {
+                padding: 140px 0 80px;
             }
 
-            .use-case {
-                padding: 60px 0;
+            .content-box {
+                padding: 32px 24px;
             }
 
-            .use-case-content {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .closing-cta {
-                padding: 80px 0;
-            }
-
-            .footer-inner {
+            .hero-cta {
                 flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 16px;
             }
 
-            .use-case-list li {
-                font-size: 15px;
+            .hero-cta .btn {
+                width: 100%;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 16px;
             }
         }
     </style>
@@ -417,7 +453,7 @@
             </a>
             <nav class="nav">
                 <ul class="nav-links">
-                    <li><a href="use-cases.html" class="active">Use Cases</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
                     <li><a href="index.html#values">Why Us</a></li>
                     <li><a href="index.html#how-it-works">How It Works</a></li>
                 </ul>
@@ -434,96 +470,62 @@
         </div>
     </header>
 
-    <!-- MVP Banner -->
-    <div style="background: #fef3c7; border-bottom: 1px solid #fcd34d; padding: 12px 0; text-align: center; margin-top: 72px;">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <p style="font-size: 14px; color: #92400e; font-weight: 500; margin: 0;">📋 <strong>MVP Proof-of-Concept</strong> — This page demonstrates how Product Intelligence serves different user types.</p>
-        </div>
-    </div>
-
-    <!-- Page Header -->
-    <section class="page-header" style="padding-top: 60px;">
-        <div class="container">
-            <h1>Product Intelligence for Every Decision</h1>
-            <p>One intelligence platform. Three ways to use it — depending on who you are and what decision you need to make.</p>
-        </div>
-    </section>
-
-    <!-- Use Case 1: Individuals -->
-    <section class="use-case">
-        <div class="container">
-            <div class="use-case-header">
-                <span class="use-case-label">Use Case 1</span>
-                <h2 class="use-case-title">For Individuals</h2>
-                <p class="use-case-subtitle">Buy the right product with confidence.</p>
-            </div>
-            <div class="use-case-content">
-                <ul class="use-case-list">
-                    <li>Understand what a product actually is</li>
-                    <li>Know who it is useful for and not useful for</li>
-                    <li>Compare options without reading hundreds of reviews</li>
-                    <li>Get a clear recommendation based on needs and budget</li>
-                    <li>See trusted places to buy the product</li>
-                </ul>
-                <div class="use-case-outcome">
-                    <p>Individuals make faster, smarter purchase decisions with less confusion.</p>
+            <div class="hero-content">
+                <h1>B2B Pilot (UK) — Product Intelligence</h1>
+                <p class="hero-subtitle">Non-commercial pilot to validate structured product evaluation in real business decisions.</p>
+                <div class="hero-cta">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book a 10-min Pilot Call</a>
+                    <a href="mailto:contact@productintelligence.com?subject=Request%20LOI%20Template" class="btn btn-secondary">Request an LOI Template</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Use Case 2: Businesses & Industry -->
-    <section class="use-case business">
+    <!-- What You Get Section -->
+    <section class="content-section">
         <div class="container">
-            <div class="use-case-header">
-                <span class="use-case-label">Use Case 2</span>
-                <h2 class="use-case-title">For Businesses & Industry</h2>
-                <p class="use-case-subtitle">Make structured, risk-aware product decisions.</p>
-            </div>
-            <div class="use-case-content">
-                <ul class="use-case-list">
-                    <li>Structured product evaluation for business use</li>
-                    <li>Understand cost vs value before purchasing</li>
-                    <li>Compare suppliers, types, and long-term suitability</li>
-                    <li>Identify risks and limitations early</li>
-                    <li>Support procurement and operational decisions</li>
+            <div class="content-box">
+                <h3>What you get in the pilot</h3>
+                <ul>
+                    <li>1–2 product evaluations using the fixed framework</li>
+                    <li>Risks, constraints, suitability + recommendation</li>
+                    <li>Optional seller/procurement angle depending on company needs</li>
+                    <li>Delivered as a structured PDF-style report (static for now)</li>
                 </ul>
-                <div class="use-case-outcome">
-                    <p>Businesses reduce risk, save time, and make confident purchasing decisions.</p>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Use Case 3: E-commerce & Sellers -->
-    <section class="use-case">
+    <!-- Who This Is For Section -->
+    <section class="content-section">
         <div class="container">
-            <div class="use-case-header">
-                <span class="use-case-label">Use Case 3</span>
-                <h2 class="use-case-title">For E-commerce & Sellers</h2>
-                <p class="use-case-subtitle">Choose profitable products and describe them clearly.</p>
-            </div>
-            <div class="use-case-content">
-                <ul class="use-case-list">
-                    <li>Decide whether a product is worth selling</li>
-                    <li>Understand demand, competition, and variants</li>
-                    <li>Identify who the product is best suited for</li>
-                    <li>Generate clear, honest product descriptions</li>
-                    <li>Compare products before adding them to a store</li>
-                    <li>Access sourcing and buying links</li>
+            <div class="content-box">
+                <h3>Who this is for</h3>
+                <p>This pilot is designed for:</p>
+                <ul>
+                    <li>Procurement teams evaluating tools and products</li>
+                    <li>Operations and warehouse managers making purchasing decisions</li>
+                    <li>E-commerce sellers choosing products to sell</li>
+                    <li>SMEs evaluating tools and solutions before purchase</li>
                 </ul>
-                <div class="use-case-outcome">
-                    <p>Sellers choose better products, reduce mistakes, and build trust with customers.</p>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Closing CTA -->
-    <section class="closing-cta">
+    <!-- LOI Section -->
+    <section class="content-section">
         <div class="container">
-            <h2>Choose how you want to use Product Intelligence.</h2>
-            <a href="app.html" class="btn btn-primary">Get Started</a>
+            <div class="content-box">
+                <h3>About the LOI (Letter of Intent)</h3>
+                <p>The LOI is a simple, non-binding document that expresses your intent to explore a paid subscription after the pilot if value is proven.</p>
+                <div class="loi-box">
+                    <h3>What it means</h3>
+                    <p>By signing an LOI, you're indicating that if the pilot demonstrates clear value for your business, you're open to discussing a paid subscription. There's no obligation, and the pilot itself is completely non-commercial.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -536,12 +538,10 @@
                     Product Intelligence
                 </div>
                 <div class="footer-links">
-                    <a href="index.html">Home</a>
-                    <a href="use-cases.html">Use Cases</a>
-                    <a href="mailto:productintelligence.uk@gmail.com">Contact</a>
+                    <a href="mailto:productintelligence.uk@gmail.com">Contact: productintelligence.uk@gmail.com</a>
                     <a href="https://www.linkedin.com/in/chennakesava-rao-garlapati-31b504284" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 </div>
-                <div style="width: 100%; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div class="footer-bottom">
                     <p>&copy; 2025 Product Intelligence. All rights reserved.</p>
                     <p style="margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.6);">We only collect pilot registration details to contact you about the pilot. No payment required.</p>
                 </div>
@@ -551,4 +551,3 @@
 
 </body>
 </html>
-

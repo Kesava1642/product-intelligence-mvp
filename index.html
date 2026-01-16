@@ -428,6 +428,125 @@
             margin: 0 auto;
         }
 
+        /* Quick Visual Overview */
+        .overview-section {
+            padding: 100px 0;
+            background: var(--background);
+        }
+
+        .overview-intro {
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .overview-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: all var(--transition);
+        }
+
+        .overview-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .overview-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .overview-caption {
+            padding: 20px 24px;
+            text-align: center;
+        }
+
+        .overview-caption h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .overview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 60-second Walkthrough */
+        .walkthrough-section {
+            padding: 100px 0;
+            background: var(--background-alt);
+        }
+
+        .walkthrough-section .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .walkthrough-section .section-title {
+            font-size: clamp(28px, 3.5vw, 36px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .walkthrough-section .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .walkthrough-video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 24px;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            background: #000;
+        }
+
+        .walkthrough-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .walkthrough-note {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 16px;
+        }
+
         /* Early Access Pilot */
         .pilot-section {
             padding: 100px 0;
@@ -505,6 +624,229 @@
 
             .pilot-list {
                 max-width: 100%;
+            }
+        }
+
+        /* Traction & Validation */
+        .traction-section {
+            padding: 100px 0;
+            background: var(--background-alt);
+        }
+
+        .traction-section .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .traction-section .section-title {
+            font-size: clamp(28px, 3.5vw, 36px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .traction-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .traction-metric {
+            background: white;
+            padding: 32px 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: all var(--transition);
+        }
+
+        .traction-metric:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .traction-metric-value {
+            font-size: clamp(24px, 2.5vw, 32px);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .traction-metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .traction-founder {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 24px;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .traction-founder a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .traction-founder a:hover {
+            color: var(--primary);
+        }
+
+        .traction-credibility {
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .traction-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .traction-buttons .btn {
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: 50px;
+        }
+
+        .traction-buttons .btn-primary {
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+        }
+
+        .traction-buttons .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+        }
+
+        @media (max-width: 1024px) {
+            .traction-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .traction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .traction-buttons {
+                flex-direction: column;
+            }
+
+            .traction-buttons .btn {
+                width: 100%;
+            }
+        }
+
+        /* Early Feedback */
+        .feedback-section {
+            padding: 100px 0;
+            background: var(--background);
+        }
+
+        .feedback-section .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .feedback-section .section-title {
+            font-size: clamp(28px, 3.5vw, 36px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .feedback-card {
+            background: white;
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .feedback-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .feedback-quote {
+            font-size: 16px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .feedback-quote::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -4px;
+            font-size: 40px;
+            color: var(--primary);
+            line-height: 1;
+            font-style: normal;
+            opacity: 0.3;
+        }
+
+        .feedback-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .feedback-role {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .feedback-date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .feedback-note {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .feedback-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .feedback-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -877,6 +1219,7 @@
                     <li><a href="use-cases.html">Use Cases</a></li>
                     <li><a href="#values">Why Us</a></li>
                     <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="b2b-pilot.html">B2B Pilot</a></li>
                 </ul>
                 <div class="nav-cta">
                     <a href="product-template.html" class="btn btn-secondary">View Framework</a>
@@ -1061,7 +1404,55 @@
                 <a href="monetisation.html" style="color: #4b5563; font-size: 15px; text-decoration: none; border-bottom: 1px solid #d1d5db;">View Monetisation & Revenue Model →</a>
                 <span style="margin: 0 16px; color: #d1d5db;">|</span>
                 <a href="why-not-ai.html" style="color: #4b5563; font-size: 15px; text-decoration: none; border-bottom: 1px solid #d1d5db;">Why Not Just Use Search or AI? →</a>
+                <span style="margin: 0 16px; color: #d1d5db;">|</span>
+                <a href="b2b-pilot.html" style="color: #4b5563; font-size: 15px; text-decoration: none; border-bottom: 1px solid #d1d5db;">B2B Pilot (UK) →</a>
             </p>
+        </div>
+    </section>
+
+    <!-- Quick Visual Overview -->
+    <section class="overview-section">
+        <div class="container">
+            <p class="overview-intro">A quick visual view of how Product Intelligence works.</p>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <img src="assets/overview-steps.png" alt="The 3-step flow showing how Product Intelligence works">
+                    <div class="overview-caption">
+                        <h3>The 3-step flow</h3>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <img src="assets/overview-report.png" alt="Example output report from Product Intelligence">
+                    <div class="overview-caption">
+                        <h3>Example output report</h3>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <img src="assets/overview-users.png" alt="Who it's for - Individuals, SMEs, and Sellers">
+                    <div class="overview-caption">
+                        <h3>Who it's for (Individuals, SMEs, Sellers)</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 60-second Walkthrough -->
+    <section class="walkthrough-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">60-second walkthrough</h2>
+                <p class="section-subtitle">See the framework in action in under a minute.</p>
+            </div>
+            <div class="walkthrough-video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/VIDEO_ID_HERE" 
+                    title="60-second walkthrough of Product Intelligence"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p class="walkthrough-note">Video shared for early validation purposes.</p>
         </div>
     </section>
 
@@ -1080,10 +1471,73 @@
                 </ul>
                 <p>Product Intelligence is built on a fixed, reusable decision framework designed for future automation.</p>
                 <p>Join the pilot to help shape the future of structured Product Intelligence.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Join the Pilot</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Join the Pilot</a>
             </div>
         </div>
         <p style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-secondary);">Business and SME pilot enquiries are also being accepted as part of early validation.</p>
+    </section>
+
+    <!-- Traction & Validation -->
+    <section class="traction-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Traction & Validation</h2>
+            </div>
+            <div class="traction-grid">
+                <div class="traction-metric">
+                    <div class="traction-metric-value">90+</div>
+                    <div class="traction-metric-label">LinkedIn impressions in 24 hours</div>
+                </div>
+                <div class="traction-metric">
+                    <div class="traction-metric-value">X</div>
+                    <div class="traction-metric-label">Posted in X LinkedIn groups</div>
+                </div>
+                <div class="traction-metric">
+                    <div class="traction-metric-value">X</div>
+                    <div class="traction-metric-label">Pilot registrations</div>
+                </div>
+                <div class="traction-metric">
+                    <div class="traction-metric-value">X</div>
+                    <div class="traction-metric-label">Feedback conversations</div>
+                </div>
+            </div>
+            <p class="traction-founder">Founder: <a href="https://www.linkedin.com/in/chennakesava-rao-garlapati-31b504284" target="_blank" rel="noopener noreferrer">LinkedIn profile</a></p>
+            <p class="traction-credibility">Early users are helping validate the framework before automation is introduced.</p>
+            <div class="traction-buttons">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Join the Pilot (Google Form)</a>
+                <a href="b2b-pilot.html" class="btn btn-secondary">Request a B2B Pilot / LOI</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Early Feedback -->
+    <section class="feedback-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Early Feedback</h2>
+            </div>
+            <div class="feedback-grid">
+                <div class="feedback-card">
+                    <div class="feedback-quote">Quote text placeholder - 1-2 lines of feedback from early pilot users.</div>
+                    <div class="feedback-author">Role/Company Placeholder</div>
+                    <div class="feedback-role">SME seller, UK</div>
+                    <div class="feedback-date">Date placeholder</div>
+                </div>
+                <div class="feedback-card">
+                    <div class="feedback-quote">Quote text placeholder - 1-2 lines of feedback from early pilot users.</div>
+                    <div class="feedback-author">Role/Company Placeholder</div>
+                    <div class="feedback-role">SME seller, UK</div>
+                    <div class="feedback-date">Date placeholder</div>
+                </div>
+                <div class="feedback-card">
+                    <div class="feedback-quote">Quote text placeholder - 1-2 lines of feedback from early pilot users.</div>
+                    <div class="feedback-author">Role/Company Placeholder</div>
+                    <div class="feedback-role">SME seller, UK</div>
+                    <div class="feedback-date">Date placeholder</div>
+                </div>
+            </div>
+            <p class="feedback-note">Quotes will be updated as pilot feedback is collected.</p>
+        </div>
     </section>
 
     <!-- Final CTA -->
@@ -1126,19 +1580,21 @@
                         </ul>
                     </div>
                     <div class="footer-column">
-                        <h4>Status</h4>
+                        <h4>Contact</h4>
                         <ul>
-                            <li><span style="color: rgba(255,255,255,0.5);">MVP Phase</span></li>
-                            <li><span style="color: rgba(255,255,255,0.5);">Static Demo</span></li>
+                            <li><a href="mailto:productintelligence.uk@gmail.com">productintelligence.uk@gmail.com</a></li>
+                            <li><a href="https://www.linkedin.com/in/chennakesava-rao-garlapati-31b504284" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Product Intelligence. All rights reserved.</p>
+                <div>
+                    <p>&copy; 2025 Product Intelligence. All rights reserved.</p>
+                    <p style="margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.6);">We only collect pilot registration details to contact you about the pilot. No payment required.</p>
+                </div>
                 <div class="footer-social">
-                    <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="https://www.linkedin.com/in/chennakesava-rao-garlapati-31b504284" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
                 </div>
             </div>
         </div>
