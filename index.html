@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -286,17 +286,19 @@
 
         .why-different-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
 
         .why-different-card {
             background: white;
-            padding: 32px 28px;
+            padding: 24px 20px;
             border-radius: var(--radius);
             border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
             transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
         }
 
         .why-different-card:hover {
@@ -304,26 +306,44 @@
             transform: translateY(-2px);
         }
 
-        .why-different-card h3 {
-            font-size: 20px;
+        .why-different-card .card-label {
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 16px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .why-different-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
             color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .why-different-card .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 14px;
         }
 
         .why-different-card ul {
             list-style: none;
             padding: 0;
             margin: 0;
+            flex-grow: 1;
         }
 
         .why-different-card li {
             position: relative;
-            padding-left: 24px;
-            margin-bottom: 12px;
-            color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.6;
+            padding-left: 16px;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.45;
         }
 
         .why-different-card li::before {
@@ -331,12 +351,18 @@
             position: absolute;
             left: 0;
             color: var(--primary);
-            font-size: 20px;
-            line-height: 1;
+            font-size: 14px;
+            line-height: 1.45;
             font-weight: 700;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .why-different-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
             .why-different-grid {
                 grid-template-columns: 1fr;
             }
@@ -1248,6 +1274,8 @@
         </div>
     </header>
 
+    <main class="page">
+
     <!-- MVP Status Banner -->
     <div class="mvp-banner" style="margin-top: 72px;">
         <div class="container">
@@ -1256,7 +1284,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero" style="padding-top: 140px;">
+    <section class="hero">
         <div class="container">
             <div class="hero-content">
                 <h1>Make better product decisions<br>before you buy or sell.</h1>
@@ -1280,34 +1308,39 @@
             </div>
             <div class="why-different-grid">
                 <div class="why-different-card">
-                    <h3>A) Innovation</h3>
+                    <span class="card-label">A) Innovation</span>
+                    <h3>A repeatable decision template</h3>
+                    <p class="card-desc">Structured evaluation you can audit, share, and reuse.</p>
                     <ul>
-                        <li>A fixed, reusable decision template (9 sections) that standardises product evaluation</li>
-                        <li>Mode-based framing (Individual / Business / Seller) while keeping one source of truth</li>
-                        <li>Designed for auditability: explicit suitability, risks, limitations, and recommendation logic</li>
+                        <li>9 sections, consistent scoring</li>
+                        <li>Clear assumptions + trade-offs</li>
                     </ul>
                 </div>
                 <div class="why-different-card">
-                    <h3>B) Beachhead market</h3>
+                    <span class="card-label">B) Beachhead Market</span>
+                    <h3>UK SMEs need clarity</h3>
+                    <p class="card-desc">Procurement and sellers waste time on unclear comparisons.</p>
                     <ul>
-                        <li><strong>Primary:</strong> UK SMEs making purchasing decisions (tools, equipment, software)</li>
-                        <li><strong>Secondary:</strong> e-commerce sellers validating products pre-listing</li>
+                        <li>Tools, equipment, software</li>
+                        <li>eCommerce listing decisions</li>
                     </ul>
                 </div>
                 <div class="why-different-card">
-                    <h3>C) Validation plan (next 30 days)</h3>
+                    <span class="card-label">C) Validation (30 days)</span>
+                    <h3>Pilot-first validation</h3>
+                    <p class="card-desc">Manual reports prove value before automation.</p>
                     <ul>
-                        <li>Collect 25 pilot registrations (expressions of interest)</li>
-                        <li>Run 10 structured pilot evaluations (manual using template)</li>
-                        <li>Secure 2 non-binding LOIs (only if value is demonstrated during manual pilot evaluations)</li>
+                        <li>10–25 pilot evaluations</li>
+                        <li>2–5 LOIs targeted</li>
                     </ul>
                 </div>
                 <div class="why-different-card">
-                    <h3>D) Roadmap (next 90 days)</h3>
+                    <span class="card-label">D) Roadmap (90 days)</span>
+                    <h3>Automation-ready roadmap</h3>
+                    <p class="card-desc">Move from template to semi-structured generator.</p>
                     <ul>
-                        <li>Convert template into a semi-structured generator (forms → report output)</li>
-                        <li>Add evidence citations + consistency checks</li>
-                        <li>Add exportable PDF and comparison reports</li>
+                        <li>Form → report output</li>
+                        <li>PDF export + comparisons</li>
                     </ul>
                 </div>
             </div>
@@ -1424,7 +1457,7 @@
     </section>
 
     <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works" style="padding: 120px 0;">
+    <section class="how-it-works" id="how-it-works">
         <!-- Anchor for "Three Steps" -->
         <a id="three-steps"></a>
         <div class="container">
@@ -1436,61 +1469,27 @@
                 </p>
             </div>
             
-            <!-- Enhanced 3-Step Cards -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
-                
-                <!-- Step 1 -->
-                <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div style="width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px;">1</div>
-                        <h3 style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0;">Select a Product</h3>
-                    </div>
-                    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; font-weight: 500;">Define what you're buying and what "success" looks like.</p>
-                    <ul style="list-style: none; margin: 0 0 20px 0; padding: 0; flex-grow: 1;">
-                        <li style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; padding-left: 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">•</span>Set context: budget, constraints, must-haves</li>
-                        <li style="font-size: 14px; color: var(--text-secondary); padding-left: 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">•</span>Choose a mode: Individual / Business / Seller</li>
-                    </ul>
-                    <a href="use-cases.html" style="font-size: 14px; color: var(--primary); text-decoration: none; font-weight: 500;">View Use Cases →</a>
+            <!-- 3-Step Cards -->
+            <div class="grid-3">
+                <div class="step-card">
+                    <div class="step-badge">1</div>
+                    <h3 class="step-title">Select a Product</h3>
+                    <p class="step-text">Define the product, context, and decision goal.</p>
+                    <a href="product-template.html" class="step-cta">Start with template →</a>
                 </div>
-                
-                <!-- Step 2 -->
-                <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div style="width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px;">2</div>
-                        <h3 style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0;">Review the Report</h3>
-                    </div>
-                    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; font-weight: 500;">Get a structured evaluation with fit, risks, and evidence.</p>
-                    <ul style="list-style: none; margin: 0 0 20px 0; padding: 0; flex-grow: 1;">
-                        <li style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; padding-left: 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">•</span>Suitability score + pros/cons</li>
-                        <li style="font-size: 14px; color: var(--text-secondary); padding-left: 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">•</span>Risks, limitations, and recommendation logic</li>
-                    </ul>
-                    <a href="demo-product.html" style="font-size: 14px; color: var(--primary); text-decoration: none; font-weight: 500;">See Demo Report →</a>
+                <div class="step-card">
+                    <div class="step-badge">2</div>
+                    <h3 class="step-title">Review the Report</h3>
+                    <p class="step-text">See suitability, risks, and alternatives in one structure.</p>
+                    <a href="demo-product.html" class="step-cta">View demo report →</a>
                 </div>
-                
-                <!-- Step 3 -->
-                <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div style="width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px;">3</div>
-                        <h3 style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0;">Make a Decision</h3>
-                    </div>
-                    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; font-weight: 500;">Decide with confidence—and document the reasoning.</p>
-                    <ul style="list-style: none; margin: 0 0 20px 0; padding: 0; flex-grow: 1;">
-                        <li style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; padding-left: 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">•</span>Audit-friendly justification</li>
-                        <li style="font-size: 14px; color: var(--text-secondary); padding-left: 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">•</span>Repeatable template for future decisions</li>
-                    </ul>
-                    <a href="product-template.html" style="font-size: 14px; color: var(--primary); text-decoration: none; font-weight: 500;">View Framework →</a>
+                <div class="step-card">
+                    <div class="step-badge">3</div>
+                    <h3 class="step-title">Make a Decision</h3>
+                    <p class="step-text">Decide with clear assumptions and evidence you can share.</p>
+                    <a href="product-template.html" class="step-cta">View framework →</a>
                 </div>
-                
             </div>
-            
-            <!-- Responsive styles for mobile -->
-            <style>
-                @media (max-width: 900px) {
-                    #how-it-works > .container > div:nth-child(2) {
-                        grid-template-columns: 1fr !important;
-                    }
-                }
-            </style>
             
             <p style="text-align: center; margin-top: 56px;">
                 <a href="demo-product.html" style="color: #4b5563; font-size: 15px; text-decoration: none; border-bottom: 1px solid #d1d5db;">View Demo Product Report →</a>
@@ -1573,51 +1572,16 @@
                     <li>SME sellers and e-commerce operators</li>
                     <li>Small businesses evaluating products before purchase</li>
                 </ul>
-                <p>Product Intelligence is built on a fixed, reusable decision framework designed for future automation.</p>
                 <p>Join the pilot to help shape the future of structured Product Intelligence.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Join the Pilot</a>
-            </div>
-        </div>
-        <p style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-secondary);">Business and SME pilot enquiries are also being accepted as part of early validation.</p>
-    </section>
-
-    <!-- Traction & Validation -->
-    <section class="traction-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Traction & Validation</h2>
-            </div>
-            <p style="text-align: center; font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.7; max-width: 700px; margin-left: auto; margin-right: auto;">Early signal: 90+ LinkedIn impressions (first post). Validation metrics (registrations, calls, LOIs) will be published once collected.</p>
-            <p class="traction-founder">Founder: <a href="https://www.linkedin.com/in/chennakesava-rao-garlapati-31b504284" target="_blank" rel="noopener noreferrer">LinkedIn profile</a></p>
-            <div class="traction-buttons">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Join the Pilot (Google Form)</a>
-                <a href="b2b-pilot.html" class="btn btn-secondary">Request a B2B Pilot / LOI</a>
+                <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 28px;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Join the Pilot</a>
+                    <a href="b2b-pilot.html" class="btn btn-secondary">Request B2B Pilot (LOI)</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Early Feedback -->
-    <section class="feedback-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Early Feedback</h2>
-            </div>
-            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
-                <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7;">Pilot feedback quotes will be added once collected and with permission. No testimonials are published without consent.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-box">
-                <h2>See the Framework in Action</h2>
-                <p>Explore a demo product report to understand how Product Intelligence structures decisions.</p>
-                <a href="demo-product.html" class="btn btn-primary btn-large">View Demo Report</a>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
