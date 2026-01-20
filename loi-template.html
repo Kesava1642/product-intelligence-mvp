@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B2B Pilot (UK) | Product Intelligence</title>
-    <meta name="description" content="Non-commercial pilot to validate structured product evaluation in real business decisions.">
+    <title>LOI Template | Product Intelligence</title>
+    <meta name="description" content="Non-binding Letter of Intent template for Product Intelligence pilot validation.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -184,87 +184,9 @@
             transition: all var(--transition);
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 180px 0 120px;
-            text-align: center;
-            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 800px;
-            height: 400px;
-            background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: clamp(36px, 5.5vw, 56px);
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 24px;
-            letter-spacing: -0.025em;
-            color: var(--text-primary);
-        }
-
-        .hero-subtitle {
-            font-size: clamp(17px, 2vw, 20px);
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 48px;
-            line-height: 1.6;
-            font-weight: 400;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .hero .btn {
-            border-radius: 50px;
-            padding: 16px 36px;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .hero .btn-primary {
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
-        }
-
-        .hero .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
-        }
-
-        .hero .btn-secondary {
-            background: white;
-            border: 1.5px solid var(--border);
-        }
-
-        .hero .btn-secondary:hover {
-            background: var(--background-alt);
-            border-color: #d1d5db;
-        }
-
         /* Content Sections */
         .content-section {
-            padding: 80px 0;
+            padding: 100px 0 80px;
         }
 
         .content-section:nth-child(even) {
@@ -292,68 +214,128 @@
             line-height: 1.6;
         }
 
-        .content-box {
+        .loi-template-box {
             background: white;
             border-radius: var(--radius);
             padding: 48px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .content-box h3 {
-            font-size: 24px;
+        .loi-template-box h1 {
+            font-size: clamp(24px, 3vw, 32px);
             font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .loi-intro {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .form-field {
             margin-bottom: 24px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--background);
+            color: var(--text-primary);
+            transition: border-color var(--transition);
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-field input::placeholder,
+        .form-field textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .info-box {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 32px;
+        }
+
+        .info-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
             color: var(--text-primary);
         }
 
-        .content-box ul {
+        .info-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .info-box ul {
             list-style: none;
             padding: 0;
+            margin-top: 12px;
         }
 
-        .content-box li {
+        .info-box li {
             position: relative;
-            padding-left: 32px;
-            margin-bottom: 16px;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 15px;
             color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
-        .content-box li::before {
+        .info-box li::before {
             content: '•';
             position: absolute;
             left: 0;
             color: var(--primary);
-            font-size: 24px;
-            line-height: 1;
             font-weight: 700;
         }
 
-        .content-box p {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .loi-box {
-            background: var(--primary-light);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius);
-            padding: 40px;
-            margin-top: 32px;
-        }
-
-        .loi-box h3 {
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-
-        .loi-box p {
-            color: var(--text-primary);
-            margin-bottom: 0;
+        .back-button {
+            text-align: center;
+            margin-top: 40px;
         }
 
         /* Footer */
@@ -419,20 +401,16 @@
                 display: flex;
             }
 
-            .hero {
+            .content-section {
                 padding: 140px 0 80px;
             }
 
-            .content-box {
+            .loi-template-box {
                 padding: 32px 24px;
             }
 
-            .hero-cta {
-                flex-direction: column;
-            }
-
-            .hero-cta .btn {
-                width: 100%;
+            .signature-section {
+                grid-template-columns: 1fr;
             }
 
             .footer-links {
@@ -470,99 +448,71 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- LOI Template Section -->
+    <section class="content-section">
         <div class="container">
-            <div class="hero-content">
-                <h1>B2B Pilot (UK) — Product Intelligence</h1>
-                <p class="hero-subtitle">Non-commercial pilot to validate structured product evaluation in real business decisions.</p>
-                <div class="hero-cta">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book a 10-min Pilot Call</a>
-                    <a href="loi-template.html" class="btn btn-secondary">Request an LOI Template</a>
+            <div class="loi-template-box">
+                <h1>Non-Binding Letter of Intent (LOI)<br>Product Intelligence Pilot</h1>
+                <p class="loi-intro">This is a non-binding template for validation purposes only. There is no obligation, no payment commitment, and no legal requirement. This document simply expresses interest in exploring a paid plan if the pilot demonstrates value.</p>
+
+                <div class="form-field">
+                    <label for="company-name">Company name</label>
+                    <input type="text" id="company-name" name="company-name" placeholder="Enter company name">
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- How the Pilot Works Section -->
-    <section class="content-section">
-        <div class="container">
-            <div class="content-box">
-                <h3>How the pilot works (non-commercial)</h3>
-                <ul>
-                    <li>Book a 10-min call</li>
-                    <li>Share 1 product decision you are considering</li>
-                    <li>We produce 1–2 structured evaluations (manual, template-based)</li>
-                    <li>You receive a PDF-style report + short feedback questions</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- What You Get Section -->
-    <section class="content-section">
-        <div class="container">
-            <div class="content-box">
-                <h3>What you get in the pilot</h3>
-                <ul>
-                    <li>1–2 product evaluations using the fixed framework</li>
-                    <li>Risks, constraints, suitability + recommendation</li>
-                    <li>Optional seller/procurement angle depending on company needs</li>
-                    <li>Delivered as a structured PDF-style report (static for now)</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Who This Is For Section -->
-    <section class="content-section">
-        <div class="container">
-            <div class="content-box">
-                <h3>Who this is for</h3>
-                <p>This pilot is designed for:</p>
-                <ul>
-                    <li>Procurement teams evaluating tools and products</li>
-                    <li>Operations and warehouse managers making purchasing decisions</li>
-                    <li>E-commerce sellers choosing products to sell</li>
-                    <li>SMEs evaluating tools and solutions before purchase</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- What We Measure Section -->
-    <section class="content-section">
-        <div class="container">
-            <div class="content-box">
-                <h3>What we measure</h3>
-                <ul>
-                    <li>Decision time saved</li>
-                    <li>Risk clarity (did it surface issues earlier?)</li>
-                    <li>Willingness to pay (post-pilot)</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- LOI Section -->
-    <section class="content-section">
-        <div class="container">
-            <div class="content-box">
-                <h3>About the LOI (Letter of Intent)</h3>
-                <p>The LOI is a simple, non-binding document that expresses your intent to explore a paid subscription after the pilot if value is demonstrated.</p>
-                <div class="loi-box">
-                    <h3>What it means</h3>
-                    <p>By signing an LOI, you're indicating that if the pilot demonstrates clear value for your business, you're open to discussing a paid subscription. There's no obligation, and the pilot itself is completely non-commercial.</p>
+                <div class="form-field">
+                    <label for="contact-name">Contact name</label>
+                    <input type="text" id="contact-name" name="contact-name" placeholder="Enter contact name">
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Compliance Note -->
-    <section class="content-section">
-        <div class="container">
-            <div class="content-box" style="background: var(--primary-light); border-color: var(--primary);">
-                <p style="color: var(--text-primary); font-weight: 500; margin-bottom: 0;"><strong>Compliance note:</strong> No confidential business data is required for this pilot. The MVP is a static demonstration; reports are produced manually.</p>
+                <div class="form-field">
+                    <label for="role">Role</label>
+                    <input type="text" id="role" name="role" placeholder="Enter role/title">
+                </div>
+
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email address">
+                </div>
+
+                <div class="form-field">
+                    <label for="use-case">Intended use case</label>
+                    <textarea id="use-case" name="use-case" placeholder="Describe your intended use case for Product Intelligence"></textarea>
+                </div>
+
+                <div class="form-field">
+                    <label for="decision-volume">Expected decision volume per month</label>
+                    <input type="text" id="decision-volume" name="decision-volume" placeholder="e.g., 5-10 product evaluations per month">
+                </div>
+
+                <div class="signature-section">
+                    <div class="form-field">
+                        <label for="signature">Signature</label>
+                        <input type="text" id="signature" name="signature" placeholder="Signature">
+                    </div>
+                    <div class="form-field">
+                        <label for="date">Date</label>
+                        <input type="text" id="date" name="date" placeholder="Date">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>What this LOI means</h3>
+                    <p>If the pilot demonstrates value, we are open to discussing a paid plan.</p>
+                </div>
+
+                <div class="info-box">
+                    <h3>What it does NOT mean</h3>
+                    <ul>
+                        <li>No payment commitment</li>
+                        <li>No exclusivity</li>
+                        <li>No legal obligation</li>
+                    </ul>
+                </div>
+
+                <div class="back-button">
+                    <a href="b2b-pilot.html" class="btn btn-secondary btn-large">Back to B2B Pilot</a>
+                </div>
             </div>
         </div>
     </section>

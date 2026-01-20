@@ -275,9 +275,72 @@
             color: var(--text-secondary);
         }
 
+        /* Why Different Section */
+        .why-different {
+            background: var(--background-alt);
+        }
+
+        .why-different-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .why-different-card {
+            background: white;
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .why-different-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .why-different-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .why-different-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .why-different-card li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .why-different-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 20px;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .why-different-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Who This Is For */
         .audience {
-            background: var(--background-alt);
+            background: var(--background);
         }
 
         .audience-grid {
@@ -1258,6 +1321,48 @@
         </div>
     </section>
 
+    <!-- Why Product Intelligence is Different -->
+    <section class="why-different">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Product Intelligence is different</h2>
+            </div>
+            <div class="why-different-grid">
+                <div class="why-different-card">
+                    <h3>A) Innovation</h3>
+                    <ul>
+                        <li>A fixed, reusable decision template (9 sections) that standardises product evaluation</li>
+                        <li>Mode-based framing (Individual / Business / Seller) while keeping one source of truth</li>
+                        <li>Designed for auditability: explicit suitability, risks, limitations, and recommendation logic</li>
+                    </ul>
+                </div>
+                <div class="why-different-card">
+                    <h3>B) Beachhead market</h3>
+                    <ul>
+                        <li><strong>Primary:</strong> UK SMEs making purchasing decisions (tools, equipment, software)</li>
+                        <li><strong>Secondary:</strong> e-commerce sellers validating products pre-listing</li>
+                    </ul>
+                </div>
+                <div class="why-different-card">
+                    <h3>C) Validation plan (next 30 days)</h3>
+                    <ul>
+                        <li>Collect 25 pilot registrations (expressions of interest)</li>
+                        <li>Run 10 structured pilot evaluations (manual using template)</li>
+                        <li>Secure 2 non-binding LOIs (only if value is demonstrated during manual pilot evaluations)</li>
+                    </ul>
+                </div>
+                <div class="why-different-card">
+                    <h3>D) Roadmap (next 90 days)</h3>
+                    <ul>
+                        <li>Convert template into a semi-structured generator (forms → report output)</li>
+                        <li>Add evidence citations + consistency checks</li>
+                        <li>Add exportable PDF and comparison reports</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Who This Is For -->
     <section class="audience" id="audience">
         <div class="container">
@@ -1416,19 +1521,19 @@
             <p class="overview-intro">A quick visual view of how Product Intelligence works.</p>
             <div class="overview-grid">
                 <div class="overview-card">
-                    <img src="assets/overview-steps.png" alt="The 3-step flow showing how Product Intelligence works">
+                    <img src="assets/media/overview-steps.png" alt="The 3-step flow showing how Product Intelligence works" onerror="this.onerror=null;this.src='assets/media/placeholder-diagram.svg';">
                     <div class="overview-caption">
                         <h3>The 3-step flow</h3>
                     </div>
                 </div>
                 <div class="overview-card">
-                    <img src="assets/overview-report.png" alt="Example output report from Product Intelligence">
+                    <img src="assets/media/overview-report.png" alt="Example output report from Product Intelligence" onerror="this.onerror=null;this.src='assets/media/placeholder-diagram.svg';">
                     <div class="overview-caption">
                         <h3>Example output report</h3>
                     </div>
                 </div>
                 <div class="overview-card">
-                    <img src="assets/overview-users.png" alt="Who it's for - Individuals, SMEs, and Sellers">
+                    <img src="assets/media/overview-users.png" alt="Who it's for - Individuals, SMEs, and Sellers" onerror="this.onerror=null;this.src='assets/media/placeholder-diagram.svg';">
                     <div class="overview-caption">
                         <h3>Who it's for (Individuals, SMEs, Sellers)</h3>
                     </div>
@@ -1461,8 +1566,8 @@
         <div class="container">
             <div class="pilot-box">
                 <h2>Early Access Pilot – UK</h2>
-                <p><strong>Status: Early Access Pilot currently onboarding UK users</strong></p>
-                <p>We are onboarding early users to trial Product Intelligence – a structured, decision-ready product evaluation framework.</p>
+                <p><strong>Status: Early access expressions of interest open (UK).</strong></p>
+                <p>We are collecting expressions of interest to validate the framework with UK users and SMEs. This MVP is a static demonstration; pilots are conducted manually using the fixed template.</p>
                 <p style="margin-bottom: 20px;"><strong>This pilot is for:</strong></p>
                 <ul class="pilot-list">
                     <li>Individuals making important product decisions</li>
@@ -1483,24 +1588,8 @@
             <div class="section-header">
                 <h2 class="section-title">Traction & Validation</h2>
             </div>
-            <div class="traction-grid">
-                <div class="traction-metric">
-                    <div class="traction-metric-value">90+</div>
-                    <div class="traction-metric-label">LinkedIn impressions in 24 hours</div>
-                </div>
-                <div class="traction-metric">
-                    <div class="traction-metric-value">X</div>
-                    <div class="traction-metric-label">Posted in X LinkedIn groups</div>
-                </div>
-                <div class="traction-metric">
-                    <div class="traction-metric-value">X</div>
-                    <div class="traction-metric-label">Pilot registrations</div>
-                </div>
-                <div class="traction-metric">
-                    <div class="traction-metric-value">X</div>
-                    <div class="traction-metric-label">Feedback conversations</div>
-                </div>
-            </div>
+            <p style="text-align: center; font-size: 16px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">Validation metrics (registrations, conversations, LOIs) will be published as they are collected.</p>
+            <p style="text-align: center; font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.5;">Early visibility test: 90+ LinkedIn impressions (first post) — early signal only.</p>
             <p class="traction-founder">Founder: <a href="https://www.linkedin.com/in/chennakesava-rao-garlapati-31b504284" target="_blank" rel="noopener noreferrer">LinkedIn profile</a></p>
             <p class="traction-credibility">Early users are helping validate the framework before automation is introduced.</p>
             <div class="traction-buttons">
@@ -1516,27 +1605,10 @@
             <div class="section-header">
                 <h2 class="section-title">Early Feedback</h2>
             </div>
-            <div class="feedback-grid">
-                <div class="feedback-card">
-                    <div class="feedback-quote">Quote text placeholder - 1-2 lines of feedback from early pilot users.</div>
-                    <div class="feedback-author">Role/Company Placeholder</div>
-                    <div class="feedback-role">SME seller, UK</div>
-                    <div class="feedback-date">Date placeholder</div>
-                </div>
-                <div class="feedback-card">
-                    <div class="feedback-quote">Quote text placeholder - 1-2 lines of feedback from early pilot users.</div>
-                    <div class="feedback-author">Role/Company Placeholder</div>
-                    <div class="feedback-role">SME seller, UK</div>
-                    <div class="feedback-date">Date placeholder</div>
-                </div>
-                <div class="feedback-card">
-                    <div class="feedback-quote">Quote text placeholder - 1-2 lines of feedback from early pilot users.</div>
-                    <div class="feedback-author">Role/Company Placeholder</div>
-                    <div class="feedback-role">SME seller, UK</div>
-                    <div class="feedback-date">Date placeholder</div>
-                </div>
+            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary);">Early feedback (in progress)</h3>
+                <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.6;">Pilot feedback quotes will be added once collected. We will not publish participant feedback without permission.</p>
             </div>
-            <p class="feedback-note">Quotes will be updated as pilot feedback is collected.</p>
         </div>
     </section>
 
