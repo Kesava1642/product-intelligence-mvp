@@ -123,3 +123,38 @@ section{padding: 54px 0;}
   font-weight: 700;
 }
 .small-note{color:var(--muted); font-size: 13px;}
+/* =========================
+   FORCE THEME OVERRIDES
+   ========================= */
+
+/* Ensure background + typography wins everywhere */
+body{
+  background:
+    radial-gradient(900px 500px at 50% 0%, rgba(30,64,175,.10), transparent 60%),
+    radial-gradient(900px 500px at 10% 25%, rgba(14,165,233,.08), transparent 60%),
+    var(--bg) !important;
+  color: var(--text) !important;
+}
+p, li{ color: var(--muted) !important; line-height: 1.65 !important; }
+
+/* Buttons: make them premium (not too bright) */
+button, .btn, .button, a.button{
+  border-radius: 999px !important;
+}
+a.button.primary, .btn-primary, .cta-primary, .primary{
+  background: var(--primary) !important;
+  color:#fff !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+a.button.primary:hover, .btn-primary:hover, .cta-primary:hover, .primary:hover{
+  background: var(--primary-hover) !important;
+}
+
+/* Cards: consistent SaaS look */
+.card, .feature-card, .pricing-card, .panel, .box,
+.section-card, .grid-card, .tile, .pill-card{
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
