@@ -4,7 +4,7 @@ A static proof-of-concept demonstration of a structured decision framework that 
 
 ## Live Demo
 
-🌐 **GitHub Pages**: [View Live Site](https://[your-username].github.io/product-intelligence-mvp/)
+🌐 **GitHub Pages**: [View Live Site](https://kesava1642.github.io/product-intelligence-mvp/)
 
 ## Pages
 
