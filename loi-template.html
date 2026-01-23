@@ -53,7 +53,7 @@
         }
 
         /* Header */
-        .header {
+        .site-header {
             position: fixed;
             top: 0;
             left: 0;
@@ -74,7 +74,7 @@
             height: 72px;
         }
 
-        .logo {
+        .brand {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -96,19 +96,20 @@
             font-size: 18px;
         }
 
-        .nav {
+        .site-nav {
             display: flex;
             align-items: center;
             gap: 32px;
         }
 
-        .nav-links {
+        .site-nav .nav-links {
             display: flex;
             gap: 32px;
             list-style: none;
+            white-space: nowrap;
         }
 
-        .nav-links a {
+        .site-nav .nav-links a {
             text-decoration: none;
             color: var(--text-secondary);
             font-weight: 500;
@@ -116,11 +117,11 @@
             transition: color var(--transition);
         }
 
-        .nav-links a:hover {
+        .site-nav .nav-links a:hover {
             color: var(--primary);
         }
 
-        .nav-cta {
+        .header-cta {
             display: flex;
             gap: 12px;
         }
@@ -392,8 +393,8 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links,
-            .nav-cta {
+            .site-nav .nav-links,
+            .header-cta {
                 display: none;
             }
 
@@ -424,19 +425,20 @@
 <body>
 
     <!-- Header -->
-    <header class="header">
+    <header class="site-header">
         <div class="header-inner">
-            <a href="index.html" class="logo">
+            <a href="index.html" class="brand">
                 <div class="logo-icon">PI</div>
                 <span>Product Intelligence</span>
             </a>
-            <nav class="nav">
+            <nav class="site-nav">
                 <ul class="nav-links">
                     <li><a href="use-cases.html">Use Cases</a></li>
                     <li><a href="why-not-ai.html">Why Us</a></li>
                     <li><a href="index.html#how-it-works">How It Works</a></li>
+                    <li><a href="b2b-pilot.html">B2B Pilot</a></li>
                 </ul>
-                <div class="nav-cta">
+                <div class="header-cta">
                     <a href="product-template.html" class="btn btn-secondary">View Framework</a>
                     <a href="demo-product.html" class="btn btn-primary">See Demo Report</a>
                 </div>
