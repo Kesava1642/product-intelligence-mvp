@@ -362,6 +362,31 @@
             background: var(--background-alt);
         }
 
+        /* Demo Notice */
+        .demo-notice {
+            background: var(--background-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+
+        .demo-notice h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .demo-notice p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
+        }
+
         .info-card h4 {
             font-size: 14px;
             font-weight: 600;
@@ -720,10 +745,11 @@
     </header>
 
     <!-- MVP Banner -->
-    <div style="background: #fef3c7; border-bottom: 1px solid #fcd34d; padding: 12px 0; text-align: center;">
-        <div class="container">
-            <p style="font-size: 14px; color: #92400e; font-weight: 500; margin: 0;">📋 <strong>MVP Demo Report</strong> — This is a static example showing the Product Intelligence report structure.</p>
-        </div>
+    <div class="mvp-banner">
+      <div class="mvp-banner-inner">
+        <span class="mvp-badge">MVP</span>
+        Demo Report — This is a static example showing the Product Intelligence report structure.
+      </div>
     </div>
 
     <!-- Report Header -->
@@ -737,6 +763,12 @@
 
     <!-- Product Snapshot -->
     <div class="container">
+        <!-- Demo Notice -->
+        <div class="demo-notice">
+            <h4>Demo Notice</h4>
+            <p>This is an illustrative sample report used to demonstrate the Product Intelligence evaluation format. The data shown is hypothetical and does not represent any real customer, supplier, or brand.</p>
+        </div>
+
         <div class="snapshot-card">
             <div class="snapshot-grid">
                 <div class="snapshot-item">
