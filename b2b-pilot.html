@@ -332,6 +332,46 @@
             font-weight: 700;
         }
 
+        /* Numbered Steps */
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: step-counter;
+        }
+
+        .steps-list li {
+            position: relative;
+            padding-left: 36px;
+            margin-bottom: 14px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            counter-increment: step-counter;
+        }
+
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trust-line {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
         .content-box p {
             font-size: 16px;
             color: var(--text-secondary);
@@ -483,6 +523,22 @@
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDmWC8ZcaBcDlOpGR52KUW8C9nkYsQlLJJa0YlhWxnWZBaAw/viewform?usp=pp_url" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book a 10-min Pilot Call</a>
                     <a href="loi-template.html" class="btn btn-secondary">Request an LOI Template</a>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Happens Next Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-box">
+                <h3>What happens after you submit</h3>
+                <ol class="steps-list">
+                    <li>We review your submission and confirm fit.</li>
+                    <li>We request minimal product/context details (only what's needed).</li>
+                    <li>We deliver a structured evaluation report in the agreed format.</li>
+                    <li>We collect feedback to refine the framework for UK SMEs.</li>
+                </ol>
+                <p class="trust-line">No obligation — and we do not publish or share your information.</p>
             </div>
         </div>
     </section>
