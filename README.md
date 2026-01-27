@@ -39,14 +39,14 @@ A static proof-of-concept demonstration of a structured decision framework that 
 ## Roadmap
 
 ### Next 30 Days
-- Collect 25 pilot registrations (expressions of interest)
-- Run 10 structured pilot evaluations (manual using template)
-- Secure 2 non-binding LOIs (only if value proven)
+- Founder-led validation through internal procurement scenarios and early pilot outreach.
+- Seek expressions of interest and run manual pilot evaluations using the template where agreed.
+- Pursue non-binding LOIs only where value is demonstrated.
 
 ### Next 60 Days
-- Validate pricing through pilot follow-ups
-- Refine framework based on user feedback
-- Begin template-to-generator conversion planning
+- Validate pricing through pilot follow-ups where available.
+- Refine framework based on early pilot feedback.
+- Begin template-to-generator conversion planning.
 
 ### Next 90 Days
 - Convert template into a semi-structured generator (forms → report output)
